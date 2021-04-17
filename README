@@ -1,0 +1,21 @@
+This README file contains information on the contents of the yocto-rock64 layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+  URI: https://github.com/AmateurECE/kas
+
+Patches
+=======
+
+Please submit any patches against the yocto-rock64 layer to Ethan D. Twardy
+`<ethan.twardy@gmail.com>`
+
+How to Build
+============
+
+This repository implements a kas project. The files under kas/ contain
+configurations that build images for the Rock64 for each release of the Yocto
+project. Currently, only Dunfell is supported.
