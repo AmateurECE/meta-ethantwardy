@@ -34,3 +34,4 @@ local_conf_header:
   meta-custom: |
     BB_NUMBER_THREADS = "8"
     PARALLEL_MAKE = "-j8"
+    EXTRA_IMAGE_FEATURES += "debug-tweaks"
