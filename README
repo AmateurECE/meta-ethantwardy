@@ -1,4 +1,5 @@
-This README file contains information on the contents of the yocto-rock64 layer.
+This README file contains information on the contents of the yocto-rock64
+layer.
 
 Please see the corresponding sections below for details.
 
@@ -18,4 +19,16 @@ How to Build
 
 This repository implements a kas project. The files under kas/ contain
 configurations that build images for the Rock64 for each release of the Yocto
-project. Currently, only Dunfell is supported.
+project. Currently, dunfell and hardknott are supported. To build, install the
+kas-container wrapper for kas (https://github.com/siemens/kas), then:
+
+    git clone https://github.com/AmateurECE/yocto-rock64
+    kas-container build yocto-rock64/kas/hardknott.yaml
+
+This configuration builds core-image-base, but that can obviously be altered by
+changing conf/local.conf. The -sdimg file the deploy directory (e.g.
+build/tmp/deploy/images/core-image-base-rock64.rock64-sdimg) should then be
+flashed to the board to boot. A convenience script, tools/FlashSd.sh is
+provided. One can flash the image to an SD card, for example, with:
+
+    sudo ./Flash.sh image.rock64-sdimg /dev/disk2
