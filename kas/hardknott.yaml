@@ -1,5 +1,5 @@
 header:
-  version: 1
+  version: 2
 machine: rock64
 distro: poky
 target: core-image-base
@@ -32,11 +32,7 @@ repos:
 
   meta-rockchip:
     url: https://git.yoctoproject.org/git/meta-rockchip
-    refspec: 9088965c3a088f8259015ff4fc7fc63b77a322f0
-
-  meta-rock64:
-    url: https://github.com/AmateurECE/meta-rock64
-    refspec: 0549882d2fdd3d20491bca2887c41fbf6791788a
+    refspec: 2cf5a03eaa04a8275003471f030f22eefa2dbbdf
 
 local_conf_header:
   meta-custom: |
