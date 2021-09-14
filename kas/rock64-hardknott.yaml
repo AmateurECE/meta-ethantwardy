@@ -1,14 +1,14 @@
 header:
-  version: 1
+  version: 2
 machine: rock64
 distro: poky
 target: core-image-base
 repos:
-  yocto-rock64:
+  meta-edtwardy:
 
   poky:
     url: https://git.yoctoproject.org/git/poky
-    refspec: 13f4ddf50eccaeed96a40a5f1a1d4173e677e98a
+    refspec: 60d51ca484e43f4ef38f313956e510c25dcd7dac
     layers:
       meta:
       meta-poky:
@@ -16,20 +16,23 @@ repos:
 
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
-    refspec: 430ef96fe65f62d8da995f446d5b9b093544f031
+    refspec: c51e79dd854460c6f6949a187970d05362152e84
     layers:
       meta-oe:
       meta-multimedia:
       meta-networking:
       meta-python:
 
+  meta-arm:
+    url: git://git.yoctoproject.org/meta-arm
+    refspec: e82d9fdd49745a6a064b636f2ea1e02c1750d298
+    layers:
+      meta-arm:
+      meta-arm-toolchain:
+
   meta-rockchip:
     url: https://git.yoctoproject.org/git/meta-rockchip
-    refspec: 52e6a8c2c011cdc453649b0fac61e9b979033dc4
-
-  meta-rock64:
-    url: https://github.com/AmateurECE/meta-rock64
-    refspec: b281129fdb0e2ffe48e8d6b81ef8c264133e5056
+    refspec: 2cf5a03eaa04a8275003471f030f22eefa2dbbdf
 
 local_conf_header:
   meta-custom: |
