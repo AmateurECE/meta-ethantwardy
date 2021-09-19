@@ -5,6 +5,8 @@ distro: poky
 target: core-image-base
 repos:
   meta-edtwardy:
+    layers:
+      meta-rock64-bsp:
 
   poky:
     url: https://git.yoctoproject.org/git/poky
