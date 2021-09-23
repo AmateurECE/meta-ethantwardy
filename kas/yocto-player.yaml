@@ -38,6 +38,7 @@ local_conf_header:
     TFTP_SERVER_IP = "192.168.1.60"
     EXTRA_IMAGE_FEATURES += "debug-tweaks ssh-server-openssh"
     RPI_USE_U_BOOT = "1"
+    RPI_EXTRA_CONFIG = "dtparam=audio=on"
     ENABLE_UART = "1"
     CONF_VERSION = "1"
     SDKMACHINE = "x86_64"
