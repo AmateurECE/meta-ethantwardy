@@ -1,0 +1,5 @@
+rpi-bsp: kernel/initramfs are being populated in the image
+rpi-bsp: meta-rust layer
+rpi-bsp: eSDK?
+rpi-bsp: verify SSH works?
+rpi-bsp: finish modifying boot.scr

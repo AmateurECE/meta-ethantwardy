@@ -1,0 +1,41 @@
+header:
+  version: 2
+machine: raspberrypi4-64
+distro: poky
+target: core-image-base
+repos:
+  meta-edtwardy:
+    layers:
+      meta-rpi-bsp:
+
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    refspec: hardknott
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    refspec: hardknott
+    layers:
+      meta-oe:
+      meta-multimedia:
+      meta-networking:
+      meta-python:
+
+  meta-raspberrypi:
+    url: https://git.yoctoproject.org/git/meta-raspberrypi
+    refspec: hardknott
+
+local_conf_header:
+  standard: |
+    TFTP_SERVER_IP = "192.168.1.60"
+    EXTRA_IMAGE_FEATURES += "debug-tweaks ssh-server-openssh"
+    RPI_USE_U_BOOT = "1"
+    ENABLE_UART = "1"
+    CONF_VERSION = "1"
+    SDKMACHINE = "x86_64"
+    BB_NUMBER_THREADS = "8"
+    PARALLEL_MAKE = "-j8"

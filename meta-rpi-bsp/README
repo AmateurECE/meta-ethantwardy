@@ -1,0 +1,53 @@
+This README file contains information on the contents of the yocto-rock64
+layer.
+
+Please see the corresponding sections below for details.
+
+Dependencies
+============
+
+  URI: https://github.com/AmateurECE/kas
+
+Patches
+=======
+
+Please submit any patches against the yocto-rock64 layer to Ethan D. Twardy
+`<ethan.twardy@gmail.com>`
+
+How to Build
+============
+
+This repository implements a kas project. The files under kas/ contain
+configurations that build images for the Raspberrypi4 for each release of the
+Yocto project. Currently, only hardknott is supported. To build, install the
+kas-container wrapper for kas (https://github.com/siemens/kas), then:
+
+    git clone https://github.com/AmateurECE/meta-edtwardy
+    kas-container build meta-edtwardy/kas/yocto-player.yaml
+
+The Flash.sh script provided in the parent layer can be used to flash the disk
+image.
+
+Gotchas
+=======
+
+My goal for this layer is to make a distribution which I can base all of my
+projects on. This would include:
+
+* A U-boot only disk image that would automatically grab an image from a TFTP
+  server upon boot. Any change to the kernel/rootfs would only require
+  rebuilding the initramfs image
+
+How to TFTP boot:
+
+setenv serverip @@TFTP_SERVER_IP@@
+tftp ${kernel_addr_r} @@KERNEL_IMAGETYPE@@
+tftp ${fdt_addr_r} @@TFTP_FDT_IMAGE@@
+fdt addr ${fdt_addr_r} && fdt get value bootargs /chosen bootargs
+booti ${kernel_addr_r} - ${fdt_addr_r}
+
+How to generate an initramfs image that U-boot can boot:
+
+images/example.bb:
+    IMAGE_CLASSES += "image_types_uboot"
+    IMAGE_FSTYPES = "cpio.gz.u-boot wic.bz2"
