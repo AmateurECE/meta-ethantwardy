@@ -8,6 +8,10 @@ repos:
     layers:
       meta-rpi-bsp:
 
+  meta-rust:
+    url: https://github.com/meta-rust/meta-rust
+    refspec: hardknott
+
   poky:
     url: https://git.yoctoproject.org/git/poky
     refspec: hardknott
