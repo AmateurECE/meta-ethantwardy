@@ -1,2 +1,2 @@
 
-IMAGE_INSTALL_append = " alsa-utils-aplay"
+IMAGE_INSTALL_append = " alsa-utils-aplay alsa-utils-speakertest"
