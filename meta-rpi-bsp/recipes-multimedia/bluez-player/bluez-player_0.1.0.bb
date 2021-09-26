@@ -8,10 +8,10 @@ inherit cargo
 # how to get bluez-player could be as easy as but default to a git checkout:
 # SRC_URI += "crate://crates.io/bluez-player/0.1.0"
 SRC_URI += "git://github.com/AmateurECE/bluez-player;protocol=https;nobranch=1"
-SRCREV = "121ca4047ec097628e5a10848f84fe2ce0d7f123"
+SRCREV = "ade44a35533423b9abe818b6b377bdd7034121ea"
 S = "${WORKDIR}/git"
 CARGO_SRC_DIR = ""
-PV_append = ".AUTOINC+121ca4047e"
+PV_append = ".AUTOINC+ade44a3553"
 
 # please note if you have entries that do not begin with crate://
 # you must change them to how that package can be fetched
