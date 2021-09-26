@@ -47,5 +47,5 @@ local_conf_header:
     PARALLEL_MAKE = "-j8"
   sdk: |
     SDK_EXT_TYPE = "minimal"
-    SDK_UPDATE_URL = "http://edtwardy-yocto.local/yocto/esdk"
+    SDK_UPDATE_URL = "http://edtwardy-yocto.local/esdk"
     SDKMACHINE = "x86_64"
