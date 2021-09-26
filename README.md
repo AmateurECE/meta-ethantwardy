@@ -27,6 +27,20 @@ Install the eSDK to the volume:
 yocto@ea5526d4ee6e:~$ ./installer/poky-glibc-*.sh
 ```
 
+Finally, add the SSTATE mirror, by manually editing
+`~/poky_sdk/conf/local.conf` to include the following:
+
+```
+SSTATE_MIRRORS = "\
+...
+file://(.*) http://edtwardy-yocto.local/sstate-cache/\1 \
+"
+```
+
+Also, make sure that there's an entry in `/etc/hosts` for
+`edtwardy-yocto.local`. Or, the URL `https://edtwardy.hopto.org/sstate-cache`
+can be used to allow remote access. 
+
 After this, the container is configured to source the environment setup script
 automatically, so all that's necessary is to spin up a container and develop!
 
