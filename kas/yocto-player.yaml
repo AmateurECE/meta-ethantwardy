@@ -10,7 +10,7 @@ repos:
 
   meta-rust:
     url: https://github.com/meta-rust/meta-rust
-    refspec: hardknott
+    refspec: master
 
   poky:
     url: https://git.yoctoproject.org/git/poky
@@ -34,13 +34,18 @@ repos:
     refspec: hardknott
 
 local_conf_header:
-  standard: |
+  debug: |
     TFTP_SERVER_IP = "192.168.1.60"
     EXTRA_IMAGE_FEATURES += "debug-tweaks ssh-server-openssh"
+  raspberrypi: |
     RPI_USE_U_BOOT = "1"
     RPI_EXTRA_CONFIG = "dtparam=audio=on"
     ENABLE_UART = "1"
+  host_standard: |
     CONF_VERSION = "1"
-    SDKMACHINE = "x86_64"
     BB_NUMBER_THREADS = "8"
     PARALLEL_MAKE = "-j8"
+  sdk: |
+    SDK_EXT_TYPE = "minimal"
+    SDK_UPDATE_URL = "http://edtwardy-yocto.local/yocto/esdk"
+    SDKMACHINE = "x86_64"
