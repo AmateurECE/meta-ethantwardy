@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 : "${USER:=edtwardy}"
 : "${IP_ADDRESS:=192.168.1.60}"
 : "${IMAGE_DIR:=/home/edtwardy/Git/Yocto/build/tmp/deploy/images}"
