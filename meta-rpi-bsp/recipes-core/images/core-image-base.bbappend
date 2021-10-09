@@ -4,4 +4,5 @@ IMAGE_INSTALL_append = " \
                      alsa-utils-speakertest\
                      bluez-player \
                      bluez-alsa \
+                     iwd \
                      "

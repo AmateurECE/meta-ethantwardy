@@ -1,0 +1,43 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          pi-bluetooth
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start daemon at boot time
+# Description:       Enable service provided by daemon.
+### END INIT INFO
+
+dir="/"
+user="root"
+
+name=pi-bluetooth
+stdout_log="/var/log/$name.log"
+stderr_log="/var/log/$name.err"
+
+case "$1" in
+    start)
+        echo "Starting $name"
+        # Load bluetooth firmware
+        /usr/bin/btuart
+
+        # Do some initialization?
+        /usr/bin/bthelper hci0
+    ;;
+    stop)
+    ;;
+    restart)
+        /usr/bin/btuart
+        /usr/bin/bthelper hci0
+    ;;
+    status)
+        echo "Stopped"
+    ;;
+    *)
+    echo "Usage: $0 {start|status}"
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -2,7 +2,12 @@
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=72d868d66bdd5bf51fe67734431de057"
 
-SRC_URI = "git://github.com/Arkq/bluez-alsa.git"
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+
+SRC_URI = "\
+git://github.com/Arkq/bluez-alsa.git \
+file://bluealsa \
+"
 
 PV = "3.1.0"
 SRCREV = "b09f373ea7dbc6e3ecbcb74d7299f5230cdc6e59"
@@ -28,8 +33,15 @@ ${libdir}/alsa-lib/libasound_module_ctl_bluealsa.so \
 ${libdir}/alsa-lib/libasound_module_pcm_bluealsa.so \
 "
 
-inherit pkgconfig autotools
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME_${PN} = "bluealsa"
+
+inherit pkgconfig autotools update-rc.d
 
 # Extra ./configure options
 EXTRA_OECONF = ""
 
+do_install_append() {
+    install -d ${D}${INIT_D_DIR}
+    install -m755 ${WORKDIR}/bluealsa ${D}${INIT_D_DIR}/bluealsa
+}
