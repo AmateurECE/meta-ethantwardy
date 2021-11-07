@@ -6,6 +6,7 @@ target: core-image-base
 repos:
   meta-edtwardy:
     layers:
+      meta-edtwardy:
       meta-rpi-bsp:
 
   meta-rust:
