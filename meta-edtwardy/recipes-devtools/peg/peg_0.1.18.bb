@@ -22,13 +22,16 @@ SRC_URI[sha512sum] = "ca2fb9088bf87955adf6f883370ddb7d5f6f3cae3605a871094317205a
 
 BBCLASSEXTEND = "native nativesdk"
 
+PROVIDES_${PN} += "${PN}-native"
+
 do_compile() {
         oe_runmake
 }
 
 do_install() {
-        install -d ${D}/usr/local
-        oe_runmake install ROOT=${D}
+        install -d ${D}${bindir}
+        install ${S}/peg ${D}${bindir}
+        install ${S}/leg ${D}${bindir}
 }
 
 ###############################################################################
