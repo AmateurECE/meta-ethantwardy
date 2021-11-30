@@ -1,0 +1,3 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME = "iwd"
