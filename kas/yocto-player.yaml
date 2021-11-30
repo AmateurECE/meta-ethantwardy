@@ -15,7 +15,7 @@ repos:
 
   poky:
     url: https://git.yoctoproject.org/git/poky
-    refspec: hardknott
+    refspec: master
     layers:
       meta:
       meta-poky:
@@ -23,7 +23,7 @@ repos:
 
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
-    refspec: hardknott
+    refspec: master
     layers:
       meta-oe:
       meta-multimedia:
@@ -32,7 +32,7 @@ repos:
 
   meta-raspberrypi:
     url: https://git.yoctoproject.org/git/meta-raspberrypi
-    refspec: hardknott
+    refspec: honister
 
 local_conf_header:
   debug: |
@@ -43,7 +43,7 @@ local_conf_header:
     RPI_EXTRA_CONFIG = "dtparam=audio=on"
     ENABLE_UART = "1"
   host_standard: |
-    CONF_VERSION = "1"
+    CONF_VERSION = "2"
     BB_NUMBER_THREADS = "8"
     PARALLEL_MAKE = "-j8"
   sdk: |

@@ -1,8 +1,10 @@
 
-IMAGE_INSTALL_append = " \
+IMAGE_INSTALL:append = " \
                      alsa-utils-aplay \
                      alsa-utils-speakertest\
-                     bluez-player \
                      bluez-alsa \
                      iwd \
+                     ldd \
+                     bluez-iot-agent \
+                     gdbserver \
                      "

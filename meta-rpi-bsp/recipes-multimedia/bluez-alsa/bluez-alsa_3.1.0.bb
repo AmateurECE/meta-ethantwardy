@@ -2,10 +2,10 @@
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=72d868d66bdd5bf51fe67734431de057"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI = "\
-git://github.com/Arkq/bluez-alsa.git \
+git://github.com/Arkq/bluez-alsa.git;protocol=https;branch=master \
 file://bluealsa \
 "
 
@@ -26,22 +26,22 @@ S = "${WORKDIR}/git"
 DEPENDS = "dbus alsa-lib bluez5 glib-2.0 libbsd sbc"
 
 # libasound, libbluetooth, libbsd, libglib2.0, libsbc
-RDEPENDS_${PN}_append = " alsa-lib bluez5 glib-2.0 libbsd sbc dbus-lib"
+RDEPENDS:${PN}:append = " alsa-lib bluez5 glib-2.0 libbsd sbc dbus-lib"
 
-FILES_${PN}_append = " \
+FILES:${PN}:append = " \
 ${libdir}/alsa-lib/libasound_module_ctl_bluealsa.so \
 ${libdir}/alsa-lib/libasound_module_pcm_bluealsa.so \
 "
 
 INITSCRIPT_PACKAGES = "${PN}"
-INITSCRIPT_NAME_${PN} = "bluealsa"
+INITSCRIPT_NAME:${PN} = "bluealsa"
 
 inherit pkgconfig autotools update-rc.d
 
 # Extra ./configure options
 EXTRA_OECONF = ""
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${INIT_D_DIR}
     install -m755 ${WORKDIR}/bluealsa ${D}${INIT_D_DIR}/bluealsa
 }

@@ -11,7 +11,7 @@
 LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=fb504b67c50331fc78734fed90fb0e09"
 
-SRC_URI = "git://git.kernel.org/pub/scm/libs/ell/ell.git;protocol=https"
+SRC_URI = "git://git.kernel.org/pub/scm/libs/ell/ell.git;protocol=https;branch=master"
 
 # Modify these as desired
 PV = "0.44"
@@ -32,7 +32,7 @@ inherit pkgconfig autotools-brokensep
 # Specify any options you want to pass to the configure script using EXTRA_OECONF:
 EXTRA_OECONF = ""
 
-FILES_${PN} += "${includedir}/ell/useful.h"
+FILES:${PN} += "${includedir}/ell/useful.h"
 
 do_configure() {
     echo "$PWD"
@@ -40,6 +40,6 @@ do_configure() {
     oe_runconf
 }
 
-do_install_append() {
+do_install:append() {
     install ${S}/${PN}/useful.h ${D}${includedir}/${PN}
 }

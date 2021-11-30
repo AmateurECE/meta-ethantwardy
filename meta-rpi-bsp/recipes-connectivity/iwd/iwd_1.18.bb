@@ -12,11 +12,11 @@ LICENSE = "LGPL-2.1-only"
 LIC_FILES_CHKSUM = "file://COPYING;md5=fb504b67c50331fc78734fed90fb0e09"
 
 SRC_URI = "\
-git://git.kernel.org/pub/scm/network/wireless/iwd.git;protocol=https \
+git://git.kernel.org/pub/scm/network/wireless/iwd.git;protocol=https;branch=master \
 file://iwd \
 "
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 # Modify these as desired
 PV = "1.18"
@@ -43,7 +43,7 @@ EXTRA_OECONF = "\
 --disable-manual-pages \
 "
 
-FILES_${PN} += "\
+FILES:${PN} += "\
 ${datadir}/dbus-1/system.d/${PN}-dbus.conf \
 "
 
@@ -53,7 +53,7 @@ do_configure() {
     autotools_do_configure
 }
 
-do_install_append() {
+do_install:append() {
     install -d ${D}${INIT_D_DIR}
     install -m 0755 ${WORKDIR}/iwd ${D}${INIT_D_DIR}/${PN}
 }
