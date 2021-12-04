@@ -7,10 +7,10 @@
 #
 # CREATED:          09/24/2021
 #
-# LAST EDITED:      09/26/2021
+# LAST EDITED:      12/04/2021
 ###
 
-FROM docker.io/library/debian:stretch-slim
+FROM docker.io/library/debian:bullseye-slim
 
 RUN apt-get update && apt-get upgrade -y \
         && apt-get install -y \
