@@ -7,7 +7,7 @@
 #
 # CREATED:          11/28/2021
 #
-# LAST EDITED:      11/29/2021
+# LAST EDITED:      11/30/2021
 ###
 
 LICENSE = "MIT"
@@ -23,20 +23,5 @@ DEPENDS:append:class-target = " peg-native"
 RPROVIDES:${PN} += "libhandlebars"
 
 inherit meson pkgconfig
-
-FILES:${PN}:append = " \
-${libdir} \
-${libdir}/${PN}.so \
-${libdir}/${PN}.so.0 \
-${libdir}/${PN}.so.${PV} \
-"
-
-do_install:append() {
-        install -d ${D}${libdir}
-        install -m0755 ${B}/${PN}.so ${D}${libdir}/${PN}.so.${PV}
-        ln -sr ${D}${libdir}/${PN}.so.${PV} ${D}${libdir}/${PN}.so.0
-        rm -f ${D}${libdir}/${PN}.so
-        ln -sr ${D}${libdir}/${PN}.so.0 ${D}${libdir}/${PN}.so
-}
 
 ###############################################################################
