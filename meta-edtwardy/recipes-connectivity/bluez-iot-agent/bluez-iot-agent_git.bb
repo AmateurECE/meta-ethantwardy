@@ -7,13 +7,17 @@
 #
 # CREATED:          11/06/2021
 #
-# LAST EDITED:      12/04/2021
+# LAST EDITED:      12/06/2021
 ###
 
 LICENSE = "GPL-3.0-or-later"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
 
-SRC_URI = "git://github.com/AmateurECE/bluez-iot-agent;protocol=https;branch=trunk"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+SRC_URI = " \
+git://github.com/AmateurECE/bluez-iot-agent;protocol=https;branch=trunk \
+file://${PN} \
+"
 
 PV = "1.0+git${SRCPV}"
 SRCREV = "${AUTOREV}"
@@ -30,6 +34,14 @@ ${datadir}/${PN}/index.html.hbs \
 ${datadir}/${PN}/style.css \
 "
 
-inherit meson pkgconfig
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME = "${PN}"
+
+inherit meson pkgconfig update-rc.d
+
+do_install:append() {
+    install -d ${D}${INIT_D_DIR}
+    install -m 0755 ${WORKDIR}/${PN} ${D}${INIT_D_DIR}/${PN}
+}
 
 ###############################################################################
