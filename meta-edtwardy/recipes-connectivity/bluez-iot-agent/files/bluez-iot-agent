@@ -27,7 +27,7 @@ case "$1" in
         ;;
 
     status)
-        if [ -d /proc/$(cat $pid_file) ]; then
+        if [ -f $pid_file ] && [ -d /proc/$(cat $pid_file) ]; then
             printf '%s\n' "Running"
         else
             printf '%s\n' "Stopped"
