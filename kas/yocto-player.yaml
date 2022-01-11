@@ -1,7 +1,7 @@
 header:
   version: 2
 machine: raspberrypi4-64
-distro: poky
+distro: poky-player
 target: core-image-base
 repos:
   meta-edtwardy:
@@ -34,13 +34,18 @@ repos:
     url: https://git.yoctoproject.org/git/meta-raspberrypi
     refspec: honister
 
+  meta-agl:
+    url: https://gitlab.com/liulangxing/meta-agl.git
+    refspec: next
+    layers:
+      meta-pipewire:
+
 local_conf_header:
   debug: |
     TFTP_SERVER_IP = "192.168.1.60"
     EXTRA_IMAGE_FEATURES += "debug-tweaks ssh-server-openssh"
   raspberrypi: |
     RPI_USE_U_BOOT = "1"
-    RPI_EXTRA_CONFIG = "dtparam=audio=on"
     ENABLE_UART = "1"
   host_standard: |
     CONF_VERSION = "2"

@@ -7,4 +7,6 @@ IMAGE_INSTALL:append = " \
                      ldd \
                      bluez-iot-agent \
                      gdbserver \
+                     packagegroup-pipewire \
+                     ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd-networkd-conf', '', d)} \
                      "

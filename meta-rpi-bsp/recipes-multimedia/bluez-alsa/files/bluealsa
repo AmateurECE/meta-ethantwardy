@@ -36,7 +36,6 @@ case "$1" in
                           --startas /usr/bin/bluealsa -- $bluealsa_args
         start-stop-daemon -S -b --oknodo --pidfile $aplay_pid_file -m \
                           --startas /usr/bin/bluealsa-aplay -- $aplay_args
-        amixer sset Headphone "90%"
         if [ $? != 0 ]; then
             echo "Unable to start $name"
         fi
