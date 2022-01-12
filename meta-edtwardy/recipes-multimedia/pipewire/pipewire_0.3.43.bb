@@ -67,7 +67,7 @@ EXTRA_OEMESON += " \
 "
 
 PACKAGECONFIG ??= "\
-    ${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'bluez5', '', d)} \
     ${@bb.utils.filter('DISTRO_FEATURES', 'alsa systemd', d)} \
     gstreamer jack v4l2 \
 "
@@ -79,7 +79,7 @@ PACKAGECONFIG ??= "\
 # as being in conflict.
 
 PACKAGECONFIG[alsa] = "-Dalsa=enabled,-Dalsa=disabled,alsa-lib udev"
-PACKAGECONFIG[bluez] = "-Dbluez5=enabled,-Dbluez5=disabled,bluez5 sbc"
+PACKAGECONFIG[bluez5] = "-Dbluez5=enabled,-Dbluez5=disabled,bluez5 sbc"
 PACKAGECONFIG[docs] = "-Ddocs=enabled,-Ddocs=disabled,doxygen-native"
 PACKAGECONFIG[gstreamer] = "-Dgstreamer=enabled,-Dgstreamer=disabled,glib-2.0 gstreamer1.0 gstreamer1.0-plugins-base"
 PACKAGECONFIG[jack] = "-Djack=enabled,-Djack=disabled,jack,,,pipewire-jack"
@@ -208,6 +208,7 @@ PACKAGES =+ "\
     ${PN}-alsa \
     ${PN}-jack \
     ${PN}-v4l2 \
+    ${PN}-bluez5 \
     ${PN}-media-session \
     ${PN}-spa-plugins \
     ${PN}-spa-plugins-meta \
@@ -236,6 +237,10 @@ FILES:${PN}-dev += " \
 
 FILES:${PN}-v4l2 += " \
     ${libdir}/${PW_MODULE_SUBDIR}/v4l2/libpw-v4l2.so \
+"
+
+FILES:${PN}-bluez5 += " \
+    ${datadir}/${SPA_SUBDIR}/bluez5/bluez-hardware.conf \
 "
 
 CONFFILES:libpipewire += "${datadir}/pipewire/client.conf"
