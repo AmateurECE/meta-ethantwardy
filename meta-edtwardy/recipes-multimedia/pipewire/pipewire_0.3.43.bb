@@ -20,7 +20,7 @@ SECTION = "multimedia"
 
 DEPENDS = "dbus"
 
-SRCREV = "e857856be7b64d562cdcc01c43933218a68b225e"
+SRCREV = "0.3.43"
 SRC_URI = "git://gitlab.freedesktop.org/pipewire/pipewire.git;branch=master;protocol=https"
 
 S = "${WORKDIR}/git"
@@ -63,6 +63,7 @@ EXTRA_OEMESON += " \
     -Dvulkan=disabled \
     -Dlibcamera=disabled \
     -Dman=disabled \
+    -Dsession-managers=[] \
 "
 
 PACKAGECONFIG ??= "\
@@ -84,8 +85,8 @@ PACKAGECONFIG[gstreamer] = "-Dgstreamer=enabled,-Dgstreamer=disabled,glib-2.0 gs
 PACKAGECONFIG[jack] = "-Djack=enabled,-Djack=disabled,jack,,,pipewire-jack"
 PACKAGECONFIG[sdl2] = "-Dsdl2=enabled,-Dsdl2=disabled,virtual/libsdl2"
 PACKAGECONFIG[sndfile] = "-Dsndfile=enabled,-Dsndfile=disabled,libsndfile1"
-PACKAGECONFIG[systemd] = "-Dsystemd=enabled -Dsystemd-system-service=enabled ,-Dsystemd=disabled -Dsystemd-system-service=disabled,systemd"
-PACKAGECONFIG[v4l2] = "-Dv4l2=enabled,-Dv4l2=disabled,udev"
+PACKAGECONFIG[systemd] = "-Dsystemd-system-service=enabled,-Dsystemd-system-service=disabled,systemd"
+PACKAGECONFIG[v4l2] = "-Dpipewire-v4l2=enabled,-Dpipewire-v4l2=disabled,udev"
 PACKAGECONFIG[pipewire-alsa] = "-Dpipewire-alsa=enabled,-Dpipewire-alsa=disabled,alsa-lib"
 PACKAGECONFIG[pipewire-jack] = "-Dpipewire-jack=enabled -Dlibjack-path=${libdir}/${PW_MODULE_SUBDIR}/jack,-Dpipewire-jack=disabled,jack,,,jack"
 
@@ -206,6 +207,7 @@ PACKAGES =+ "\
     ${PN}-pulse \
     ${PN}-alsa \
     ${PN}-jack \
+    ${PN}-v4l2 \
     ${PN}-media-session \
     ${PN}-spa-plugins \
     ${PN}-spa-plugins-meta \
@@ -218,6 +220,7 @@ PACKAGES =+ "\
 
 PACKAGES_DYNAMIC = "^${PN}-spa-plugins.* ^${PN}-modules.*"
 
+SYSTEMD_PACKAGE:${PN} = "pipewire"
 SYSTEMD_SERVICE:${PN} = "pipewire.service"
 CONFFILES:${PN} += "${datadir}/pipewire/pipewire.conf"
 FILES:${PN} = " \
@@ -229,6 +232,10 @@ FILES:${PN} = " \
 
 FILES:${PN}-dev += " \
     ${libdir}/${PW_MODULE_SUBDIR}/jack/libjack*.so \
+"
+
+FILES:${PN}-v4l2 += " \
+    ${libdir}/${PW_MODULE_SUBDIR}/v4l2/libpw-v4l2.so \
 "
 
 CONFFILES:libpipewire += "${datadir}/pipewire/client.conf"
