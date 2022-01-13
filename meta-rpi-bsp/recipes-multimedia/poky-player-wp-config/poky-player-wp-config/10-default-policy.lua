@@ -110,7 +110,7 @@ function default_policy.enable()
   load_script("static-endpoints.lua", default_policy.endpoints)
 
   -- Create session items for nodes that appear in the graph
-  load_script("create-item.lua")
+  load_script("create-item.lua", default_policy.policy)
 
   -- Link nodes to each other to make media flow in the graph
   load_script("policy-node.lua", default_policy.policy)
