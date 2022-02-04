@@ -7,7 +7,7 @@
 #
 # CREATED:          11/28/2021
 #
-# LAST EDITED:      11/30/2021
+# LAST EDITED:      01/16/2022
 ###
 
 LICENSE = "MIT"
@@ -19,9 +19,19 @@ SRCREV = "v${PV}"
 S = "${WORKDIR}/git"
 B = "${WORKDIR}/build"
 
-DEPENDS:append:class-target = " peg-native"
+DEPENDS:append = " cmake-native unity-staticdev"
 RPROVIDES:${PN} += "libhandlebars"
 
 inherit meson pkgconfig
+
+do_write_config:append() {
+    # As of last edited date, meson.bbclass does not populate CMake variables
+    # in meson.cross file. Unfortunately, unity exports unityConfig.cmake, but
+    # no .pc file. So, manually add the right configuration to meson.cross to
+    # allow meson to locate unity using CMake.
+    sed -i "2i cmake = '${WORKDIR}/recipe-sysroot-native/usr/bin/cmake'" \
+        ${WORKDIR}/meson.cross
+    sed -i "/\[built-in options\]/a cmake_prefix_path = '${WORKDIR}/recipe-sysroot/usr'" ${WORKDIR}/meson.cross
+}
 
 ###############################################################################

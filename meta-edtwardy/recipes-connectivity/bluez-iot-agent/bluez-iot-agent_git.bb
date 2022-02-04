@@ -7,16 +7,16 @@
 #
 # CREATED:          11/06/2021
 #
-# LAST EDITED:      12/06/2021
+# LAST EDITED:      02/04/2022
 ###
 
 LICENSE = "GPL-3.0-or-later"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=1ebbd3e34237af26da5dc08a4e440464"
 
-FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI = " \
 git://github.com/AmateurECE/bluez-iot-agent;protocol=https;branch=trunk \
-file://${PN} \
+file://${BPN} \
+file://bluez-iot-agent.service \
 "
 
 PV = "1.0+git${SRCPV}"
@@ -32,16 +32,17 @@ FILES:${PN} += "\
 ${datadir}/dbus-1/system.d/${PN}.conf \
 ${datadir}/${PN}/index.html.hbs \
 ${datadir}/${PN}/style.css \
+${systemd_system_unitdir}/bluez-iot-agent.service \
 "
 
-INITSCRIPT_PACKAGES = "${PN}"
-INITSCRIPT_NAME = "${PN}"
+inherit meson pkgconfig systemd
 
-inherit meson pkgconfig update-rc.d
+SYSTEMD_SERVICE:${PN} = "bluez-iot-agent.service"
 
 do_install:append() {
-    install -d ${D}${INIT_D_DIR}
-    install -m 0755 ${WORKDIR}/${PN} ${D}${INIT_D_DIR}/${PN}
+    install -d ${D}${systemd_system_unitdir}
+    install -m 0644 ${WORKDIR}/bluez-iot-agent.service \
+        ${D}${systemd_system_unitdir}
 }
 
 ###############################################################################
