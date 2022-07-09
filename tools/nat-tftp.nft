@@ -1,0 +1,38 @@
+###############################################################################
+# NAME:             nat-tftp.nft
+#
+# AUTHOR:           Ethan D. Twardy <ethan.twardy@gmail.com>
+#
+# DESCRIPTION:      nftables firewall rule to perform source nat'ing for a
+#                   device on a subnet--allows the device to communicate with
+#                   the build server.
+#
+# CREATED:          07/09/2022
+#
+# LAST EDITED:      07/09/2022
+###
+
+# The following rule relies on the kernel module 'nf_nat_tftp', and it may be
+# necessary to manually modprobe it before loading this rule.
+
+# load the rule: `nft -f ./nat-tftp.nft`
+# delete the table: `nft delete table tftp_nat
+table ip tftp_nat {
+    ct helper helper-tftp {
+        type "tftp" protocol udp
+    }
+
+    chain sethelper {
+        type filter hook forward priority 0; policy accept;
+        ip saddr 192.168.5.0/24 ip daddr 192.168.1.60 udp dport 69 \
+            ct helper set "helper-tftp"
+    }
+
+    chain postrouting {
+        type nat hook postrouting priority 100;
+        ip saddr 192.168.5.0/24 oif wlan0 snat to 192.168.1.18
+    }
+}
+
+
+###############################################################################
