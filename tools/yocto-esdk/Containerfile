@@ -7,7 +7,7 @@
 #
 # CREATED:          09/24/2021
 #
-# LAST EDITED:      12/04/2021
+# LAST EDITED:      07/09/2022
 ###
 
 FROM docker.io/library/debian:bullseye-slim
@@ -26,7 +26,7 @@ RUN apt-get update && apt-get upgrade -y \
 RUN sed -i -e '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
         && dpkg-reconfigure --frontend=noninteractive locales \
         && touch /etc/default/locale
-COPY tools/cmd-esdk-container.sh /bin/container-cmd
+COPY cmd-esdk-container.sh /bin/container-cmd
 
 ARG SERVER_IP=192.168.1.60
 RUN printf '%s %s\n' "$SERVER_IP" "edtwardy-yocto.local" >> /etc/hosts
@@ -36,11 +36,6 @@ USER yocto
 WORKDIR /home/yocto
 RUN mkdir -p /home/yocto/poky_sdk
 VOLUME /home/yocto/poky_sdk
-
-# RUN mkdir -p /home/yocto/.rustup /home/yocto/.cargo
-# RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rustup.sh \
-#         && chmod +x ./rustup.sh \
-#         && ./rustup.sh -y
 
 ENTRYPOINT ["/bin/bash"]
 CMD ["/bin/container-cmd"]
