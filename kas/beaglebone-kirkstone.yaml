@@ -1,0 +1,50 @@
+header:
+  version: 2
+machine: beaglebone
+distro: poky
+target: core-image-minimal
+repos:
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    refspec: kirkstone
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    refspec: kirkstone
+    layers:
+      meta-oe:
+      meta-multimedia:
+      meta-networking:
+      meta-python:
+
+  meta-ti:
+    url: https://git.yoctoproject.org/meta-ti
+    refspec: kirkstone
+    layers:
+      meta-ti-bsp:
+      meta-ti-extras:
+
+  meta-arm:
+    url: https://git.yoctoproject.org/meta-arm
+    refspec: kirkstone
+    layers:
+      meta-arm-bsp:
+      meta-arm-toolchain:
+      meta-arm:
+
+local_conf_header:
+  debug: |
+    EXTRA_IMAGE_FEATURES += "debug-tweaks"
+    IMAGE_INSTALL:append = " evtest curl"
+  host_standard: |
+    CONF_VERSION = "2"
+    BB_NUMBER_THREADS = "8"
+    PARALLEL_MAKE = "-j8"
+  sdk: |
+    SDK_EXT_TYPE = "minimal"
+    SDK_UPDATE_URL = "http://edtwardy-yocto.local/esdk"
+    SDKMACHINE = "x86_64"
