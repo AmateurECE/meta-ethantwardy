@@ -39,7 +39,7 @@ repos:
 local_conf_header:
   debug: |
     EXTRA_IMAGE_FEATURES += "debug-tweaks"
-    IMAGE_INSTALL:append = " evtest curl"
+    IMAGE_INSTALL:append = " evtest curl i2c-tools"
   host_standard: |
     CONF_VERSION = "2"
     BB_NUMBER_THREADS = "8"
