@@ -69,3 +69,13 @@ podman run -it --rm \
     -v $PWD:/home/yocto/app \
     localhost/esdk-container
 ```
+
+# Building and Booting a QEMU x86_64 Image
+
+The `qemu-debug-kirkstone.yaml` kas file is provided to build a rootfs that
+can be used to boot a custom kernel under QEMU. The kas file will not
+attempt to populate a bootloader or kernel, so those must both be provided
+by the user.
+
+Both a `.wic` image and a `.cpio.gz` image are built, so that the user can
+choose to boot using a disk image, or an initrd.
