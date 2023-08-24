@@ -1,0 +1,37 @@
+header:
+  version: 14
+machine: rock64
+distro: poky
+target: core-image-base
+repos:
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    commit: aa63b25cbe25d89ab07ca11ee72c17cab68df8de
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    commit: b0ba472191c2b7709ef04ae9c5a23bea040518f9
+    layers:
+      meta-oe:
+      meta-multimedia:
+      meta-networking:
+      meta-python:
+
+  meta-arm:
+    url: git://git.yoctoproject.org/meta-arm
+    commit: 85b0e80e7d6d58bb6aaae6edf88476b9e07d3313
+    layers:
+      meta-arm:
+      meta-arm-toolchain:
+
+  meta-rockchip:
+    url: https://git.yoctoproject.org/git/meta-rockchip
+    commit: 5f06c7c018755b0bef6d6f4944ae25b5447535fc
+
+local_conf_header:
+  meta-custom: |
+    EXTRA_IMAGE_FEATURES += "debug-tweaks"
