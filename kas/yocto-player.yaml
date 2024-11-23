@@ -1,5 +1,5 @@
 header:
-  version: 2
+  version: 17
 machine: raspberrypi4-64
 distro: poky-player
 target: core-image-base
@@ -9,13 +9,9 @@ repos:
       meta-edtwardy:
       meta-rpi-bsp:
 
-  meta-rust:
-    url: https://github.com/meta-rust/meta-rust
-    refspec: master
-
   poky:
     url: https://git.yoctoproject.org/git/poky
-    refspec: master
+    branch: scarthgap
     layers:
       meta:
       meta-poky:
@@ -23,7 +19,7 @@ repos:
 
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
-    refspec: master
+    branch: scarthgap
     layers:
       meta-oe:
       meta-multimedia:
@@ -32,13 +28,7 @@ repos:
 
   meta-raspberrypi:
     url: https://git.yoctoproject.org/git/meta-raspberrypi
-    refspec: honister
-
-  meta-agl:
-    url: https://gitlab.com/liulangxing/meta-agl.git
-    refspec: next
-    layers:
-      meta-pipewire:
+    branch: scarthgap
 
 local_conf_header:
   debug: |
@@ -47,11 +37,6 @@ local_conf_header:
   raspberrypi: |
     RPI_USE_U_BOOT = "1"
     ENABLE_UART = "1"
-  host_standard: |
-    CONF_VERSION = "2"
-    BB_NUMBER_THREADS = "8"
-    PARALLEL_MAKE = "-j8"
-  sdk: |
-    SDK_EXT_TYPE = "minimal"
-    SDK_UPDATE_URL = "http://edtwardy-yocto.local/esdk"
-    SDKMACHINE = "x86_64"
+  host: |
+    BB_PRESSURE_MAX_CPU = "100000"
+    BB_PRESSURE_MAX_MEMORY = "100000"

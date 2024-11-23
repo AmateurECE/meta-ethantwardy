@@ -7,8 +7,7 @@ ldd \
 bluez-iot-agent \
 gdbserver \
 poky-player-wp-config \
-packagegroup-pipewire \
+pipewire \
 ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd-networkd-conf', '', d)} \
-${@bb.utils.contains('DISTRO_FEATURES', 'bluetooth', 'pipewire-bluez5', '', d)} \
 pipewire-alsa-card-profile \
 "
