@@ -1,13 +1,12 @@
 header:
   version: 17
 machine: raspberrypi4-64
-distro: poky-player
-target: core-image-base
+distro: stereo-gadget
+target: stereo-gadget-image
 repos:
   meta-edtwardy:
     layers:
-      meta-edtwardy:
-      meta-rpi-bsp:
+      meta-stereo-gadget:
 
   poky:
     url: https://git.yoctoproject.org/git/poky
