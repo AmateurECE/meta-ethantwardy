@@ -41,4 +41,3 @@ FILES:${PN} += "\
 CONFFILES:${PN} += "\
     ${sysconfdir}/wireplumber/* \
 "
-RPROVIDES:${PN} += "virtual/wireplumber-config"
