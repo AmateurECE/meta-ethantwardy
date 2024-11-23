@@ -10,7 +10,8 @@ repos:
 
   poky:
     url: https://git.yoctoproject.org/git/poky
-    branch: scarthgap
+    commit: d1c25a3ce446a23e453e40ac2ba8f22b0e7ccefd
+    # branch: scarthgap
     layers:
       meta:
       meta-poky:
@@ -18,7 +19,8 @@ repos:
 
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
-    branch: scarthgap
+    commit: 2e3126c9c16bb3df0560f6b3896d01539a3bfad7
+    # branch: scarthgap
     layers:
       meta-oe:
       meta-multimedia:
@@ -27,7 +29,8 @@ repos:
 
   meta-raspberrypi:
     url: https://git.yoctoproject.org/git/meta-raspberrypi
-    branch: scarthgap
+    commit: 6df7e028a2b7b2d8cab0745dc0ed2eebc3742a17
+    # branch: scarthgap
 
 local_conf_header:
   debug: |
@@ -37,5 +40,5 @@ local_conf_header:
     RPI_USE_U_BOOT = "1"
     ENABLE_UART = "1"
   host: |
-    BB_PRESSURE_MAX_CPU = "100000"
-    BB_PRESSURE_MAX_MEMORY = "100000"
+    BB_PRESSURE_MAX_CPU = "250000"
+    BB_PRESSURE_MAX_MEMORY = "250000"
