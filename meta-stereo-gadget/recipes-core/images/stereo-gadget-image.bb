@@ -22,4 +22,6 @@ ldd \
 gdbserver \
 "
 
+IMAGE_FSTYPES = "tar.gz wic"
+
 inherit core-image
