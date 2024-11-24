@@ -21,6 +21,10 @@ repos:
     url: https://git.openembedded.org/meta-openembedded
     commit: 2e3126c9c16bb3df0560f6b3896d01539a3bfad7
     # branch: scarthgap
+    patches:
+      0001:
+        repo: meta-edtwardy
+        path: kas/0001-pipewire-Add-glib-2.0-native-dep-for-bluez5.patch
     layers:
       meta-oe:
       meta-multimedia:
