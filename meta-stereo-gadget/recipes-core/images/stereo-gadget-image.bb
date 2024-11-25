@@ -22,6 +22,8 @@ ldd \
 gdbserver \
 "
 
+IMAGE_FEATURES += "ssh-server-dropbear"
+
 IMAGE_FSTYPES = "tar.gz wic"
 
 inherit core-image
