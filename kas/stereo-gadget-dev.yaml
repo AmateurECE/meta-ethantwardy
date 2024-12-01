@@ -2,8 +2,7 @@ header:
   version: 17
   includes:
     - kas/stereo-gadget.yaml
-target: stereo-gadget-image
+target: stereo-gadget-image-dev
 local_conf_header:
   debug: |
-    EXTRA_IMAGE_FEATURES += "debug-tweaks"
     PACKAGECONFIG:append:pn-dbus = " verbose-mode"

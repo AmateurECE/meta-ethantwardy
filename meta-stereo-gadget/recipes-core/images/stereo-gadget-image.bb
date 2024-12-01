@@ -16,12 +16,6 @@ ${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd-networkd-conf', '', 
 pipewire-alsa-card-profile \
 "
 
-# Debug packages
-IMAGE_INSTALL:append = " \
-ldd \
-gdbserver \
-"
-
 IMAGE_FEATURES += "ssh-server-dropbear"
 
 IMAGE_FSTYPES = "tar.gz wic"
