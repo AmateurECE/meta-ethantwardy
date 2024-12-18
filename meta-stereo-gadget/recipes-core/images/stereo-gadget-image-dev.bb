@@ -9,3 +9,5 @@ gdbserver \
 EXTRA_IMAGE_FEATURES += "debug-tweaks"
 
 WKS_FILE = "netboot-sdcard.wks"
+
+inherit buildhistory
