@@ -17,6 +17,7 @@ pipewire-alsa-card-profile \
 "
 
 # TODO: Might be able to minimize this a little bit more
+# TODO: Remove kernel-modules when we go to a static kernel
 IMAGE_INSTALL:append = " \
 linux-firmware-rpidistro-bcm43455 \
 linux-firmware-rpidistro-bcm43456 \
@@ -27,6 +28,6 @@ kernel-modules \
 
 IMAGE_FEATURES += "ssh-server-dropbear"
 
-IMAGE_FSTYPES = "tar.gz wic"
+IMAGE_FSTYPES = "wic"
 
 inherit core-image

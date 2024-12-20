@@ -1,0 +1,30 @@
+From 709537ed962dddce4f01f7228f5035cd190d2aa1 Mon Sep 17 00:00:00 2001
+From: kas User <kas@example.com>
+Date: Wed, 18 Dec 2024 07:55:07 -0600
+Subject: [PATCH] rpi: Add netboot-gadget environment file
+
+Upstream-Status: Inappropriate [oe specific]
+---
+ board/raspberrypi/rpi/rpi-netboot-gadget.env   | 4 ++++
+ {board/raspberrypi/rpi => include/env}/rpi.env | 0
+ 2 files changed, 4 insertions(+)
+ create mode 100644 board/raspberrypi/rpi/rpi-netboot-gadget.env
+ rename {board/raspberrypi/rpi => include/env}/rpi.env (100%)
+
+diff --git a/board/raspberrypi/rpi/rpi-netboot-gadget.env b/board/raspberrypi/rpi/rpi-netboot-gadget.env
+new file mode 100644
+index 0000000000..d372a01127
+--- /dev/null
++++ b/board/raspberrypi/rpi/rpi-netboot-gadget.env
+@@ -0,0 +1,4 @@
++#include <env/rpi.env>
++
++serverip=192.168.2.60
++boot_targets=pxe
+diff --git a/board/raspberrypi/rpi/rpi.env b/include/env/rpi.env
+similarity index 100%
+rename from board/raspberrypi/rpi/rpi.env
+rename to include/env/rpi.env
+-- 
+2.45.2
+

@@ -6,6 +6,7 @@ target: stereo-gadget-image
 repos:
   meta-edtwardy:
     layers:
+      meta-rpi-gadget:
       meta-stereo-gadget:
 
   poky:
@@ -40,3 +41,4 @@ local_conf_header:
   host: |
     BB_PRESSURE_MAX_CPU = "250000"
     BB_PRESSURE_MAX_MEMORY = "250000"
+    INHERIT += "buildhistory"
