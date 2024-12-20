@@ -1,6 +1,0 @@
-rpi-bsp: Create and register D-Bus agent to automatically accept pairing
-rpi-bsp: finish modifying boot.scr
-rpi-bsp: Revert to initramfs image
-rpi-bsp: Move to mainline kernel
-rpi-bsp: Move from wext to nl80211
-rpi-bsp: Remove wpa-supplicant from image
