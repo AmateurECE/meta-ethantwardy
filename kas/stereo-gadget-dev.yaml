@@ -5,6 +5,5 @@ header:
 target: stereo-gadget-image-dev
 local_conf_header:
   debug: |
-    NETBOOT_SERVER_IP = "192.168.2.60"
+    EXTRA_IMAGE_FEATURES += "debug-tweaks"
     PACKAGECONFIG:append:pn-dbus = " verbose-mode"
-    PREFERRED_PROVIDER_u-boot-default-script = "netboot-config"
