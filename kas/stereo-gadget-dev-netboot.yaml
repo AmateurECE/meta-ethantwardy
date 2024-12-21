@@ -3,6 +3,7 @@ header:
   includes:
     - kas/stereo-gadget-dev.yaml
 target: stereo-gadget-image-netboot
+machine: rpi-gadget
 local_conf_header:
   debug: |
     NETBOOT_SERVER_IP = "192.168.2.60"

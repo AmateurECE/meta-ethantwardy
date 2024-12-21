@@ -1,6 +1,6 @@
 header:
   version: 17
-machine: stereo-gadget
+machine: rpi-gadget
 distro: stereo-gadget
 target: stereo-gadget-image
 repos:
