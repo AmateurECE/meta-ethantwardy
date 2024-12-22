@@ -6,4 +6,4 @@ target: stereo-gadget-image-netboot
 machine: rpi-netboot-gadget
 local_conf_header:
   debug: |
-    NETBOOT_SERVER_IP = "192.168.2.60"
+    NETBOOT_TFTP_HOST = "192.168.2.60:6969"
