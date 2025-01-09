@@ -4,3 +4,6 @@
 /meta-raspberrypi/
 /poky/
 /linux/
+
+config.yaml
+reboot.sh
