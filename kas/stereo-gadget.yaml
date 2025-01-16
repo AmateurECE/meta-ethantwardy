@@ -7,6 +7,7 @@ repos:
   meta-ethantwardy:
     layers:
       meta-gadget:
+      meta-rpi-gadget:
       meta-stereo-gadget:
 
   poky:
