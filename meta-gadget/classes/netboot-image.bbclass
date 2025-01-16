@@ -8,4 +8,4 @@ IMAGE_FSTYPES = "tar.gz wic"
 PREFERRED_PROVIDER_virtual/u-boot-env = "u-boot-env-netboot"
 do_image_wic[depends] += "virtual/u-boot-env:do_deploy"
 
-IMAGE_FEATURES += "read-only-rootfs"
+inherit gadget-image
