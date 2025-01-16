@@ -6,7 +6,7 @@ target: stereo-gadget-image
 repos:
   meta-ethantwardy:
     layers:
-      meta-rpi-gadget:
+      meta-gadget:
       meta-stereo-gadget:
 
   poky:
