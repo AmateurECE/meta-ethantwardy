@@ -8,6 +8,9 @@ B = "${WORKDIR}/build"
 
 python () {
     host = d.getVar('NETBOOT_TFTP_HOST')
+    if not host:
+        return
+
     if ':' in host:
         parts = host.split(':')
         d.setVar('NETBOOT_TFTP_IP', parts[0])

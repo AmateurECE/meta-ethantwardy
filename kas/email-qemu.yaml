@@ -1,3 +1,5 @@
+# Email gadget, bootable with QEMU. Run using:
+# kas shell -c "runqemu qemux86-64 serial nographic" kas/email-qemu.yaml
 header:
   version: 17
   includes:
