@@ -1,14 +1,9 @@
 header:
   version: 17
-machine: rpi-gadget
-distro: stereo-gadget
-target: stereo-gadget-image
+machine: qemux86-64
+distro: poky
+target: core-image-minimal-initramfs
 repos:
-  meta-ethantwardy:
-    layers:
-      meta-rpi-gadget:
-      meta-stereo-gadget:
-
   poky:
     url: https://git.yoctoproject.org/git/poky
     commit: d1c25a3ce446a23e453e40ac2ba8f22b0e7ccefd
@@ -22,20 +17,11 @@ repos:
     url: https://git.openembedded.org/meta-openembedded
     commit: 2e3126c9c16bb3df0560f6b3896d01539a3bfad7
     # branch: scarthgap
-    patches:
-      0001:
-        repo: meta-edtwardy
-        path: kas/0001-pipewire-Add-glib-2.0-native-dep-for-bluez5.patch
     layers:
       meta-oe:
       meta-multimedia:
       meta-networking:
       meta-python:
-
-  meta-raspberrypi:
-    url: https://git.yoctoproject.org/git/meta-raspberrypi
-    commit: 6df7e028a2b7b2d8cab0745dc0ed2eebc3742a17
-    # branch: scarthgap
 
 local_conf_header:
   host: |

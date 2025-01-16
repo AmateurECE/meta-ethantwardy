@@ -1,0 +1,7 @@
+header:
+  version: 17
+  includes:
+    - kas/email.yaml
+local_conf_header:
+  debug: |
+    EXTRA_IMAGE_FEATURES += "debug-tweaks"
