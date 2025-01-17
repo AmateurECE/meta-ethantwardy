@@ -1,5 +1,5 @@
-# Email gadget, bootable with QEMU. Run using:
-# kas shell -c "runqemu tmp/deploy/images/qemux86-64/qemu-email-gadget-qemux86-64.rootfs.wic wic serial nographic" kas/email-qemu.yaml
+# Email gadget, bootable with QEMU.
+# See tools/email-runqemu.sh for how to run this image.
 header:
   version: 17
   includes:
