@@ -1,7 +1,7 @@
 header:
   version: 17
 machine: qemux86-64
-distro: poky
+distro: email-gadget
 target: qemu-email-gadget
 repos:
   meta-ethantwardy:
