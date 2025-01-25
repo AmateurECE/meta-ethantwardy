@@ -7,4 +7,4 @@
 
 config.yaml
 reboot.sh
-email-data.img
+email-data/
