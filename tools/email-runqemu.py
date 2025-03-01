@@ -37,7 +37,7 @@ def data_drive_options(data_file: str):
     ]
 
 def rootfs_options():
-    deploydir="build/tmp-glibc/deploy/images/qemux86-64"
+    deploydir="build/tmp/deploy/images/qemux86-64"
     rootfs=f"{deploydir}/qemu-email-gadget-qemux86-64.rootfs.wic"
     return [
         "-drive", f"if=none,id=hd,file={rootfs},format=raw,readonly=on",
