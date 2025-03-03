@@ -34,6 +34,11 @@ d root root 0755 /var/lock/subsys none
 f root root 0664 /var/log/wtmp none
 f root root 0664 /var/run/utmp none
 
-# Configuration that lives on the data partition of the server.
+# Network configuration that lives on the data partition of the server.
 l root root 0644 /etc/resolv.conf /data/network/resolv.conf
 l root root 0644 /etc/network/interfaces /data/network/interfaces
+
+# Postfix spool and runtime data
+b root root 0600 /var/spool/postfix /data/mail/spool/postfix
+d root root 0644 /run/postfix none
+b postfix postfix 0644 /var/spool/postfix/pid /run/postfix

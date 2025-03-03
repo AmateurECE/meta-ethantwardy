@@ -1,0 +1,38 @@
+From dd097238d0708c96e54ecfb7c35c9422e4f8f729 Mon Sep 17 00:00:00 2001
+From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+Date: Sat, 1 Mar 2025 09:41:57 -0600
+Subject: [PATCH] postfix: Remove postinst ontarget task
+
+For the email gadget, these actions are taken at provisioning time, not
+at postinst time. Since the rootfs is intended to be read-only, it's
+necessary to delete this task. Unfortunately, this can't be done in a
+.bbappend.
+
+Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
+---
+ meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb b/meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb
+index d48e9145f8..f1e64e856f 100644
+--- a/meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb
++++ b/meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb
+@@ -220,15 +220,6 @@ ALTERNATIVE_LINK_NAME[mailq.1] = "${mandir}/man1/mailq.1"
+ ALTERNATIVE_LINK_NAME[newaliases.1] = "${mandir}/man1/newaliases.1"
+ ALTERNATIVE_LINK_NAME[sendmail.1] = "${mandir}/man1/sendmail.1"
+ 
+-pkg_postinst_ontarget:${PN}-cfg () {
+-    touch /etc/aliases
+-    newaliases
+-
+-    # generate virtual_alias, default is hash
+-    touch /etc/postfix/virtual_alias
+-    postmap /etc/postfix/virtual_alias
+-}
+-
+ PACKAGES =+ "${PN}-cfg"
+ RDEPENDS:${PN}-cfg:class-target += "${PN}-bin"
+ RDEPENDS:${PN}:class-target += "${PN}-cfg"
+-- 
+2.47.2
+

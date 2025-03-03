@@ -22,6 +22,10 @@ repos:
     url: https://git.openembedded.org/meta-openembedded
     commit: c93994f1bb601c57548b588d4f77a044d90822cf
     # branch: styhead
+    patches:
+      0001:
+        repo: meta-ethantwardy
+        path: kas/0001-postfix-Remove-postinst-ontarget-task.patch
     layers:
       meta-oe:
       meta-multimedia:
