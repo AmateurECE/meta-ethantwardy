@@ -1,4 +1,4 @@
-From dd097238d0708c96e54ecfb7c35c9422e4f8f729 Mon Sep 17 00:00:00 2001
+From c3c6936c2b81cc9e3de1c0ec167fd185362379d3 Mon Sep 17 00:00:00 2001
 From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
 Date: Sat, 1 Mar 2025 09:41:57 -0600
 Subject: [PATCH] postfix: Remove postinst ontarget task
@@ -10,14 +10,14 @@ necessary to delete this task. Unfortunately, this can't be done in a
 
 Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
 ---
- meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb | 9 ---------
+ .../recipes-daemons/postfix/postfix_3.10.1.bb            | 9 ---------
  1 file changed, 9 deletions(-)
 
-diff --git a/meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb b/meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb
-index d48e9145f8..f1e64e856f 100644
---- a/meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb
-+++ b/meta-networking/recipes-daemons/postfix/postfix_3.8.6.bb
-@@ -220,15 +220,6 @@ ALTERNATIVE_LINK_NAME[mailq.1] = "${mandir}/man1/mailq.1"
+diff --git a/meta-networking/recipes-daemons/postfix/postfix_3.10.1.bb b/meta-networking/recipes-daemons/postfix/postfix_3.10.1.bb
+index d426b0fe83..3abff6e804 100644
+--- a/meta-networking/recipes-daemons/postfix/postfix_3.10.1.bb
++++ b/meta-networking/recipes-daemons/postfix/postfix_3.10.1.bb
+@@ -225,15 +225,6 @@ ALTERNATIVE_LINK_NAME[mailq.1] = "${mandir}/man1/mailq.1"
  ALTERNATIVE_LINK_NAME[newaliases.1] = "${mandir}/man1/newaliases.1"
  ALTERNATIVE_LINK_NAME[sendmail.1] = "${mandir}/man1/sendmail.1"
  

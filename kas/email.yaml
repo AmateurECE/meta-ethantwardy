@@ -11,8 +11,8 @@ repos:
 
   poky:
     url: https://git.yoctoproject.org/git/poky
-    commit: 11a8dec6e29ac0b2fd942c0fc00dd7fc30658841
-    # branch: styhead
+    commit: dfe34c23379f501c65abdde10b7185f0c6b48c02
+    # branch: master
     layers:
       meta:
       meta-poky:
@@ -20,8 +20,8 @@ repos:
 
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
-    commit: c93994f1bb601c57548b588d4f77a044d90822cf
-    # branch: styhead
+    commit: 59f822ceb7a788a6da80eeb0ea909a03e72f81a0
+    # branch: master
     patches:
       0001:
         repo: meta-ethantwardy
