@@ -3,6 +3,10 @@
 Initialize the aliases files:
 
 ```
+# TODO: create /data/network/resolv.conf
+# TODO: create /data/network/interfaces
+echo 'mail.domain.com' > /data/network/hostname
+
 mkdir /data/mail
 touch /data/mail/aliases
 touch /data/mail/aliases.db

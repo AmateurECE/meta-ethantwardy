@@ -37,6 +37,7 @@ f root root 0664 /var/run/utmp none
 # Network configuration that lives on the data partition of the server.
 l root root 0644 /etc/resolv.conf /data/network/resolv.conf
 l root root 0644 /etc/network/interfaces /data/network/interfaces
+l root root 0644 /etc/hostname /data/network/hostname
 
 # Postfix spool and runtime data
 b root root 0600 /var/spool/postfix /data/mail/spool/postfix
