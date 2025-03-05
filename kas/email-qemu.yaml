@@ -7,3 +7,4 @@ header:
 local_conf_header:
   debug: |
     EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"
+    IMAGE_INSTALL += " strace"

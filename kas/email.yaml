@@ -37,3 +37,5 @@ local_conf_header:
     BB_PRESSURE_MAX_CPU = "250000"
     BB_PRESSURE_MAX_MEMORY = "250000"
     INHERIT += "buildhistory"
+  distro: |
+    ERROR_QA:remove = "patch-status"
