@@ -6,3 +6,4 @@ tmpfs                /var/volatile        tmpfs      defaults              0  0
 
 # The gadget data partition
 LABEL=gadget-data	   /data	              btrfs	     defaults	             0	0
+/data/home           /home                none       defaults,bind         0  0
