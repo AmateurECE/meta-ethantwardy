@@ -1,4 +1,4 @@
-compatibility_level = 3.6
+compatibility_level = 3.10
 smtputf8_enable = no
 
 # Configure your domain and accounts
@@ -15,7 +15,7 @@ virtual_mailbox_maps = hash:/etc/postfix/virtual
 virtual_alias_maps = hash:/data/mail/virtual_alias
 
 alias_maps = hash:/data/mail/aliases
-alias_database = hash:/data/mail/aliases.db
+alias_database = hash:/data/mail/aliases
 
 # You'll start with the following lines for maildir storage
 virtual_mailbox_base = /var/spool/vmail
@@ -43,6 +43,7 @@ debug_peer_level = 2
 sendmail_path = /usr/sbin/sendmail
 newaliases_path = /usr/bin/newaliases
 mailq_path = /usr/bin/mailq
+home_mailbox = Maildir/
 
 smtpd_data_restrictions =
         permit_mynetworks,
