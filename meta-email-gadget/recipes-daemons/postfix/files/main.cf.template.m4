@@ -4,8 +4,8 @@ smtputf8_enable = no
 # Configure your domain and accounts
 #mydomain=sample.com
 #FQDN from gethostname
-#myhostname =
-mydomain=localdomain
+myhostname = MYHOSTNAME
+mydomain = MYDOMAIN
 mydestination = $myhostname, localhost.localdomain localhost
 mynetworks = 127.0.0.1/8
 inet_interfaces = 127.0.0.1
@@ -34,7 +34,7 @@ queue_directory = /var/spool/postfix
 mail_spool_directory = /var/spool/mail
 readme_directory = no
 command_directory = /usr/sbin
-daemon_directory = @LIBEXECDIR@/postfix
+daemon_directory = /usr/libexec/postfix
 mail_owner = postfix
 setgid_group = postdrop
 unknown_local_recipient_reject_code = 450

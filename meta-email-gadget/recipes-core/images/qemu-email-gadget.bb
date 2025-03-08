@@ -3,12 +3,17 @@ require recipes-core/images/core-image-minimal.bb
 IMAGE_FSTYPES = "wic"
 WKS_FILE = "pcbios-gadget.wks"
 
-# Install curl, because it's better than wget
-IMAGE_INSTALL += " curl"
+# Install some stuff I want
+IMAGE_INSTALL += " \
+    curl \
+    man-db \
+    bash \
+"
 
 # Mail documentation, utilities and services.
 IMAGE_INSTALL += " postfix bsd-mailx postfix-doc"
 
-IMAGE_INSTALL += " man-db"
+# Build configuration at runtime
+IMAGE_INSTALL += " make-conf"
 
 inherit gadget-image
