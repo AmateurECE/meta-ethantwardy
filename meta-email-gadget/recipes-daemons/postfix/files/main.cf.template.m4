@@ -6,7 +6,7 @@ smtputf8_enable = no
 #FQDN from gethostname
 myhostname = MYHOSTNAME
 mydomain = MYDOMAIN
-mydestination = $myhostname, localhost.localdomain localhost
+mydestination = $myhostname localhost.localdomain localhost
 mynetworks = 127.0.0.1/8
 inet_interfaces = 127.0.0.1
 

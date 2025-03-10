@@ -1,0 +1,29 @@
+include "/data/network/named.options.local";
+
+// Documentation:
+// https://bind9.readthedocs.io/en/latest/chapter3.html
+options {
+	directory "/var/cache/bind";
+
+	// If there is a firewall between you and nameservers you want
+	// to talk to, you might need to uncomment the query-source
+	// directive below.  Previous versions of BIND always asked
+	// questions using port 53, but BIND 8.1 and later use an unprivileged
+	// port by default.
+
+	// query-source address * port 53;
+
+	auth-nxdomain no;    # conform to RFC1035
+
+  // Don't broadcast the version, so that it's harder to exploit
+  // vulnerabilities
+	version "not currently available";
+
+  // The default
+	recursion yes;
+
+  // Allow queries only from localhost
+	allow-query { 127.0.0.1 };
+
+	empty-zones-enable yes;
+};

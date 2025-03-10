@@ -13,6 +13,9 @@ IMAGE_INSTALL += " \
 # Mail documentation, utilities and services.
 IMAGE_INSTALL += " postfix bsd-mailx postfix-doc"
 
+# Bind9 as a recursive DNS nameserver
+IMAGE_INSTALL += " bind"
+
 # Build configuration at runtime
 IMAGE_INSTALL += " make-conf"
 
