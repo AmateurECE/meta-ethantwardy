@@ -7,13 +7,7 @@ Initialize the aliases files:
 echo 'mail.domain.com' > /data/network/hostname
 
 # Set up local forwarders to improve DNS performance
-cat - >/data/network/named.options.local <<EOF
-> options {
->     forwarders {
->         10.0.2.3
->     }
-> }
-> EOF
+echo 'forwarders { 10.0.2.3; };' >/data/network/named.options.local
 
 mkdir /data/mail
 touch /data/mail/aliases

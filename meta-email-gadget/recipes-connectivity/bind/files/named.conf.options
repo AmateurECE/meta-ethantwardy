@@ -1,5 +1,3 @@
-include "/data/network/named.options.local";
-
 // Documentation:
 // https://bind9.readthedocs.io/en/latest/chapter3.html
 options {
@@ -15,15 +13,17 @@ options {
 
 	auth-nxdomain no;    # conform to RFC1035
 
-  // Don't broadcast the version, so that it's harder to exploit
-  // vulnerabilities
+	// Don't broadcast the version, so that it's harder to exploit
+	// version-specific vulnerabilities
 	version "not currently available";
 
-  // The default
+	// The default
 	recursion yes;
 
-  // Allow queries only from localhost
-	allow-query { 127.0.0.1 };
+	// Allow queries only from localhost
+	allow-query { 127.0.0.1; };
 
 	empty-zones-enable yes;
+
+	include "/data/network/named.options.local";
 };
