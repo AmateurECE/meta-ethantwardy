@@ -4,6 +4,7 @@
 /meta-raspberrypi/
 /poky/
 /linux/
+/certificates/
 
 config.yaml
 reboot.sh
