@@ -41,7 +41,6 @@ d bind bind 0755 /run/cache/bind none
 l root root 0755 /var/cache/bind /run/cache/bind
 
 # Network configuration that lives on the data partition of the server.
-l root root 0644 /etc/resolv.conf /data/network/resolv.conf
 l root root 0644 /etc/network/interfaces /data/network/interfaces
 l root root 0644 /etc/hostname /data/network/hostname
 
