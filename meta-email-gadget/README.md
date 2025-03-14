@@ -17,7 +17,7 @@ touch /data/mail/aliases
 touch /data/mail/aliases.db
 touch /data/mail/virtual_alias
 newaliases
-postmap /etc/postfix/virtual_alias
+postmap /data/mail/virtual_alias
 mkdir -p /data/mail/spool/postfix
 
 # Setup postfix configuration
@@ -69,6 +69,7 @@ cat - >/data/network/db.ethantwardy.com <<EOF
 > ; A records
 > ns1 IN  A   10.0.1.2
 > @   IN  A   10.0.1.2
+> mail IN A   10.0.1.2
 > EOF
 
 # The other VM's IP address is 10.0.1.2.
