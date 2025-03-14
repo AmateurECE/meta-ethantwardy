@@ -1,0 +1,37 @@
+From 66411aada5364caa2e486307a0542d242d0a79ec Mon Sep 17 00:00:00 2001
+From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+Date: Fri, 14 Mar 2025 06:11:25 -0500
+Subject: [PATCH] build: Generate empty build information
+
+This is needed to make the build system more reproducible and prevent
+certain QA issues in Bitbake.
+
+Upstream-Status: Inappropriate oe specific
+Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
+---
+ Makefile.am | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index ccb82db..d9ba955 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -117,13 +117,10 @@ mutt_dotlock.c: dotlock.c
+ # get this line with grep; one needs to eval it and output the result.
+ conststrings.c: txt2c config.status
+ 	( \
+-		($(CC) -v >/dev/null 2>&1 && $(CC) -v) || \
+-		($(CC) --version >/dev/null 2>&1 && $(CC) --version) || \
+-		($(CC) -V >/dev/null 2>&1 && $(CC) -V) || \
+ 		echo "unknown compiler"; \
+ 	) 2>&1 | ${srcdir}/txt2c.sh cc_version >conststrings_c
+-	echo "$(CFLAGS)" | ${srcdir}/txt2c.sh cc_cflags >>conststrings_c
+-	( eval "`grep '^ac_cs_config=' config.status`" && echo $$ac_cs_config; ) | ${srcdir}/txt2c.sh configure_options >>conststrings_c
++	echo | ${srcdir}/txt2c.sh cc_cflags >>conststrings_c
++	echo | ${srcdir}/txt2c.sh configure_options >>conststrings_c
+ 	mv -f conststrings_c conststrings.c
+ 
+ CLEANFILES = mutt_dotlock.c $(BUILT_SOURCES)
+-- 
+2.47.2
+
