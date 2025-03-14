@@ -8,6 +8,7 @@ IMAGE_INSTALL += " \
     curl \
     man-db \
     bash \
+    net-tools \
 "
 
 # Mail documentation, utilities and services.
