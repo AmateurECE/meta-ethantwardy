@@ -6,9 +6,17 @@ smtputf8_enable = no
 #FQDN from gethostname
 myhostname = MYHOSTNAME
 mydomain = MYDOMAIN
-mydestination = $myhostname localhost.localdomain localhost
+mydestination = $myhostname localhost.$mydomain localhost
 mynetworks = 127.0.0.1/8
 inet_interfaces = 127.0.0.1
+
+smtpd_tls_chain_files =
+    /data/mail/tls/privkey.pem,
+    /data/mail/tls/fullchain.pem
+
+# Offer TLS and use it when available
+smtp_tls_security_level = may
+smtpd_tls_security_level = may
 
 virtual_mailbox_domains = sample.com, other.net
 virtual_mailbox_maps = hash:/etc/postfix/virtual
