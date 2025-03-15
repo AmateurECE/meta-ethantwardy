@@ -16,6 +16,7 @@ IMAGE_INSTALL += " \
 IMAGE_INSTALL += " \
     postfix \
     postfix-doc \
+    dovecot \
     bsd-mailx \
     mutt \
 "
