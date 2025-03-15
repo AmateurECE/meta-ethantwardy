@@ -9,6 +9,7 @@ IMAGE_INSTALL += " \
     man-db \
     bash \
     net-tools \
+    gadget-tools \
 "
 
 # Mail documentation, utilities and services.
