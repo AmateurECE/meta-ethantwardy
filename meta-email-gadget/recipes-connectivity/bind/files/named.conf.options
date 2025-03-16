@@ -25,5 +25,5 @@ options {
 
 	empty-zones-enable yes;
 
-	include "/data/network/named.options.local";
+	include "/etc/bind/named.options.local";
 };

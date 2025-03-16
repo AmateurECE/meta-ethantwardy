@@ -39,3 +39,4 @@ local_conf_header:
     INHERIT += "buildhistory"
   distro: |
     ERROR_QA:remove = "patch-status"
+    MUTABLE_GADGET = "1"

@@ -11,8 +11,8 @@ mynetworks = 127.0.0.1/8
 inet_interfaces = 127.0.0.1
 
 smtpd_tls_chain_files =
-    /data/mail/tls/privkey.pem,
-    /data/mail/tls/fullchain.pem
+    /etc/gadget/tls/privkey.pem,
+    /etc/gadget/tls/fullchain.pem
 
 # Offer TLS and use it when available
 smtp_tls_security_level = may
@@ -20,10 +20,10 @@ smtpd_tls_security_level = may
 
 virtual_mailbox_domains = sample.com, other.net
 virtual_mailbox_maps = hash:/etc/postfix/virtual
-virtual_alias_maps = hash:/data/mail/virtual_alias
+virtual_alias_maps = hash:/etc/postfix/virtual_alias
 
-alias_maps = hash:/data/mail/aliases
-alias_database = hash:/data/mail/aliases
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
 
 # You'll start with the following lines for maildir storage
 virtual_mailbox_base = /var/spool/vmail

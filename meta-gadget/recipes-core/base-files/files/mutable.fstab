@@ -1,0 +1,12 @@
+/dev/root            /                    auto       defaults              1  1
+proc                 /proc                proc       defaults              0  0
+devpts               /dev/pts             devpts     mode=0620,ptmxmode=0666,gid=5      0  0
+tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,strictatime 0  0
+tmpfs                /var/volatile        tmpfs      defaults              0  0
+
+# The gadget data partition
+LABEL=gadget-data    /data/etc            btrfs      rw,relatime,discard=async,space_cache=v2,subvol=/@etc               0  0
+overlay              /etc                 overlay    lowerdir=/etc,upperdir=/data/etc/.upper,workdir=/data/etc/.work     0  0
+LABEL=gadget-data    /data/var            btrfs      rw,relatime,discard=async,space_cache=v2,subvol=/@var               0  0
+overlay              /var                 overlay    lowerdir=/var,upperdir=/data/var/.upper,workdir=/data/var/.work     0  0
+LABEL=gadget-data    /home                btrfs      rw,relatime,discard=async,space_cache=v2,subvol=/@home              0  0
