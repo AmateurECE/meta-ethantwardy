@@ -43,6 +43,18 @@ install -Dm600 <source> /etc/gadget/tls/privkey.pem
 install -m600 <source> /etc/gadget/tls/fullchain.pem
 ```
 
+1. Local user provisioning
+
+```
+# Uncomment %sudo ALL=(ALL:ALL) ALL /etc/sudoers
+adduser ethantwardy
+adduser ethantwardy sudo
+cat - >>/etc/aliases <<EOF
+> root: ethantwardy
+> EOF
+postalias /etc/aliases
+```
+
 # Setting up the Test Environment
 
 1. Create a test image: `truncate -s 256M email-data/ethantwardy.com.img`

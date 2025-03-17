@@ -10,6 +10,7 @@ IMAGE_INSTALL += " \
     bash \
     net-tools \
     gadget-tools \
+    sudo \
 "
 
 # Mail documentation, utilities and services.
