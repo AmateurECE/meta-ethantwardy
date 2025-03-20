@@ -46,12 +46,11 @@ install -m600 <source> /etc/gadget/tls/fullchain.pem
 1. Local user provisioning
 
 ```
-# Uncomment %sudo ALL=(ALL:ALL) ALL /etc/sudoers
 adduser ethantwardy
-adduser ethantwardy sudo
-cat - >>/etc/aliases <<EOF
-> root: ethantwardy
-> EOF
+# Add the ethantwardy user to the sudo group (this command may not work, so
+# manual finagling of /etc/group may be required)
+adduser sudo ethantwardy
+echo 'root: ethantwardy' >/etc/aliases
 postalias /etc/aliases
 ```
 
