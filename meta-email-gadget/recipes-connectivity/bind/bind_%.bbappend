@@ -11,11 +11,6 @@ do_install:append() {
     fi
 
     echo 'nameserver 127.0.0.1' > ${D}/etc/resolv.conf
-
-    # Remake local configuration file as a symlink to point into the data
-    # partition.
-    rm ${D}/etc/bind/named.conf.local
-    ln -s /data/network/named.conf.local ${D}/etc/bind/named.conf.local
 }
 
 FILES:${PN} += " /etc/resolv.conf"
