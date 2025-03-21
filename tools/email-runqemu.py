@@ -49,19 +49,13 @@ def rootfs_options(config_directory, image):
     ]
 
 def networking_options(wan_mac: str, lan_mac: str):
-    address = ('0.0.0.0', 1234)
-    _, port = address
-    if someone_is_listening_on(address):
-        lan_spec = f"connect=127.0.0.1:{port}"
-    else:
-        lan_spec = f"listen=:{port}"
     return [
         # User interface for accessing the internet
         "-device", f"virtio-net-pci,netdev=net0,mac={wan_mac}",
         "-netdev", "user,id=net0",
         # Guest network
         "-device", f"virtio-net-pci,netdev=net1,mac={lan_mac}",
-        "-netdev", f"socket,id=net1,{lan_spec}",
+        "-netdev", f"socket,id=net1,mcast=230.0.0.1:1234",
     ]
 
 def main():
