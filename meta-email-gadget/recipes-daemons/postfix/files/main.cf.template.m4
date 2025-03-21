@@ -1,15 +1,14 @@
 compatibility_level = 3.10
 smtputf8_enable = no
 
-# Configure your domain and accounts
-#mydomain=sample.com
-#FQDN from gethostname
+# Domain
 myhostname = MYHOSTNAME
 mydomain = MYDOMAIN
 mydestination = $myhostname localhost.$mydomain localhost
-mynetworks = 127.0.0.1/8
-inet_interfaces = 127.0.0.1
+mynetworks = 127.0.0.0/8
+mynetworks_style = host
 
+# TLS
 smtpd_tls_chain_files =
     /etc/gadget/tls/privkey.pem,
     /etc/gadget/tls/fullchain.pem
@@ -18,12 +17,14 @@ smtpd_tls_chain_files =
 smtp_tls_security_level = may
 smtpd_tls_security_level = may
 
-virtual_mailbox_domains = sample.com, other.net
-virtual_mailbox_maps = hash:/etc/postfix/virtual
-virtual_alias_maps = hash:/etc/postfix/virtual_alias
-
+# Aliases
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
+
+# Virtual Domain Configuration
+# virtual_mailbox_domains = sample.com, other.net
+# virtual_mailbox_maps = hash:/etc/postfix/virtual
+# virtual_alias_maps = hash:/etc/postfix/virtual_alias
 
 # You'll start with the following lines for maildir storage
 virtual_mailbox_base = /var/spool/vmail
@@ -35,8 +36,7 @@ virtual_gid_maps = static:`grep vmail /etc/passwd | cut -d ":" -f 4`
 #virtual_transport = lmtp:unix:/var/lib/cyrus/socket/lmtp
 
 
-# General stuff here again
-#config_directory = /etc/postfix
+# Path configuration
 sample_directory = /etc/postfix
 queue_directory = /var/spool/postfix
 mail_spool_directory = /var/spool/mail
@@ -46,13 +46,13 @@ daemon_directory = /usr/libexec/postfix
 mail_owner = postfix
 setgid_group = postdrop
 unknown_local_recipient_reject_code = 450
-mynetworks_style = host
 debug_peer_level = 2
 sendmail_path = /usr/sbin/sendmail
 newaliases_path = /usr/bin/newaliases
 mailq_path = /usr/bin/mailq
 home_mailbox = Maildir/
 
+# SMTPD Configuration
 smtpd_data_restrictions =
         permit_mynetworks,
         reject_unauth_pipelining,
