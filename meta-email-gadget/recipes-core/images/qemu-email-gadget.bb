@@ -11,6 +11,7 @@ IMAGE_INSTALL += " \
     net-tools \
     gadget-tools \
     sudo \
+    tzdata \
 "
 
 # Mail documentation, utilities and services.
