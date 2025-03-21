@@ -2,8 +2,7 @@
 # See tools/email-runqemu.sh for how to run this image.
 header:
   version: 17
-  includes:
-    - kas/email.yaml
+  includes: [kas/email.yaml]
 local_conf_header:
   debug: |
     EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"

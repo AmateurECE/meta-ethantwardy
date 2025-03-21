@@ -36,11 +36,14 @@ def data_drive_options(data_file: str):
         "-device", "scsi-hd,drive=hdata"
     ]
 
-def rootfs_options():
-    deploydir="build/tmp/deploy/images/qemux86-64"
-    rootfs=f"{deploydir}/qemu-email-gadget-qemux86-64.rootfs.wic"
+def rootfs_options(image):
+    deploydir = "build/tmp/deploy/images/qemux86-64"
+    if not image:
+        image = f"{deploydir}/qemu-email-gadget-qemux86-64.rootfs.wic"
+    else:
+        image = f"{deploydir}/{image}"
     return [
-        "-drive", f"if=none,id=hd,file={rootfs},format=raw,readonly=on",
+        "-drive", f"if=none,id=hd,file={image},format=raw,readonly=on",
         "-device", "scsi-hd,drive=hd"
     ]
 
@@ -72,9 +75,10 @@ def main():
     data_file = config[args.config]['data_file']
     wan_mac = config[args.config]['wan_mac']
     lan_mac = config[args.config]['lan_mac']
+    image = config[args.config]['image'] if 'image' in config[args.config] else None
 
     executable = '/usr/bin/qemu-system-x86_64'
-    options = MACHINE_OPTIONS  + URANDOM_OPTIONS + rootfs_options() \
+    options = MACHINE_OPTIONS  + URANDOM_OPTIONS + rootfs_options(image) \
             + data_drive_options(data_file) \
             + networking_options(wan_mac, lan_mac) + SERIAL_OPTIONS
     os.execvp(executable, [executable] + options)

@@ -2,14 +2,15 @@ header:
   version: 17
   includes: [kas/gadget.yaml]
 machine: qemux86-64
-distro: email-gadget
-target: qemu-email-gadget
+distro: poky
+target: dns-test-image
 repos:
   meta-ethantwardy:
     layers:
-      meta-email-gadget:
+      meta-dns-gadget:
 
 local_conf_header:
+  debug: |
+    EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"
   distro: |
-    ERROR_QA:remove = "patch-status"
     MUTABLE_GADGET = "1"

@@ -1,0 +1,39 @@
+header:
+  version: 17
+repos:
+  meta-ethantwardy:
+    layers:
+      meta-gadget:
+
+  poky:
+    url: https://git.yoctoproject.org/git/poky
+    commit: dfe34c23379f501c65abdde10b7185f0c6b48c02
+    # branch: master
+    patches:
+      0001:
+        repo: meta-ethantwardy
+        path: kas/0001-meta-graphics-mesa-Fix-SRC_URI-upstream-domain-name.patch
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    commit: 59f822ceb7a788a6da80eeb0ea909a03e72f81a0
+    # branch: master
+    patches:
+      0001:
+        repo: meta-ethantwardy
+        path: kas/0001-postfix-Remove-postinst-ontarget-task.patch
+    layers:
+      meta-oe:
+      meta-multimedia:
+      meta-networking:
+      meta-python:
+
+local_conf_header:
+  host: |
+    BB_PRESSURE_MAX_CPU = "250000"
+    BB_PRESSURE_MAX_MEMORY = "250000"
+    INHERIT += "buildhistory"
