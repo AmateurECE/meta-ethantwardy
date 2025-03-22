@@ -1,0 +1,19 @@
+header:
+  version: 17
+  includes: [kas/email.yaml]
+machine: rpi-gadget
+target: rpi-email-gadget
+repos:
+  meta-ethantwardy:
+    layers:
+      meta-rpi-gadget:
+
+  meta-raspberrypi:
+    url: https://git.yoctoproject.org/git/meta-raspberrypi
+    # commit: 6df7e028a2b7b2d8cab0745dc0ed2eebc3742a17
+    branch: master
+
+# TODO: Delete this when ready to ship
+local_conf_header:
+  debug: |
+    EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"
