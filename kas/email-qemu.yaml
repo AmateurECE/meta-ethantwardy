@@ -3,6 +3,8 @@
 header:
   version: 17
   includes: [kas/email.yaml]
+machine: qemux86-64
+target: qemu-email-gadget
 local_conf_header:
   debug: |
     EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"

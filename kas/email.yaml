@@ -1,9 +1,7 @@
 header:
   version: 17
   includes: [kas/gadget.yaml]
-machine: qemux86-64
 distro: email-gadget
-target: qemu-email-gadget
 repos:
   meta-ethantwardy:
     layers:
