@@ -1,4 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI:append:netboot = " \
 ${@ "file://serverip.cfg" if d.getVar('NETBOOT_TFTP_HOST') else ""} \
