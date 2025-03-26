@@ -5,12 +5,8 @@
 1. Create subvolumes:
 
 ```
-btrfs subvolume create /mnt/@etc
-mkdir /mnt/@etc/.upper /mnt/@etc/.work
-btrfs subvolume create /mnt/@var
-mkdir /mnt/@var/.upper /mnt/@var/.work
-btrfs subvolume create /mnt/@home
-mkdir /mnt/@home/root
+btrfs subvolume create /mnt/@{etc,var,home}
+mkdir /mnt/@{etc,var}/.upper /mnt/@{etc,var}/.work /mnt/@home/root
 ```
 
 1. Setup `/etc/network/interfaces`.
