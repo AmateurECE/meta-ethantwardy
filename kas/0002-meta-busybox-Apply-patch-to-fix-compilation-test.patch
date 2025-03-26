@@ -1,0 +1,60 @@
+From 9e949705c46b04a74e139905a7de4838a1ef052d Mon Sep 17 00:00:00 2001
+From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+Date: Mon, 24 Mar 2025 13:31:50 -0500
+Subject: [PATCH] [meta] busybox: Apply patch to fix compilation test
+
+Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
+---
+ .../0001-Fix-ncurses-compile-test.patch       | 27 +++++++++++++++++++
+ meta/recipes-core/busybox/busybox_1.37.0.bb   |  1 +
+ 2 files changed, 28 insertions(+)
+ create mode 100644 meta/recipes-core/busybox/busybox/0001-Fix-ncurses-compile-test.patch
+
+diff --git a/meta/recipes-core/busybox/busybox/0001-Fix-ncurses-compile-test.patch b/meta/recipes-core/busybox/busybox/0001-Fix-ncurses-compile-test.patch
+new file mode 100644
+index 0000000000..7b206ef137
+--- /dev/null
++++ b/meta/recipes-core/busybox/busybox/0001-Fix-ncurses-compile-test.patch
+@@ -0,0 +1,27 @@
++From 7c05c54364e5835869b2bdc1f0df50ad8cd38a6d Mon Sep 17 00:00:00 2001
++From: Ethan Twardy <ethan.twardy@gmail.com>
++Date: Mon, 24 Mar 2025 13:28:35 -0500
++Subject: [PATCH] Fix ncurses compile test
++
++Signed-off-by: Ethan Twardy <ethan.twardy@gmail.com>
++Upstream-Status: oe-specific Not applicable
++---
++ scripts/kconfig/lxdialog/check-lxdialog.sh | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/scripts/kconfig/lxdialog/check-lxdialog.sh b/scripts/kconfig/lxdialog/check-lxdialog.sh
++index 7003e02..8045348 100755
++--- a/scripts/kconfig/lxdialog/check-lxdialog.sh
+++++ b/scripts/kconfig/lxdialog/check-lxdialog.sh
++@@ -55,7 +55,7 @@ trap "rm -f $tmp" 0 1 2 3 15
++ check() {
++         $cc -x c - -o $tmp 2>/dev/null <<'EOF'
++ #include CURSES_LOC
++-main() {}
+++int main() {}
++ EOF
++ 	if [ $? != 0 ]; then
++ 	    echo " *** Unable to find the ncurses libraries or the"       1>&2
++-- 
++2.47.2
++
+diff --git a/meta/recipes-core/busybox/busybox_1.37.0.bb b/meta/recipes-core/busybox/busybox_1.37.0.bb
+index c3131eb453..fee522e046 100644
+--- a/meta/recipes-core/busybox/busybox_1.37.0.bb
++++ b/meta/recipes-core/busybox/busybox_1.37.0.bb
+@@ -53,6 +53,7 @@ SRC_URI = "https://busybox.net/downloads/busybox-${PV}.tar.bz2;name=tarball \
+            file://0001-syslogd-fix-wrong-OPT_locallog-flag-detection.patch \
+            file://0002-start-stop-daemon-fix-tests.patch \
+            file://0003-start-stop-false.patch \
++           file://0001-Fix-ncurses-compile-test.patch \
+            "
+ SRC_URI:append:libc-musl = " file://musl.cfg"
+ SRC_URI:append:x86-64 = " file://sha_accel.cfg"
+-- 
+2.47.2
+

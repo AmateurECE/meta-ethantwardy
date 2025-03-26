@@ -13,6 +13,9 @@ repos:
       0001:
         repo: meta-ethantwardy
         path: kas/0001-meta-graphics-mesa-Fix-SRC_URI-upstream-domain-name.patch
+      0002:
+        repo: meta-ethantwardy
+        path: kas/0002-meta-busybox-Apply-patch-to-fix-compilation-test.patch
     layers:
       meta:
       meta-poky:
