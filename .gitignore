@@ -2,6 +2,7 @@
 /build/
 /meta-openembedded/
 /meta-raspberrypi/
+/meta-rauc/
 /poky/
 /linux/
 /certificates/
