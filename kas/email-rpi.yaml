@@ -1,8 +1,7 @@
 header:
   version: 17
   includes: [kas/email.yaml, kas/rpi-gadget.yaml]
-machine: rpi-gadget
-target: rpi-email-gadget
+machine: rpi-ab-mutable-gadget
 
 # TODO: Delete this when ready to ship
 local_conf_header:

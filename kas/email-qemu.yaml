@@ -3,9 +3,11 @@
 header:
   version: 17
   includes: [kas/email.yaml]
-machine: qemux86-64
-target: qemu-email-gadget
+machine: qemu-mutable-gadget
 local_conf_header:
+  # ntpd segfaults on boot. I can't figure out why, but we don't need it anyway
+  platform: |
+    IMAGE_INSTALL:remove = "ntp"
   debug: |
     EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"
     IMAGE_INSTALL:append = " strace dummy-ca-certificate"

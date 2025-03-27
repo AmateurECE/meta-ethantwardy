@@ -39,8 +39,8 @@ def data_drive_options(data_file: str):
 
 def rootfs_options(config_directory, image):
     if not image:
-        deploydir = "build/tmp/deploy/images/qemux86-64"
-        rootfs = f"{deploydir}/qemu-email-gadget-qemux86-64.rootfs.wic"
+        deploydir = "build/tmp/deploy/images/qemu-mutable-gadget"
+        rootfs = f"{deploydir}/email-gadget-image-qemu-mutable-gadget.rootfs.wic"
     else:
         rootfs = f"{config_directory}/{image}"
     return [

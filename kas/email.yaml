@@ -2,12 +2,14 @@ header:
   version: 17
   includes: [kas/gadget.yaml]
 distro: email-gadget
+target: ab-mutable-gadget-image-bundle
 repos:
   meta-ethantwardy:
     layers:
       meta-email-gadget:
 
 local_conf_header:
+  image: |
+    ROOTFS_IMAGE_TARGET = "email-gadget-image"
   distro: |
     ERROR_QA:remove = "patch-status"
-    MUTABLE_GADGET = "1"
