@@ -22,7 +22,7 @@ index 0000000000..7b206ef137
 +Subject: [PATCH] Fix ncurses compile test
 +
 +Signed-off-by: Ethan Twardy <ethan.twardy@gmail.com>
-+Upstream-Status: oe-specific Not applicable
++Upstream-Status: Inappropriate [oe specific]
 +---
 + scripts/kconfig/lxdialog/check-lxdialog.sh | 2 +-
 + 1 file changed, 1 insertion(+), 1 deletion(-)
