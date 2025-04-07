@@ -1,6 +1,6 @@
-test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "A B"
-test -n "${BOOT_A_LEFT}" || setenv BOOT_A_LEFT 3
-test -n "${BOOT_B_LEFT}" || setenv BOOT_B_LEFT 3
+test -n "${BOOT_ORDER}" || setenv BOOT_ORDER "system0 system1"
+test -n "${BOOT_system0_LEFT}" || setenv BOOT_system0_LEFT 3
+test -n "${BOOT_system1_LEFT}" || setenv BOOT_system1_LEFT 3
 
 saveenv
 
@@ -8,16 +8,16 @@ setenv bootpart
 for BOOT_SLOT in "${BOOT_ORDER}"; do
   if test "x${bootpart}" != "x"; then
     # Skip the remaining iterations
-  elif test "x${BOOT_SLOT}" = "xA"; then
-    if test 0x${BOOT_A_LEFT} -gt 0; then
-      echo "Found valid slot A, ${BOOT_A_LEFT} attempts remaining"
-      setexpr BOOT_A_LEFT ${BOOT_A_LEFT} - 1
+  elif test "x${BOOT_SLOT}" = "xsystem0"; then
+    if test 0x${BOOT_system0_LEFT} -gt 0; then
+      echo "Found valid slot system0, ${BOOT_system0_LEFT} attempts remaining"
+      setexpr BOOT_system0_LEFT ${BOOT_system0_LEFT} - 1
       setenv bootpart 2
     fi
-  elif test "x${BOOT_SLOT}" = "xB"; then
-    if test 0x${BOOT_B_LEFT} -gt 0; then
-      echo "Found valid slot B, ${BOOT_B_LEFT} attempts remaining"
-      setexpr BOOT_B_LEFT ${BOOT_B_LEFT} - 1
+  elif test "x${BOOT_SLOT}" = "xsystem1"; then
+    if test 0x${BOOT_system1_LEFT} -gt 0; then
+      echo "Found valid slot system1, ${BOOT_system1_LEFT} attempts remaining"
+      setexpr BOOT_system1_LEFT ${BOOT_system1_LEFT} - 1
       setenv bootpart 3
     fi
   fi
