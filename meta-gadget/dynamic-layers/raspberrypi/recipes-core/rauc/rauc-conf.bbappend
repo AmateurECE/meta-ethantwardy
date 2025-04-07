@@ -5,10 +5,12 @@ do_install:append() {
     install -d ${D}/mnt/rauc/bundle
     install -d ${D}/mnt/rauc/rootfs.0
     install -d ${D}/mnt/rauc/rootfs.1
+    install -d ${D}/var/rauc
 }
 
 FILES:${PN} += " \
     /mnt/rauc/bundle \
     /mnt/rauc/rootfs.0 \
     /mnt/rauc/rootfs.1 \
+    /var/rauc \
 "
