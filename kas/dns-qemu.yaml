@@ -1,16 +1,16 @@
 header:
   version: 17
   includes: [kas/gadget.yaml]
-machine: qemux86-64
-distro: poky
-target: dns-test-image
+machine: qemu-mutable-gadget
+distro: dns-gadget
+target: ab-mutable-gadget-image-bundle
 repos:
   meta-ethantwardy:
     layers:
       meta-dns-gadget:
 
 local_conf_header:
+  image: |
+    ROOTFS_IMAGE_TARGET = "dns-test-image"
   debug: |
     EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"
-  distro: |
-    MUTABLE_GADGET = "1"

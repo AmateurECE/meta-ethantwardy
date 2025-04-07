@@ -13,6 +13,9 @@ repos:
       0001:
         repo: meta-ethantwardy
         path: kas/0001-meta-graphics-mesa-Fix-SRC_URI-upstream-domain-name.patch
+      0002:
+        repo: meta-ethantwardy
+        path: kas/0002-meta-busybox-Apply-patch-to-fix-compilation-test.patch
     layers:
       meta:
       meta-poky:
@@ -31,6 +34,17 @@ repos:
       meta-multimedia:
       meta-networking:
       meta-python:
+
+  meta-rauc:
+    url: https://github.com/rauc/meta-rauc.git
+    commit: 2ee80ebc81c30d34fe7a86ef8e8e2e580f569641
+    branch: master
+
+# Pass these environment variables through to bitbake
+env:
+  RAUC_KEY_FILE: null
+  RAUC_CERT_FILE: null
+  RAUC_KEYRING_FILE: null
 
 local_conf_header:
   host: |

@@ -7,8 +7,14 @@ IMAGE_INSTALL += " \
     bash \
     net-tools \
     gadget-tools \
+"
+
+# Install a few things that provide required features
+IMAGE_INSTALL += " \
     sudo \
     tzdata \
+    ntp \
+    packagegroup-core-ssh-openssh \
 "
 
 # Mail documentation, utilities and services.

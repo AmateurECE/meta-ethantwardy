@@ -1,14 +1,11 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI:append = " file://mutable.fstab"
+SRC_URI:append:ab-mutable = " file://mutable.fstab"
 
-do_install:append() {
-    if [ -n "${MUTABLE_GADGET}" ]; then
-        install -Dm644 ${UNPACKDIR}/mutable.fstab ${D}/etc/fstab
-    fi
-
+do_install:append:ab-mutable() {
+    install -Dm644 ${UNPACKDIR}/mutable.fstab ${D}/etc/fstab
     install -d ${D}/data/etc
     install -d ${D}/data/var
 }
 
-FILES:${PN} += "/data/var /data/etc"
+FILES:append:ab-mutable:${PN} = " /data/var /data/etc"
