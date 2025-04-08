@@ -7,6 +7,7 @@ IMAGE_INSTALL += " \
     bash \
     net-tools \
     gadget-tools \
+    kernel-module-configs \
 "
 
 # Install a few things that provide required features
