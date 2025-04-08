@@ -18,6 +18,14 @@ IMAGE_INSTALL += " \
     packagegroup-core-ssh-openssh \
 "
 
+# Firewall support
+IMAGE_INSTALL += " \
+    nftables \
+    firewall-config \
+    kernel-module-nf-tables \
+    kernel-module-nft-ct \
+"
+
 # Mail documentation, utilities and services.
 IMAGE_INSTALL += " \
     postfix \
