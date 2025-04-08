@@ -10,3 +10,6 @@ overlay              /etc                 overlay    lowerdir=/etc,upperdir=/dat
 LABEL=gadget-data    /data/var            btrfs      rw,relatime,discard=async,space_cache=v2,subvol=/@var               0  0
 overlay              /var                 overlay    lowerdir=/var,upperdir=/data/var/.upper,workdir=/data/var/.work     0  0
 LABEL=gadget-data    /home                btrfs      rw,relatime,discard=async,space_cache=v2,subvol=/@home              0  0
+
+# The boot partition
+LABEL=boot           /boot                auto       defaults             0  0
