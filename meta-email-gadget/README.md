@@ -57,6 +57,20 @@ mkdir -p /home/edtwardy/Maildir
 echo 'root: ethantwardy' >/etc/aliases
 postalias /etc/aliases
 
+# Setup virtual users
+echo 'ethantwardy@domain.com ethantwardy@domain.com' \
+  > /etc/postfix/virtual
+cat - >/etc/postfix/virtual_alias <<EOF
+> postmaster@domain.com ethantwardy@domain.com
+> hostmaster@domain.com ethantwardy@domain.com
+> webmaster@domain.com ethantwardy@domain.com
+> abuse@domain.com ethantwardy@domain.com
+> EOF
+
+postmap /etc/postfix/{virtual,virtual_alias}
+
+echo 'etwardy@domain.com:::::' >/etc/dovecot/passwd
+
 # Only allow user ethantwardy to log in over SSH
 echo 'AllowUsers ethantwardy' >/etc/ssh/sshd_config.d/local.conf
 

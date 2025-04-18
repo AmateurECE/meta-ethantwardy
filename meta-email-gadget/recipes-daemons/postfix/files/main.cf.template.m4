@@ -22,35 +22,35 @@ alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 
 # Virtual Domain Configuration
-# virtual_mailbox_domains = sample.com, other.net
-# virtual_mailbox_maps = hash:/etc/postfix/virtual
-# virtual_alias_maps = hash:/etc/postfix/virtual_alias
-
-# You'll start with the following lines for maildir storage
+virtual_mailbox_domains = MYDOMAIN
 virtual_mailbox_base = /var/spool/vmail
-virtual_uid_maps = static:`grep vmail /etc/passwd | cut -d ":" -f 3`
-virtual_gid_maps = static:`grep vmail /etc/passwd | cut -d ":" -f 4`
+virtual_mailbox_maps = hash:/etc/postfix/virtual
+virtual_alias_maps = hash:/etc/postfix/virtual_alias
 
-
-# You'll start with the following lines for IMAP storage
-#virtual_transport = lmtp:unix:/var/lib/cyrus/socket/lmtp
-
+# Socket path is relative to queue_directory
+virtual_transport = lmtp:unix:private/dovecot-lmtp
 
 # Path configuration
 sample_directory = /etc/postfix
-queue_directory = /var/spool/postfix
-mail_spool_directory = /var/spool/mail
 readme_directory = no
+
 command_directory = /usr/sbin
 daemon_directory = /usr/libexec/postfix
-mail_owner = postfix
-setgid_group = postdrop
-unknown_local_recipient_reject_code = 450
-debug_peer_level = 2
 sendmail_path = /usr/sbin/sendmail
 newaliases_path = /usr/bin/newaliases
 mailq_path = /usr/bin/mailq
+
+# (Non-virtual) Mail storage
+queue_directory = /var/spool/postfix
+mail_spool_directory = /var/spool/mail
 home_mailbox = Maildir/
+
+# Policy Configuration
+mail_owner = postfix
+setgid_group = postdrop
+
+unknown_local_recipient_reject_code = 450
+debug_peer_level = 2
 
 # SMTPD Configuration
 smtpd_data_restrictions =
