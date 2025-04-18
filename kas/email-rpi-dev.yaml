@@ -1,0 +1,6 @@
+header:
+  version: 17
+  includes: [kas/email-rpi.yaml]
+local_conf_header:
+  debug: |
+    EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"

@@ -2,8 +2,3 @@ header:
   version: 17
   includes: [kas/email.yaml, kas/rpi-gadget.yaml]
 machine: rpi-ab-mutable-gadget
-
-# TODO: Delete this when ready to ship
-local_conf_header:
-  debug: |
-    EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"

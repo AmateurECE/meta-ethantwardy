@@ -53,8 +53,16 @@ adduser sudo ethantwardy
 
 mkdir -p /home/edtwardy/Maildir
 
+# Forward mail from root to ethantwardy
 echo 'root: ethantwardy' >/etc/aliases
 postalias /etc/aliases
+
+# Only allow user ethantwardy to log in over SSH
+echo 'AllowUsers ethantwardy' >/etc/ssh/sshd_config.d/local.conf
+
+# To disable root login, make sure the second field in /etc/shadow is '*'
+grep 'root' /etc/shadow
+root:*:15069:0:99999:7:::
 ```
 
 # Setting up the Test Environment
