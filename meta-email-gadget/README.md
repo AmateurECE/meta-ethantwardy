@@ -69,7 +69,9 @@ cat - >/etc/postfix/virtual_alias <<EOF
 
 postmap /etc/postfix/{virtual,virtual_alias}
 
-echo 'etwardy@domain.com:::::' >/etc/dovecot/passwd
+echo 'etwardy@domain.com:@password@::::' >/etc/dovecot/passwd
+echo 's/@password@/'$(doveadm pw -s blf-crypt)'/' \
+  | xargs -I{} sed -i -e '{}' /etc/dovecot/passwd
 
 # Only allow user ethantwardy to log in over SSH
 echo 'AllowUsers ethantwardy' >/etc/ssh/sshd_config.d/local.conf

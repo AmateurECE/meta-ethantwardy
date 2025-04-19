@@ -22,7 +22,7 @@ alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 
 # Virtual Domain Configuration
-virtual_mailbox_domains = MYDOMAIN
+virtual_mailbox_domains = $mydomain
 virtual_mailbox_base = /var/spool/vmail
 virtual_mailbox_maps = hash:/etc/postfix/virtual
 virtual_alias_maps = hash:/etc/postfix/virtual_alias
@@ -53,6 +53,12 @@ unknown_local_recipient_reject_code = 450
 debug_peer_level = 2
 
 # SMTPD Configuration
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/dovecot-sasl
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_local_domain = $myhostname
+smtpd_sender_login_maps = $virtual_mailbox_maps
+
 smtpd_data_restrictions =
         permit_mynetworks,
         reject_unauth_pipelining,
@@ -111,5 +117,19 @@ smtpd_recipient_restrictions =
         # reject_unverified_sender,
         # reject_unverified_recipient
         check_recipient_access hash:/etc/postfix/internal_recipient
+
+mua_client_restrictions =
+        permit_mynetworks,
+        permit_sasl_authenticated,
+        reject
+
+mua_sender_restrictions =
+        reject_sender_login_mismatch
+
+mua_recipient_restrictions =
+        reject_non_fqdn_recipient,
+        reject_unknown_recipient_domain,
+        permit_sasl_authenticated,
+        reject
 
 disable_vrfy_command = yes
