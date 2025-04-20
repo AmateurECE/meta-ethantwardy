@@ -33,6 +33,7 @@ IMAGE_INSTALL += " \
     dovecot \
     bsd-mailx \
     mutt \
+    rspamd \
 "
 
 # Bind9 as a recursive DNS nameserver

@@ -1,0 +1,30 @@
+From 2e4b9e039f83d146647eca821238f98cad342613 Mon Sep 17 00:00:00 2001
+From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+Date: Sat, 19 Apr 2025 09:04:30 -0500
+Subject: [PATCH] backward-cpp: Enable for libdwarf-0
+
+Recent releases of libdwarf have a different path suffix for their
+include directory. This causes CMake to fail to locate libdwarf.
+
+Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
+Upstream-Status: pending
+---
+ contrib/backward-cpp/BackwardConfig.cmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/backward-cpp/BackwardConfig.cmake b/contrib/backward-cpp/BackwardConfig.cmake
+index 4cec0be91..d90b9ba0b 100644
+--- a/contrib/backward-cpp/BackwardConfig.cmake
++++ b/contrib/backward-cpp/BackwardConfig.cmake
+@@ -109,7 +109,7 @@ if (${STACK_DETAILS_AUTO_DETECT})
+ 		LIBDL_INCLUDE_DIR LIBDL_LIBRARY)
+ 
+ 	# find libdwarf
+-	find_path(LIBDWARF_INCLUDE_DIR NAMES "libdwarf.h" PATH_SUFFIXES libdwarf)
++	find_path(LIBDWARF_INCLUDE_DIR NAMES "libdwarf.h" PATH_SUFFIXES libdwarf-0)
+ 	find_path(LIBELF_INCLUDE_DIR NAMES "libelf.h")
+ 	find_path(LIBDL_INCLUDE_DIR NAMES "dlfcn.h")
+ 	find_library(LIBDWARF_LIBRARY dwarf)
+-- 
+2.47.2
+
