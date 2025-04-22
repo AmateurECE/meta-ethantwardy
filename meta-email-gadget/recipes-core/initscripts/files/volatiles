@@ -34,6 +34,9 @@ d root root 0755 /var/lock/subsys none
 f root root 0664 /var/log/wtmp none
 f root root 0664 /var/run/utmp none
 
+# Redis/Rspamd
+d redis rspamd 0770 /var/run/redis none
+
 # Bind9
 d bind bind 0755 /run/named none
 l root root 0755 /var/named /run/named
