@@ -1,0 +1,7 @@
+header:
+  version: 17
+  includes: [kas/email-rpi.yaml]
+target: email-gadget-image
+local_conf_header:
+  debug: |
+    EXTRA_IMAGE_FEATURES += "empty-root-password"
