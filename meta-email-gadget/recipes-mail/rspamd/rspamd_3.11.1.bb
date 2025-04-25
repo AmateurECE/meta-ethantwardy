@@ -35,6 +35,10 @@ inherit useradd update-rc.d
 
 SRC_URI += " \
     file://rspamd.sh \
+    file://classifier-bayes.conf \
+    file://redis.conf \
+    file://actions.conf \
+    file://milter_headers.conf \
 "
 
 DEPENDS += "snowball-native"
@@ -61,6 +65,12 @@ EXTRA_OECMAKE += " \
 do_install:append() {
     install -d -m755 ${D}/var/lib/rspamd
     install -Dm755 ${UNPACKDIR}/rspamd.sh ${D}/etc/init.d/rspamd
+
+    LOCAL_CONFDIR="${D}/etc/rspamd/local.d"
+    install -Dm644 ${UNPACKDIR}/classifier-bayes.conf -t "$LOCAL_CONFDIR"
+    install -Dm644 ${UNPACKDIR}/redis.conf -t "$LOCAL_CONFDIR"
+    install -Dm644 ${UNPACKDIR}/actions.conf -t "$LOCAL_CONFDIR"
+    install -Dm644 ${UNPACKDIR}/milter_headers.conf -t "$LOCAL_CONFDIR"
 }
 
 pkg_postinst:${PN}() {

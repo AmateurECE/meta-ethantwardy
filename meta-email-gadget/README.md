@@ -79,6 +79,12 @@ echo 'AllowUsers ethantwardy' >/etc/ssh/sshd_config.d/local.conf
 # To disable root login, make sure the second field in /etc/shadow is '*'
 grep 'root' /etc/shadow
 root:*:15069:0:99999:7:::
+
+# Set the Rspamd controller passwords:
+echo 'password = "'$(rspamadm pw)'"' \
+    >>/etc/rspamd/local.d/worker-controller.inc
+echo 'enable_password = "'$(rspamadm pw)'"' \
+    >>/etc/rspamd/local.d/worker-controller.inc
 ```
 
 # Setting up the Test Environment
@@ -174,4 +180,56 @@ cat - >/etc/bind/named.conf.local <<EOF
 >     file "/etc/bind/db.10.0.1";
 > };
 > EOF
+```
+
+# Migrating Users
+
+The user database needs to be migrated after a system update. These are the
+files `/etc/{group,gshadow,passwd,shadow}` and their backup files (suffixed
+with `-`). To migrate a file, first check the differences:
+
+```
+root@mail:~# rm /data/etc/.upper/passwd
+root@mail:~# mount -o remount /etc
+root@mail:~# diff -Naur /etc/passwd /etc/passwd-
+--- /etc/passwd
++++ /etc/passwd-
+@@ -15,12 +15,11 @@
+ list:x:38:38:Mailing List Manager:/var/list:/sbin/nologin
+ irc:x:39:39:ircd:/run/ircd:/sbin/nologin
+ _apt:x:42:65534::/nonexistent:/sbin/nologin
+-dovenull:x:992:991::/usr/libexec:/sbin/nologin
+-dovecot:x:993:992::/usr/libexec:/sbin/nologin
+-rspamd:x:994:993::/etc/rspamd:/bin/false
+-bind:x:995:994::/var/cache/bind:/bin/sh
+-redis:x:996:995::/var/lib/redis:/bin/false
++dovenull:x:994:993::/usr/libexec:/sbin/nologin
++dovecot:x:995:994::/usr/libexec:/sbin/nologin
++bind:x:996:995::/var/cache/bind:/bin/sh
+ sshd:x:997:996::/var/run/sshd:/bin/false
+ vmail:x:998:997::/var/spool/vmail:/bin/false
+ postfix:x:999:999::/var/spool/postfix:/bin/false
+ nobody:x:65534:65534:nobody:/nonexistent:/sbin/nologin
++ethantwardy:x:1000:1000:Linux User,,,:/home/ethantwardy:/bin/sh
+```
+
+In this case, I only care about migrating the last line--my custom user
+account:
+
+```
+root@mail:~# tail -n1 /etc/passwd- >>/etc/passwd
+root@mail:~# cp /etc/passwd /etc/passwd-
+```
+
+Repeat this procedure for each of the files.
+
+It's often the case that BIND9's `rndc.key` has been created with a different
+UID than the one it has now. This may be the case if all DNS queries to
+localhost fail. When bind starts, it should give a permission denied error in
+the logs to indicate this:
+
+```
+root@mail:~# rm /etc/bind/rndc.key
+root@mail:~# mount -o remount /etc
+root@mail:~# service bind restart
 ```
