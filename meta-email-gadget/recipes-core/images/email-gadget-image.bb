@@ -19,6 +19,9 @@ IMAGE_INSTALL += " \
     wireguard-tools \
 "
 
+# Ensure the update-rc.d package is not removed from the rootfs
+ROOTFS_RO_UNNEEDED:remove = "update-rc.d"
+
 # Firewall support
 IMAGE_INSTALL += " \
     nftables \
