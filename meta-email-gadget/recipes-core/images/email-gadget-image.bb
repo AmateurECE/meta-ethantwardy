@@ -14,7 +14,7 @@ IMAGE_INSTALL += " \
 IMAGE_INSTALL += " \
     sudo \
     tzdata \
-    ntp \
+    busybox-ntpd \
     packagegroup-core-ssh-openssh \
 "
 
