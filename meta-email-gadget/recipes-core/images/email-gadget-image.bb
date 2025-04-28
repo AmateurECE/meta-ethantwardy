@@ -16,6 +16,7 @@ IMAGE_INSTALL += " \
     tzdata \
     busybox-ntpd \
     packagegroup-core-ssh-openssh \
+    wireguard-tools \
 "
 
 # Firewall support
