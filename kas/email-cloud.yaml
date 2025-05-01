@@ -1,0 +1,5 @@
+# Email gadget, running in the cloud.
+header:
+  version: 17
+  includes: [kas/email.yaml]
+machine: cloud-mutable-gadget
