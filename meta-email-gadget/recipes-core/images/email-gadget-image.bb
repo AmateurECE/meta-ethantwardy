@@ -26,7 +26,6 @@ ROOTFS_RO_UNNEEDED:remove = "update-rc.d"
 IMAGE_INSTALL += " \
     nftables \
     firewall-config \
-    kernel-module-nf-tables \
     kernel-module-nft-ct \
 "
 

@@ -1,2 +1,2 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI += "file://modules.cfg"
+SRC_URI += "file://email.cfg"
