@@ -39,6 +39,7 @@ SRC_URI += " \
     file://redis.conf \
     file://actions.conf \
     file://milter_headers.conf \
+    file://dkim_signing.conf \
 "
 
 DEPENDS += "snowball-native"
@@ -71,6 +72,7 @@ do_install:append() {
     install -Dm644 ${UNPACKDIR}/redis.conf -t "$LOCAL_CONFDIR"
     install -Dm644 ${UNPACKDIR}/actions.conf -t "$LOCAL_CONFDIR"
     install -Dm644 ${UNPACKDIR}/milter_headers.conf -t "$LOCAL_CONFDIR"
+    install -Dm644 ${UNPACKDIR}/dkim_signing.conf -t "$LOCAL_CONFDIR"
 }
 
 pkg_postinst:${PN}() {

@@ -41,6 +41,19 @@ cat - >/etc/gadget/main.cf.vars.m4 <<EOF
 mkdir -p /etc/gadget/tls
 install -Dm600 <source> /etc/gadget/tls/privkey.pem
 install -m600 <source> /etc/gadget/tls/fullchain.pem
+
+mkdir -p /etc/dkimkeys/ethantwardy.com
+chown -R rspamd:rspamd /etc/dkimkeys
+cd /etc/dkimkeys/ethantwardy.com
+rspamadm dkim_keygen -s ethantwardy -d ethantwardy.com -b 2048 \
+  -k ethantwardy.privkey >ethantwardy.txt
+
+mkdir /etc/mail
+echo '<selector>._domainkey.<domain.com>' \
+  '<domain.com>:<selector>:/etc/dkimkeys/<domain.com>/ethantwardy.privkey' \
+  >/etc/mail/dkim.keytable
+echo '*@<domain.com> <selector>._domainkey.<domain.com>' \
+  >/etc/mail/dkim.signingtable
 ```
 
 1. Local user provisioning
