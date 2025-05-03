@@ -6,7 +6,8 @@
 
 ```
 btrfs subvolume create /mnt/@{etc,var,home}
-mkdir /mnt/@{etc,var}/.upper /mnt/@{etc,var}/.work /mnt/@home/root
+mkdir /mnt/@var/.upper /mnt/@var/.work /mnt/@home/root
+mkdir /mnt/@etc/overlay-etc/{upper,work}
 ```
 
 1. Setup `/etc/network/interfaces`.
