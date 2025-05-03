@@ -87,8 +87,13 @@ echo 'etwardy@domain.com:@password@::::' >/etc/dovecot/passwd
 echo 's/@password@/'$(doveadm pw -s blf-crypt)'/' \
   | xargs -I{} sed -i -e '{}' /etc/dovecot/passwd
 
-# Only allow user ethantwardy to log in over SSH
-echo 'AllowUsers ethantwardy' >/etc/ssh/sshd_config.d/local.conf
+# Only allow user ethantwardy to log in over SSH (and only using a key)
+# IMPORTANT: Make sure that a public key has already been installed using
+# ssh-copy-id first!
+cat - >/etc/ssh/sshd_config.d/local.conf <<EOF
+> AllowUsers ethantwardy
+> PasswordAuthentication no
+> EOF
 
 # To disable root login, make sure the second field in /etc/shadow is '*'
 grep 'root' /etc/shadow
