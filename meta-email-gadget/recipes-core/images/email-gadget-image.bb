@@ -34,6 +34,8 @@ IMAGE_INSTALL += " \
     postfix \
     postfix-doc \
     dovecot \
+    dovecot-conf \
+    pigeonhole \
     bsd-mailx \
     mutt \
     rspamd \
