@@ -37,7 +37,6 @@ SRC_URI += " \
     file://rspamd.sh \
     file://classifier-bayes.conf \
     file://redis.conf \
-    file://actions.conf \
     file://milter_headers.conf \
     file://dkim_signing.conf \
 "
@@ -70,7 +69,6 @@ do_install:append() {
     LOCAL_CONFDIR="${D}/etc/rspamd/local.d"
     install -Dm644 ${UNPACKDIR}/classifier-bayes.conf -t "$LOCAL_CONFDIR"
     install -Dm644 ${UNPACKDIR}/redis.conf -t "$LOCAL_CONFDIR"
-    install -Dm644 ${UNPACKDIR}/actions.conf -t "$LOCAL_CONFDIR"
     install -Dm644 ${UNPACKDIR}/milter_headers.conf -t "$LOCAL_CONFDIR"
     install -Dm644 ${UNPACKDIR}/dkim_signing.conf -t "$LOCAL_CONFDIR"
 }
