@@ -19,6 +19,7 @@ IMAGE_INSTALL += " \
     packagegroup-core-ssh-openssh \
     wireguard-tools \
     cronie \
+    certbot \
 "
 
 # Ensure the update-rc.d and shadow packages are not removed from the rootfs.
@@ -51,5 +52,8 @@ IMAGE_INSTALL += " bind"
 
 # Build configuration at runtime
 IMAGE_INSTALL += " make-conf"
+
+# Nginx as a webserver
+IMAGE_INSTALL += "nginx"
 
 inherit gadget-image

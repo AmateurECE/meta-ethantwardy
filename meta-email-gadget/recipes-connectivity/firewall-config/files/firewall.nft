@@ -12,8 +12,8 @@ table inet filter {
         # Allow loopback interface
         iif lo accept
 
-        # Allow { SSH, SMTP, IMAPS, SUBMISSION }
-        tcp dport { 22, 25, 993, 465 } accept
+        # Allow { SSH, SMTP, IMAPS, SUBMISSION, HTTP, HTTPS }
+        tcp dport { 22, 25, 993, 465, 80, 443 } accept
 
         # Allow ping (ICMP echo-request)
         ip protocol icmp icmp type echo-request accept

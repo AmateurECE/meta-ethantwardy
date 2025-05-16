@@ -41,6 +41,7 @@ shutdown:x:70:
 wheel:x:80:
 users:x:100:
 crontab:x:101:
+www:x:988:
 dovenull:x:990:
 dovecot:x:991:
 rspamd:x:992:
