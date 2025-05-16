@@ -41,6 +41,7 @@ IMAGE_INSTALL += " \
     mutt \
     rspamd \
     redis \
+    spam-statistics \
 "
 
 # Bind9 as a recursive DNS nameserver
