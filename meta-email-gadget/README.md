@@ -20,9 +20,9 @@ echo 'mail.domain.com' > /etc/hostname
 # Set up local forwarders to improve DNS performance
 echo 'forwarders { 10.0.1.3; };' >/etc/bind/named.options.local
 
-touch /etc/aliases
+cp /etc/postfix/aliases /etc/aliases
 touch /etc/aliases.db
-newaliases
+postalias /etc/aliases
 
 touch /etc/postfix/virtual_alias
 postmap /etc/postfix/virtual_alias
