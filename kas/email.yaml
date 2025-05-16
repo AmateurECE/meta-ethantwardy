@@ -9,6 +9,8 @@ repos:
       meta-email-gadget:
 
   meta-openembedded:
+    layers:
+      meta-webserver:
     patches:
       0003:
         repo: meta-ethantwardy
