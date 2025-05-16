@@ -17,6 +17,7 @@ IMAGE_INSTALL += " \
     busybox-ntpd \
     packagegroup-core-ssh-openssh \
     wireguard-tools \
+    cronie \
 "
 
 # Ensure the update-rc.d package is not removed from the rootfs
