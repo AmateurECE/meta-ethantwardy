@@ -8,6 +8,7 @@ IMAGE_INSTALL += " \
     net-tools \
     gadget-tools \
     kernel-module-configs \
+    util-linux \
 "
 
 # Install a few things that provide required features
@@ -20,8 +21,9 @@ IMAGE_INSTALL += " \
     cronie \
 "
 
-# Ensure the update-rc.d package is not removed from the rootfs
-ROOTFS_RO_UNNEEDED:remove = "update-rc.d"
+# Ensure the update-rc.d and shadow packages are not removed from the rootfs.
+# These packages are needed for local service and user management.
+ROOTFS_RO_UNNEEDED:remove = "update-rc.d shadow"
 
 # Firewall support
 IMAGE_INSTALL += " \

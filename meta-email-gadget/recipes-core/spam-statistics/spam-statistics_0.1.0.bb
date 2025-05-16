@@ -7,7 +7,7 @@ HOMEPAGE = "https://github.com/AmateurECE/spam-statistics"
 inherit cargo cargo-update-recipe-crates
 
 SRC_URI += "git://github.com/AmateurECE/spam-statistics;protocol=https;branch=main"
-SRCREV = "e26fd375f711e13881bcb70c7676ef7e2f9ddca4"
+SRCREV = "5eeb394a1aff9c60eb12d5490a186fb295314c55"
 S = "${WORKDIR}/git"
 PV:append = ".AUTOINC+5eeb394a1a"
 
