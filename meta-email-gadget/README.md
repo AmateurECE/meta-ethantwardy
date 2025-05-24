@@ -252,3 +252,13 @@ root@mail:~# rm /etc/bind/rndc.key
 root@mail:~# mount -o remount /etc
 root@mail:~# service bind restart
 ```
+
+# Creating Mail Folders by Hand
+
+```
+cd /var/spool/vmail/<domain.com>/<user>
+mkdir -m 0700 -p .Spam/{cur,new,tmp}
+chmod 0700 .Spam
+chown -R vmail:vmail .Spam
+service dovecot restart
+```
