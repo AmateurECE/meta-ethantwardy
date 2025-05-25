@@ -27,5 +27,5 @@ ext4load mmc 0:${bootpart} ${kernel_addr_r} /boot/Image
 ext4load mmc 0:${bootpart} ${fdt_addr_r} /boot/bcm2711-rpi-4-b.dtb
 fdt addr ${fdt_addr_r}
 fdt get value bootargs /chosen bootargs
-setenv bootargs "${bootargs} root=/dev/mmcblk0p${bootpart} rootwait"
+setenv bootargs "${bootargs} root=/dev/mmcblk0p${bootpart} rootwait init=/sbin/preinit"
 booti ${kernel_addr_r} - ${fdt_addr_r}

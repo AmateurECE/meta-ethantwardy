@@ -1,0 +1,83 @@
+From 54c45fa5a2b1ece2bd85187189ece850ef036dde Mon Sep 17 00:00:00 2001
+From: kas User <kas@example.com>
+Date: Sun, 20 Apr 2025 17:27:43 +0000
+Subject: [PATCH] snowball: Allow cross-compilation
+
+---
+ contrib/snowball/CMakeLists.txt          | 36 +++++++++++++++---------
+ contrib/snowball/SnowballConfig.cmake.in |  3 ++
+ 2 files changed, 25 insertions(+), 14 deletions(-)
+ create mode 100644 contrib/snowball/SnowballConfig.cmake.in
+
+diff --git a/contrib/snowball/CMakeLists.txt b/contrib/snowball/CMakeLists.txt
+index 7ee961e0a..2a125b28a 100644
+--- a/contrib/snowball/CMakeLists.txt
++++ b/contrib/snowball/CMakeLists.txt
+@@ -37,15 +37,13 @@ MACRO(gen_stem IN ENCODING)
+ 		SET(_input "${CMAKE_CURRENT_SOURCE_DIR}/algorithms/${_it}.sbl")
+ 		IF(${_in_enc} STREQUAL "Unicode" AND NOT EXISTS ${_input})
+ 			ADD_CUSTOM_COMMAND(OUTPUT ${_source}
+-				COMMAND env "ASAN_OPTIONS=detect_leaks=0" ${CMAKE_CURRENT_BINARY_DIR}/snowball  "${CMAKE_CURRENT_SOURCE_DIR}/algorithms/${_it}/stem_ISO_8859_1.sbl" -o ${_base} -eprefix ${_it}_${ENCODING}_ -r ../runtime -u
+-				DEPENDS snowball)
++				COMMAND env "ASAN_OPTIONS=detect_leaks=0" snowball  "${CMAKE_CURRENT_SOURCE_DIR}/algorithms/${_it}/stem_ISO_8859_1.sbl" -o ${_base} -eprefix ${_it}_${ENCODING}_ -r ../runtime -u)
+ 			LIST(APPEND STEMMER_SOURCES ${_source})
+ 
+ 		ELSE()
+ 		IF(EXISTS "${_input}")
+ 			ADD_CUSTOM_COMMAND(OUTPUT ${_source}
+-				COMMAND env "ASAN_OPTIONS=detect_leaks=0" ${CMAKE_CURRENT_BINARY_DIR}/snowball ${_input} -o ${_base} -eprefix ${_it}_${ENCODING}_ -r ../runtime -u
+-				DEPENDS snowball)
++				COMMAND env "ASAN_OPTIONS=detect_leaks=0" snowball ${_input} -o ${_base} -eprefix ${_it}_${ENCODING}_ -r ../runtime -u)
+ 			LIST(APPEND STEMMER_SOURCES ${_source})
+ 		ENDIF()
+ 		ENDIF()
+@@ -54,17 +52,27 @@ ENDMACRO()
+ 
+ INCLUDE_DIRECTORIES("include")
+ 
+-ADD_EXECUTABLE(snowball ${COMPILER_SOURCES})
++if(CMAKE_CROSSCOMPILING)
++  FIND_PACKAGE(Snowball)
+ 
+-ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/libstemmer/modules.h
+- COMMAND ${PERL_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/libstemmer/mkmodules.pl ${CMAKE_CURRENT_BINARY_DIR}/libstemmer/modules.h libstemmer ${CMAKE_CURRENT_SOURCE_DIR}/libstemmer/modules.txt ${CMAKE_CURRENT_BINARY_DIR}/libstemmer/mkinc.mak)
+-ADD_CUSTOM_TARGET(modules DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/libstemmer/modules.h")
++  ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/libstemmer/modules.h
++  COMMAND ${PERL_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/libstemmer/mkmodules.pl ${CMAKE_CURRENT_BINARY_DIR}/libstemmer/modules.h libstemmer ${CMAKE_CURRENT_SOURCE_DIR}/libstemmer/modules.txt ${CMAKE_CURRENT_BINARY_DIR}/libstemmer/mkinc.mak)
++  ADD_CUSTOM_TARGET(modules DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/libstemmer/modules.h")
+ 
+-SET(STEMMER_SOURCES "${CMAKE_CURRENT_BINARY_DIR}/libstemmer/libstemmer.c")
+-ADD_CUSTOM_TARGET(stemmer_deps ALL)
+-ADD_DEPENDENCIES(stemmer_deps modules)
++  SET(STEMMER_SOURCES "${CMAKE_CURRENT_BINARY_DIR}/libstemmer/libstemmer.c")
++  ADD_CUSTOM_TARGET(stemmer_deps ALL)
++  ADD_DEPENDENCIES(stemmer_deps modules)
+ 
+-gen_stem("${LIBSTEM_ALGORITHMS}" "UTF_8")
++  gen_stem("${LIBSTEM_ALGORITHMS}" "UTF_8")
+ 
+-ADD_LIBRARY(stemmer ${LINK_TYPE} ${SNOWBALL_RUNTIME} ${STEMMER_SOURCES})
+-ADD_DEPENDENCIES(stemmer stemmer_deps)
++  ADD_LIBRARY(stemmer ${LINK_TYPE} ${SNOWBALL_RUNTIME} ${STEMMER_SOURCES})
++  ADD_DEPENDENCIES(stemmer stemmer_deps)
++else()
++  ADD_EXECUTABLE(snowball ${COMPILER_SOURCES})
++  INSTALL(TARGETS snowball EXPORT SnowballTargets)
++  INSTALL(EXPORT SnowballTargets FILE SnowballTargets.cmake DESTINATION share/cmake)
++  INCLUDE(CMakePackageConfigHelpers)
++  configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/SnowballConfig.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/SnowballConfig.cmake" INSTALL_DESTINATION share/cmake)
++  INSTALL(FILES "${CMAKE_CURRENT_BINARY_DIR}/SnowballConfig.cmake" DESTINATION share/cmake)
++  # EXPORT(TARGETS snowball FILE "${CMAKE_CURRENT_BINARY_DIR}/SnowballConfig.cmake")
++endif()
+diff --git a/contrib/snowball/SnowballConfig.cmake.in b/contrib/snowball/SnowballConfig.cmake.in
+new file mode 100644
+index 000000000..3cdf30ac7
+--- /dev/null
++++ b/contrib/snowball/SnowballConfig.cmake.in
+@@ -0,0 +1,3 @@
++@PACKAGE_INIT@
++
++include("${CMAKE_CURRENT_LIST_DIR}/SnowballTargets.cmake")
+-- 
+2.47.2
+

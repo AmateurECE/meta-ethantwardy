@@ -47,6 +47,11 @@ env:
   RAUC_KEYRING_FILE: null
 
 local_conf_header:
+  users: |
+    USERADDEXTENSION = "useradd-staticids"
+    USERADD_ERROR_DYNAMIC = "error"
+    USERADD_UID_TABLES = "files/passwd"
+    USERADD_GID_TABLES = "files/group"
   host: |
     BB_PRESSURE_MAX_CPU = "250000"
     BB_PRESSURE_MAX_MEMORY = "250000"

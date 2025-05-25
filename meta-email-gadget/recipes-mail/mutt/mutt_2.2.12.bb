@@ -10,7 +10,11 @@ SRC_URI = " \
 "
 SRC_URI[sha256sum] = "043af312f64b8e56f7fd0bf77f84a205d4c498030bd9586457665c47bb18ce38"
 
-DEPENDS = "openssl ncurses"
+DEPENDS = " \
+    openssl \
+    ncurses \
+    cyrus-sasl \
+"
 
 RDEPENDS:${PN} += " perl"
 
@@ -22,6 +26,8 @@ inherit texinfo gettext autotools
 # Specify any options you want to pass to the configure script using EXTRA_OECONF:
 EXTRA_OECONF = " \
     --enable-imap \
+    --enable-smtp \
+    --with-sasl \
     --with-homespool=Maildir \
     --without-gnutls --with-ssl \
 "

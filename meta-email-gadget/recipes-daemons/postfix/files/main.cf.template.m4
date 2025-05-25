@@ -22,37 +22,43 @@ alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 
 # Virtual Domain Configuration
-# virtual_mailbox_domains = sample.com, other.net
-# virtual_mailbox_maps = hash:/etc/postfix/virtual
-# virtual_alias_maps = hash:/etc/postfix/virtual_alias
-
-# You'll start with the following lines for maildir storage
+virtual_mailbox_domains = $mydomain
 virtual_mailbox_base = /var/spool/vmail
-virtual_uid_maps = static:`grep vmail /etc/passwd | cut -d ":" -f 3`
-virtual_gid_maps = static:`grep vmail /etc/passwd | cut -d ":" -f 4`
+virtual_mailbox_maps = hash:/etc/postfix/virtual
+virtual_alias_maps = hash:/etc/postfix/virtual_alias
 
-
-# You'll start with the following lines for IMAP storage
-#virtual_transport = lmtp:unix:/var/lib/cyrus/socket/lmtp
-
+# Socket path is relative to queue_directory
+virtual_transport = lmtp:unix:private/dovecot-lmtp
 
 # Path configuration
 sample_directory = /etc/postfix
-queue_directory = /var/spool/postfix
-mail_spool_directory = /var/spool/mail
 readme_directory = no
+
 command_directory = /usr/sbin
 daemon_directory = /usr/libexec/postfix
-mail_owner = postfix
-setgid_group = postdrop
-unknown_local_recipient_reject_code = 450
-debug_peer_level = 2
 sendmail_path = /usr/sbin/sendmail
 newaliases_path = /usr/bin/newaliases
 mailq_path = /usr/bin/mailq
+
+# (Non-virtual) Mail storage
+queue_directory = /var/spool/postfix
+mail_spool_directory = /var/spool/mail
 home_mailbox = Maildir/
 
+# Policy Configuration
+mail_owner = postfix
+setgid_group = postdrop
+
+unknown_local_recipient_reject_code = 450
+debug_peer_level = 2
+
 # SMTPD Configuration
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/dovecot-sasl
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_local_domain = $myhostname
+smtpd_sender_login_maps = $virtual_mailbox_maps
+
 smtpd_data_restrictions =
         permit_mynetworks,
         reject_unauth_pipelining,
@@ -111,5 +117,19 @@ smtpd_recipient_restrictions =
         # reject_unverified_sender,
         # reject_unverified_recipient
         check_recipient_access hash:/etc/postfix/internal_recipient
+
+mua_client_restrictions =
+        permit_mynetworks,
+        permit_sasl_authenticated,
+        reject
+
+mua_sender_restrictions =
+        reject_sender_login_mismatch
+
+mua_recipient_restrictions =
+        reject_non_fqdn_recipient,
+        reject_unknown_recipient_domain,
+        permit_sasl_authenticated,
+        reject
 
 disable_vrfy_command = yes

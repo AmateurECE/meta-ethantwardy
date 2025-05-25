@@ -31,6 +31,12 @@ def someone_is_listening_on(address):
         except Exception as e:
             return True
 
+def efi_options(efivars_file: str):
+    return [
+        "-drive", "if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/OVMF_CODE_4M.fd",
+        "-drive", f"if=pflash,format=raw,file={efivars_file}",
+    ]
+
 def data_drive_options(data_file: str):
     return [
         "-drive", f"if=none,id=hdata,file={data_file},format=raw",
@@ -68,6 +74,7 @@ def main():
     config.read(args.file)
     config_directory = path.dirname(args.file)
 
+    efivars_file = config[args.config]['efivars_file']
     data_file = config[args.config]['data_file']
     wan_mac = config[args.config]['wan_mac']
     lan_mac = config[args.config]['lan_mac']
@@ -75,6 +82,7 @@ def main():
 
     executable = '/usr/bin/qemu-system-x86_64'
     options = MACHINE_OPTIONS  + URANDOM_OPTIONS \
+            + efi_options(efivars_file) \
             + rootfs_options(config_directory, image) \
             + data_drive_options(data_file) \
             + networking_options(wan_mac, lan_mac) + SERIAL_OPTIONS

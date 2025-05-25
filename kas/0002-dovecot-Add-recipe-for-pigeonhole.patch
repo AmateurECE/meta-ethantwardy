@@ -1,0 +1,48 @@
+From 0160d8e14e216fc357cdea38b74d25897bb99008 Mon Sep 17 00:00:00 2001
+From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+Date: Sat, 10 May 2025 21:04:52 -0500
+Subject: [PATCH 2/2] dovecot: Add recipe for pigeonhole
+
+Pigeonhole is a dovecot plugin that adds support for the Sieve language
+and the ManageSieve protocol to dovecot.
+
+diff --git a/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb b/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb
+new file mode 100644
+index 0000000000..1997b1905d
+--- /dev/null
++++ b/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb
+@@ -0,0 +1,31 @@
++LICENSE = "LGPL-2.1-only"
++LIC_FILES_CHKSUM = "file://COPYING.LGPL;md5=4fbd65380cdd255951079008b364516c"
++
++# NOTE: See this page to correlate pigeonhole versions to dovecot versions:
++# https://pigeonhole.dovecot.org/download.html
++SRCBRANCH = "release-0.5.21"
++
++SRC_URI += "git://github.com/dovecot/pigeonhole.git;protocol=https;branch=${SRCBRANCH};tag=${PV}"
++
++S = "${WORKDIR}/git"
++
++DEPENDS += "dovecot"
++
++inherit autotools
++
++EXTRA_OECONF = "--with-dovecot=${RECIPE_SYSROOT}/usr/lib/dovecot"
++
++FILES:${PN} = " \
++    ${bindir}/sieve* \
++    ${libexecdir}/dovecot/managesieve* \
++    ${libdir}/dovecot/*.so.* \
++    ${libdir}/dovecot/*_plugin.so \
++    ${libdir}/dovecot/settings/*.so \
++    ${libdir}/dovecot/doveadm/*.so \
++    ${libdir}/dovecot/sieve/*.so \
++"
++FILES:${PN}-staticdev += " \
++    ${libdir}/dovecot/*.a \
++    ${libdir}/dovecot/*/*.a \
++"
++FILES:${PN}-dev += "${libdir}/dovecot/libdovecot-sieve.so"
+-- 
+2.47.2
+

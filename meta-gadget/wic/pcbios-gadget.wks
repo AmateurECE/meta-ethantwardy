@@ -1,3 +1,0 @@
-part /boot --source bootimg-pcbios --ondisk sda --label boot --active --align 1024
-part / --source rootfs --ondisk sda --fstype=ext4 --label platform --align 1024 --use-uuid
-bootloader --ptable gpt --timeout=0 --append="ro console=ttyS0"

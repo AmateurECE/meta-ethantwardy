@@ -6,12 +6,12 @@ S = "${WORKDIR}/sources"
 UNPACKDIR = "${S}"
 
 SRC_URI = " \
-    file://firewall.nft \
+    file://nftables.conf \
     file://firewall.sh \
 "
 
 do_install() {
-    install -Dm755 ${UNPACKDIR}/firewall.nft -t ${D}${sysconfdir}/nftables
+    install -Dm755 ${UNPACKDIR}/nftables.conf -t ${D}${sysconfdir}/nftables
     install -Dm755 ${UNPACKDIR}/firewall.sh ${D}${sysconfdir}/init.d/firewall
 }
 

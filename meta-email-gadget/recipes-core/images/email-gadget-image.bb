@@ -8,21 +8,28 @@ IMAGE_INSTALL += " \
     net-tools \
     gadget-tools \
     kernel-module-configs \
+    util-linux \
 "
 
 # Install a few things that provide required features
 IMAGE_INSTALL += " \
     sudo \
     tzdata \
-    ntp \
+    busybox-ntpd \
     packagegroup-core-ssh-openssh \
+    wireguard-tools \
+    cronie \
+    certbot \
 "
+
+# Ensure the update-rc.d and shadow packages are not removed from the rootfs.
+# These packages are needed for local service and user management.
+ROOTFS_RO_UNNEEDED:remove = "update-rc.d shadow"
 
 # Firewall support
 IMAGE_INSTALL += " \
     nftables \
     firewall-config \
-    kernel-module-nf-tables \
     kernel-module-nft-ct \
 "
 
@@ -31,8 +38,13 @@ IMAGE_INSTALL += " \
     postfix \
     postfix-doc \
     dovecot \
+    dovecot-conf \
+    pigeonhole \
     bsd-mailx \
     mutt \
+    rspamd \
+    redis \
+    spam-statistics \
 "
 
 # Bind9 as a recursive DNS nameserver
@@ -40,5 +52,8 @@ IMAGE_INSTALL += " bind"
 
 # Build configuration at runtime
 IMAGE_INSTALL += " make-conf"
+
+# Nginx as a webserver
+IMAGE_INSTALL += "nginx"
 
 inherit gadget-image
