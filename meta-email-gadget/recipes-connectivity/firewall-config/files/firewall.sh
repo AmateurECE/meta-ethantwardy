@@ -9,7 +9,7 @@
 # Description:       Loads nftables ruleset at start, flushes on stop
 ### END INIT INFO
 
-RULESET="/etc/nftables/firewall.nft"
+RULESET="/etc/nftables/nftables.conf"
 
 start() {
   echo "Starting nftables firewall..."
