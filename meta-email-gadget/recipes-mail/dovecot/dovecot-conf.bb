@@ -15,6 +15,8 @@ SRC_URI = " \
     file://spam.sieve \
 "
 
+RDEPENDS:${PN} += "postfix"
+
 do_install () {
     install -Dm644 ${UNPACKDIR}/dovecot.conf -t ${D}/etc/dovecot
     install -Dm644 ${UNPACKDIR}/tls-dovecot.conf -t ${D}/etc/dovecot
@@ -24,6 +26,10 @@ do_install () {
     install -Dm644 ${UNPACKDIR}/learn-spam.sieve -t ${D}/etc/dovecot/sieve
     install -Dm644 ${UNPACKDIR}/learn-ham.sieve -t ${D}/etc/dovecot/sieve
     install -Dm644 ${UNPACKDIR}/spam.sieve -t ${D}/etc/dovecot/sieve
+}
+
+pkg_postinst:${PN}() {
+    chown vmail:vmail $D/etc/dovecot/sieve
 }
 
 FILES:${PN} += " \
