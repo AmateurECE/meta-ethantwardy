@@ -4,14 +4,21 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=250dce80b2d545ccfdd59653914c3842"
 SUMMARY = "Gather statistics about spam on email systems that use Rspamd"
 HOMEPAGE = "https://github.com/AmateurECE/spam-statistics"
 
-inherit cargo cargo-update-recipe-crates
+inherit cargo cargo-update-recipe-crates pkgconfig
 
 SRC_URI += "git://github.com/AmateurECE/spam-statistics;protocol=https;branch=main"
-SRCREV = "eaeb9d50774cea59c6602d7f5a508157f3b67d3b"
+SRCREV = "3d2ccea316272d3913dfdd0976758908cbe039f3"
 S = "${WORKDIR}/git"
-PV:append = "+14"
+PV:append = "+19"
 
-RDEPENDS:${PN} += "gnuplot"
+DEPENDS += " \
+    fontconfig \
+"
+
+RDEPENDS:${PN} += " \
+    gnuplot \
+    ttf-roboto \
+"
 
 require ${BPN}-crates.inc
 
