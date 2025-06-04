@@ -1,6 +1,6 @@
 # short-description: Raspberry Pi Dual A/B image w/ mutable data partition
 
-part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 4096 --size 100
-part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096
-part --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 4096
-part --ondisk mmcblk0 --fstype=btrfs --label gadget-data --align 1024 --size 1G
+part /boot --source bootimg-partition --fstype=vfat --ondisk mmcblk0 --label boot --active --align 4096 --size 100
+part / --source rootfs --fstype=ext4 --ondisk mmcblk0 --label system0 --align 4096 --size 4G
+part --ondisk mmcblk0 --label system1 --align 4096 --size 4G
+part --ondisk mmcblk0 --fstype=btrfs --label gadget-data --align 1024 --size 8G

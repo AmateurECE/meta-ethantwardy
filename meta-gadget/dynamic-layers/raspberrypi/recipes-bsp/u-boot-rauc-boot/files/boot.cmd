@@ -24,8 +24,15 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
 done
 
 ext4load mmc 0:${bootpart} ${kernel_addr_r} /boot/Image
-ext4load mmc 0:${bootpart} ${fdt_addr_r} /boot/bcm2711-rpi-4-b.dtb
-fdt addr ${fdt_addr_r}
-fdt get value bootargs /chosen bootargs
-setenv bootargs "${bootargs} root=/dev/mmcblk0p${bootpart} rootwait init=/sbin/preinit"
-booti ${kernel_addr_r} - ${fdt_addr_r}
+fdt addr ${fdt_addr} && fdt get value bootargs /chosen bootargs
+
+# The RPi firmware sets up a kernel command line when it's fixing up the device
+# tree. Unfortunately, this includes some basic rootfs selection.
+setexpr bootargs gsub "root=/dev/mmcblk0p2" "" "${bootargs}"
+setexpr bootargs gsub "rootwait" "" "${bootargs}"
+setexpr bootargs gsub "rootfstype=ext4" "" "${bootargs}"
+setexpr bootargs gsub "console=\\S+" "" "${bootargs}"
+setexpr bootargs gsub "kgdboc=\\S+" "" "${bootargs}"
+
+setenv bootargs "${bootargs} console=ttyS0,115200 root=/dev/mmcblk0p${bootpart} rootwait init=/sbin/preinit"
+booti ${kernel_addr_r} - ${fdt_addr}
