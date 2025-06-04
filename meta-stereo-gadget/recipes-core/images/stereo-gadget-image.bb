@@ -1,33 +1,38 @@
-
 SUMMARY = "Bluetooth gadget for my stereo system"
-
 LICENSE = "MIT"
 
-# The minimum necessary to boot
-IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
+require recipes-core/images/core-image-minimal.bb
 
 IMAGE_INSTALL:append = " \
-alsa-utils-aplay \
-alsa-utils-speakertest \
-iwd \
-${VIRTUAL-RUNTIME_wireplumber-config} \
-pipewire \
-${@bb.utils.contains('DISTRO_FEATURES', 'systemd', 'systemd-networkd-conf', '', d)} \
-pipewire-alsa-card-profile \
+    alsa-utils-aplay \
+    alsa-utils-speakertest \
+    iwd \
+    ${VIRTUAL-RUNTIME_wireplumber-config} \
+    pipewire \
+    pipewire-alsa-card-profile \
+    packagegroup-core-ssh-openssh \
+    pi-bluetooth \
+    busybox-ntpd \
 "
 
-# TODO: Might be able to minimize this a little bit more
-# TODO: Remove kernel-modules when we go to a static kernel
+# TODO: Can probably slim this down by selecting a MACHINE_FEATURE?
 IMAGE_INSTALL:append = " \
-linux-firmware-rpidistro-bcm43455 \
-linux-firmware-rpidistro-bcm43456 \
-bluez-firmware-rpidistro-bcm4345c0-hcd \
-bluez-firmware-rpidistro-bcm4345c5-hcd \
-kernel-modules \
+    linux-firmware-rpidistro-bcm43430 \
+    linux-firmware-rpidistro-bcm43436 \
+    linux-firmware-rpidistro-bcm43436s \
+    linux-firmware-rpidistro-bcm43439 \
+    linux-firmware-rpidistro-bcm43455 \
+    linux-firmware-rpidistro-bcm43456 \
+    linux-firmware-rpidistro-license \
+    bluez-firmware-rpidistro-cypress-license \
+    bluez-firmware-rpidistro-bcm43430a1-hcd \
+    bluez-firmware-rpidistro-bcm43430b0-hcd \
+    bluez-firmware-rpidistro-bcm4343a2-hcd \
+    bluez-firmware-rpidistro-bcm4345c0-hcd \
+    bluez-firmware-rpidistro-bcm4345c5-hcd \
+    kernel-modules \
 "
 
-IMAGE_FEATURES += "ssh-server-dropbear"
+IMAGE_FSTYPES = "tar.bz2 wic.bz2 wic.bmap"
 
-IMAGE_FSTYPES = "wic"
-
-inherit core-image
+inherit gadget-image

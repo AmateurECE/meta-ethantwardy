@@ -1,4 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://wireplumber-override.service"
 
@@ -9,5 +9,5 @@ ${sysconfdir}/systemd/system/wireplumber.service.d/override.conf \
 do_install:append() {
     install -d ${D}${sysconfdir}/systemd/system
     install -d ${D}${sysconfdir}/systemd/system/wireplumber.service.d
-    install -m 0644 ${WORKDIR}/wireplumber-override.service ${D}${sysconfdir}/systemd/system/wireplumber.service.d/override.conf
+    install -m 0644 ${UNPACKDIR}/wireplumber-override.service ${D}${sysconfdir}/systemd/system/wireplumber.service.d/override.conf
 }

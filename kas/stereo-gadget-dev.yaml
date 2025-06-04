@@ -1,13 +1,7 @@
 header:
   version: 17
-  includes:
-    - kas/stereo-gadget.yaml
+  includes: [kas/stereo-gadget.yaml]
 local_conf_header:
   debug: |
-    EXTRA_IMAGE_FEATURES += "debug-tweaks"
-    PACKAGECONFIG:append:pn-dbus = " verbose-mode"
-    # Useful packages for debugging
-    IMAGE_INSTALL:append = " \
-    ldd \
-    gdbserver \
-    "
+    EXTRA_IMAGE_FEATURES += "allow-empty-password empty-root-password allow-root-login"
+    IMAGE_INSTALL:append = " strace"

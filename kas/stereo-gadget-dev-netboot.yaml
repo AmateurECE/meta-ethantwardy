@@ -1,9 +1,0 @@
-header:
-  version: 17
-  includes:
-    - kas/stereo-gadget-dev.yaml
-target: stereo-gadget-image-netboot
-machine: rpi-netboot-gadget
-local_conf_header:
-  debug: |
-    NETBOOT_TFTP_HOST = "192.168.2.60:6969"

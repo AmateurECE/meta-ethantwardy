@@ -1,4 +1,4 @@
-FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://pipewire-override.service"
 
@@ -11,5 +11,5 @@ ${sysconfdir}/systemd/system/pipewire.service.d/override.conf \
 do_install:append() {
     install -d ${D}${sysconfdir}/systemd/system
     install -d ${D}${sysconfdir}/systemd/system/pipewire.service.d
-    install -m 0644 ${WORKDIR}/pipewire-override.service ${D}${sysconfdir}/systemd/system/pipewire.service.d/override.conf
+    install -m 0644 ${UNPACKDIR}/pipewire-override.service ${D}${sysconfdir}/systemd/system/pipewire.service.d/override.conf
 }

@@ -16,6 +16,9 @@ SRC_URI = "\
 "
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+S = "${WORKDIR}/sources"
+UNPACKDIR = "${S}"
+
 do_configure[noexec] = "1"
 do_compile[noexec] = "1"
 do_install:append() {
@@ -23,16 +26,16 @@ do_install:append() {
     dbus_config_dir="${D}${sysconfdir}/dbus-1/system.d/"
 
     install -d ${config_dir}
-    install -m 0644 ${WORKDIR}/00-functions.lua ${config_dir}
-    install -m 0644 ${WORKDIR}/10-default-policy.lua ${config_dir}
-    install -m 0644 ${WORKDIR}/30-alsa-monitor.lua ${config_dir}
-    install -m 0644 ${WORKDIR}/30-bluez-monitor.lua ${config_dir}
-    install -m 0644 ${WORKDIR}/99-load-modules.lua ${config_dir}
+    install -m 0644 ${UNPACKDIR}/00-functions.lua ${config_dir}
+    install -m 0644 ${UNPACKDIR}/10-default-policy.lua ${config_dir}
+    install -m 0644 ${UNPACKDIR}/30-alsa-monitor.lua ${config_dir}
+    install -m 0644 ${UNPACKDIR}/30-bluez-monitor.lua ${config_dir}
+    install -m 0644 ${UNPACKDIR}/99-load-modules.lua ${config_dir}
 
-    install -m 0644 ${WORKDIR}/wireplumber.conf ${D}${sysconfdir}/wireplumber/
+    install -m 0644 ${UNPACKDIR}/wireplumber.conf ${D}${sysconfdir}/wireplumber/
 
     install -d ${dbus_config_dir}
-    install -m 0644 ${WORKDIR}/wireplumber-bluetooth.conf ${dbus_config_dir}
+    install -m 0644 ${UNPACKDIR}/wireplumber-bluetooth.conf ${dbus_config_dir}
 }
 
 FILES:${PN} += "\
