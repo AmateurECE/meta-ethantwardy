@@ -1,13 +1,20 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
-SRC_URI += "file://wireplumber-override.service"
+SRC_URI += " \
+    file://wireplumber.sh \
+    file://launch-wireplumber.sh \
+"
+
+INITSCRIPT_PACKAGES = "${PN}"
+INITSCRIPT_NAME = "wireplumber"
+
+inherit update-rc.d
 
 FILES:${PN}:append = " \
-${sysconfdir}/systemd/system/wireplumber.service.d/override.conf \
+    ${libexecdir}/launch-pipewire.sh \
 "
 
 do_install:append() {
-    install -d ${D}${sysconfdir}/systemd/system
-    install -d ${D}${sysconfdir}/systemd/system/wireplumber.service.d
-    install -m 0644 ${UNPACKDIR}/wireplumber-override.service ${D}${sysconfdir}/systemd/system/wireplumber.service.d/override.conf
+    install -Dm 0755 ${UNPACKDIR}/wireplumber.sh ${D}${sysconfdir}/init.d/${INITSCRIPT_NAME}
+    install -Dm 0755 ${UNPACKDIR}/launch-wireplumber.sh -t ${D}${libexecdir}
 }

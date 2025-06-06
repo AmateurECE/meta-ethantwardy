@@ -45,6 +45,7 @@ systemd-resolve:x:102:
 systemd-timesync:x:103:
 systemd-network:x:104:
 render:x:105:
+pulse:x:996:
 pipewire:x:997:
 sshd:x:998:
 messagebus:x:999:

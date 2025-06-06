@@ -7,12 +7,13 @@ IMAGE_INSTALL:append = " \
     alsa-utils-aplay \
     alsa-utils-speakertest \
     iwd \
-    ${VIRTUAL-RUNTIME_wireplumber-config} \
     pipewire \
+    pipewire-tools \
     pipewire-alsa-card-profile \
     packagegroup-core-ssh-openssh \
     pi-bluetooth \
     busybox-ntpd \
+    usbutils \
 "
 
 # TODO: Can probably slim this down by selecting a MACHINE_FEATURE?
