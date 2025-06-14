@@ -37,11 +37,16 @@ def efi_options(efivars_file: str):
         "-drive", f"if=pflash,format=raw,file={efivars_file}",
     ]
 
-def data_drive_options(data_file: str):
-    return [
+def data_drive_options(data_file: str, local_share: str):
+    options = [
         "-drive", f"if=none,id=hdata,file={data_file},format=raw",
-        "-device", "scsi-hd,drive=hdata"
+        "-device", "scsi-hd,drive=hdata",
     ]
+    if local_share:
+        options.extend([
+            "-virtfs", f"local,path={local_share},mount_tag=local_share,security_model=mapped-xattr"
+        ])
+    return options
 
 def rootfs_options(config_directory, image):
     if not image:
@@ -67,6 +72,7 @@ def networking_options(wan_mac: str, lan_mac: str):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f','--file', required=True)
+    parser.add_argument('-l', '--local-share')
     parser.add_argument('config')
     args = parser.parse_args()
 
@@ -84,7 +90,7 @@ def main():
     options = MACHINE_OPTIONS  + URANDOM_OPTIONS \
             + efi_options(efivars_file) \
             + rootfs_options(config_directory, image) \
-            + data_drive_options(data_file) \
+            + data_drive_options(data_file, args.local_share) \
             + networking_options(wan_mac, lan_mac) + SERIAL_OPTIONS
     os.execvp(executable, [executable] + options)
 
