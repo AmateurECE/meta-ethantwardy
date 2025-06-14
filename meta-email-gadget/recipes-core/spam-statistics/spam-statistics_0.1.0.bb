@@ -7,16 +7,15 @@ HOMEPAGE = "https://github.com/AmateurECE/spam-statistics"
 inherit cargo cargo-update-recipe-crates pkgconfig
 
 SRC_URI += "git://github.com/AmateurECE/spam-statistics;protocol=https;branch=main"
-SRCREV = "44f47c24f4d9c159a87894736dc88bd0ea13a409"
+SRCREV = "edb7da31b9b7617ee29aca2850a50a4b31f8f475"
 S = "${WORKDIR}/git"
-PV:append = "+23"
+PV:append = "+27"
 
 DEPENDS += " \
     fontconfig \
 "
 
 RDEPENDS:${PN} += " \
-    gnuplot \
     ttf-roboto \
 "
 
