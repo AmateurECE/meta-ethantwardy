@@ -17,17 +17,21 @@ def get_git_version(d):
         version = "unknown"
     return version
 
-GIT_VERSION := "${@get_git_version(d)}"
+GIT_DESCRIBE_VERSION := "${@get_git_version(d)}"
+GIT_DESCRIBE_VERSION[vardepvalue] = "${GIT_DESCRIBE_VERSION}"
+
+BB_DONT_CACHE = "1"
 
 do_compile:append() {
     cat > os-release <<EOF
 NAME="${DISTRO_NAME}"
 VERSION=${DISTRO_VERSION}
-VERSION_ID=${GIT_VERSION}
+VERSION_ID=${GIT_DESCRIBE_VERSION}
 ID=${DISTRO}
 PRETTY_NAME="${DISTRO_NAME} ${DISTRO_VERSION}"
 EOF
 }
+do_compile[vardeps] += "GIT_DESCRIBE_VERSION"
 
 do_install:append() {
     install -Dm0644 os-release -t ${D}${sysconfdir}
