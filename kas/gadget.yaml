@@ -16,6 +16,9 @@ repos:
       0002:
         repo: meta-ethantwardy
         path: kas/0002-meta-busybox-Apply-patch-to-fix-compilation-test.patch
+      0003:
+        repo: meta-ethantwardy
+        path: kas/0003-meta-libatomic-ops-Fix-SRC_URI.patch
     layers:
       meta:
       meta-poky:
