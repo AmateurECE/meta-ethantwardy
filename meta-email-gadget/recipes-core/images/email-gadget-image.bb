@@ -20,6 +20,7 @@ IMAGE_INSTALL += " \
     wireguard-tools \
     cronie \
     certbot \
+    certbot-dns-luadns \
 "
 
 # Ensure the update-rc.d and shadow packages are not removed from the rootfs.
