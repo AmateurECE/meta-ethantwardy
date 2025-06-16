@@ -7,9 +7,9 @@ HOMEPAGE = "https://github.com/AmateurECE/spam-statistics"
 inherit cargo cargo-update-recipe-crates pkgconfig
 
 SRC_URI += "git://github.com/AmateurECE/spam-statistics;protocol=https;branch=main"
-SRCREV = "edb7da31b9b7617ee29aca2850a50a4b31f8f475"
+SRCREV = "a5c9bd7af29ef2b42017858b94493223c4b2e1d1"
 S = "${WORKDIR}/git"
-PV:append = "+27"
+PV:append = "+28"
 
 DEPENDS += " \
     fontconfig \
