@@ -31,17 +31,29 @@ touch /etc/postfix/internal_recipient
 postmap /etc/postfix/internal_recipient
 
 # Setup postfix configuration
-mkdir -p /etc/gadget
-cat - >/etc/gadget/main.cf.vars.m4 <<EOF
-> changequote([, ])
-> define([MYHOSTNAME], [mail.domain.com])
-> define([MYDOMAIN], [domain.com])
+cat - >/etc/postfix/main.cf.local <<EOF
+> myhostname = mail.domain.com
+> mydomain = domain.com
 > EOF
+
+# Obtain certificates using certbot
+certbot certonly --webroot -w /var/www/certbot -n --agree-tos \
+  -d mail.domain.com
 
 # Install TLS certificates. The private key needs to be unencrypted!
 mkdir -p /etc/gadget/tls
-install -Dm600 <source> /etc/gadget/tls/privkey.pem
-install -m600 <source> /etc/gadget/tls/fullchain.pem
+ln -s /etc/letsencrypt/live/mail.domain.com/privkey.pem \
+  /etc/gadget/tls/privkey.pem
+ln -s /etc/letsencrypt/live/mail.domain.com/fullchain.pem \
+  /etc/gadget/tls/fullchain.pem
+
+# Renew certificates weekly
+cat - >/etc/cron.weekly/renew-certificates.sh <<EOF
+> #!/bin/sh
+>
+> exec certbot renew -w /var/www/certbot -n
+EOF
+chmod 0755 /etc/cron.weekly/renew-certificates.sh
 
 mkdir -p /etc/dkimkeys/ethantwardy.com
 chown -R rspamd:rspamd /etc/dkimkeys
