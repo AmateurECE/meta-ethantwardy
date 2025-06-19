@@ -2,8 +2,6 @@ compatibility_level = 3.10
 smtputf8_enable = no
 
 # Domain
-myhostname = MYHOSTNAME
-mydomain = MYDOMAIN
 mydestination = $myhostname localhost.$mydomain localhost
 mynetworks = 127.0.0.0/8
 mynetworks_style = host

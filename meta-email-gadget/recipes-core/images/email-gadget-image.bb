@@ -51,9 +51,6 @@ IMAGE_INSTALL += " \
 # Bind9 as a recursive DNS nameserver
 IMAGE_INSTALL += " bind"
 
-# Build configuration at runtime
-IMAGE_INSTALL += " make-conf"
-
 # Nginx as a webserver
 IMAGE_INSTALL += "nginx"
 
