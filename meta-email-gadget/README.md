@@ -69,6 +69,34 @@ echo '*@<domain.com> <selector>._domainkey.<domain.com>' \
   >/etc/mail/dkim.signingtable
 ```
 
+# Setup MTA-STS
+
+```
+cat - >/etc/nginx/sites-available/mta-sts.conf <<EOF
+> server {
+>     listen 443 ssl;
+>     listen [::]:443 ssl;
+>     server_name mta-sts.ethantwardy.com;
+> 
+>     location ^~ /.well-known/ {
+>         root /var/www/mta-sts;
+>         allow all;
+>     }
+> }
+> EOF
+
+mkdir -p /var/www/mta-sts/.well-known
+cat - >/var/www/mta-sts/.well-known/mta-sts.txt <<EOF
+> version: STSv1
+> mode: enforce
+> mx: mail.ethantwardy.com
+> max_age: 86400
+> EOF
+
+ln -s ../sites-available/mta-sts.conf /etc/nginx/sites-enabled/mta-sts.conf
+nginx -s reload
+```
+
 1. Local user provisioning
 
 ```
