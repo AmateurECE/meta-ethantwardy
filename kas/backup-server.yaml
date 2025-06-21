@@ -1,0 +1,14 @@
+header:
+  version: 17
+  includes: [kas/gadget.yaml]
+distro: backup-gadget
+target: ab-mutable-gadget-image-bundle
+machine: x86-64-mutable-gadget
+repos:
+  meta-ethantwardy:
+    layers:
+      meta-backup-gadget:
+
+local_conf_header:
+  image: |
+    ROOTFS_IMAGE_TARGET = "backup-gadget-image"
