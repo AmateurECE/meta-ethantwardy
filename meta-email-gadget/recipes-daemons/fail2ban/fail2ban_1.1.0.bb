@@ -8,6 +8,8 @@ inherit setuptools3
 SRC_URI = " \
     git://github.com/fail2ban/fail2ban.git;protocol=https;branch=master;tag=${PV} \
     file://fail2ban.sh \
+    file://jail.conf \
+    file://sshd.conf \
 "
 SRC_URI[sha256sum] = "a867bfbb5126516c12d4c8a93909ef1e4d5309fc4e9f5b97b2d987b0ffd4bbe3"
 
@@ -21,6 +23,10 @@ do_install:append() {
     # Data is installed into /usr/lib
     mv ${D}${libdir}/*/site-packages${sysconfdir}/* ${D}${sysconfdir}
     mv ${D}${libdir}/*/site-packages${datadir}/* ${D}${datadir}
+
+    # Overwrite these files, which are customized for the email-gadget
+    install -Dm644 ${UNPACKDIR}/jail.conf -t ${D}${sysconfdir}/fail2ban
+    install -Dm644 ${UNPACKDIR}/sshd.conf -t ${D}${sysconfdir}/fail2ban/filter.d
 }
 
 # TODO: Is there a better way than the kernel module?
