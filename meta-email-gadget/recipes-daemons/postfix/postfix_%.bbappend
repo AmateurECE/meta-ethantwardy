@@ -9,6 +9,7 @@ PACKAGES =+ "${PN}-makeconf"
 
 # Upstream recipe uses INITSCRIPT_NAME without a package name.
 # /etc/init.d/postfix is installed in postfix-cfg package.
+INITSCRIPT_NAME = ""
 INITSCRIPT_PACKAGES += "${PN}-cfg ${PN}-makeconf"
 INITSCRIPT_NAME:${PN}-cfg = "postfix"
 INITSCRIPT_NAME:${PN}-makeconf = "postfix-makeconf"
@@ -30,4 +31,4 @@ FILES:${PN}-cfg:append = " \
 FILES:${PN}-makeconf = " \
     /etc/init.d/postfix-makeconf \
 "
-RDEPENDS:${PN}-cfg += "${PN}-makeconf"
+RDEPENDS:${PN}:class-target += "${PN}-cfg ${PN}-makeconf"
