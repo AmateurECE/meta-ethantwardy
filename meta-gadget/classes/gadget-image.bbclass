@@ -18,3 +18,5 @@ boot_bundled_kernel() {
     ln -sf ${KERNEL_IMAGETYPE}-${INITRAMFS_LINK_NAME}.bin ${IMAGE_ROOTFS}/boot/${KERNEL_IMAGETYPE}
 }
 ROOTFS_POSTPROCESS_COMMAND += "${@bb.utils.contains('INITRAMFS_IMAGE_BUNDLE', '1', 'boot_bundled_kernel', '', d)}"
+
+do_rootfs[depends] += "${@bb.utils.contains('INITRAMFS_IMAGE_BUNDLE', '1', 'virtual/kernel:do_bundle_initramfs', '', d)}"
