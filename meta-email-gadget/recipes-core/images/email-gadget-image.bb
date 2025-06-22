@@ -21,6 +21,7 @@ IMAGE_INSTALL += " \
     cronie \
     certbot \
     certbot-dns-luadns \
+    rsyslog \
 "
 
 # Ensure the update-rc.d and shadow packages are not removed from the rootfs.
