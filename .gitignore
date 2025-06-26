@@ -3,6 +3,7 @@
 /meta-openembedded/
 /meta-raspberrypi/
 /meta-rauc/
+/meta-cyclonedx/
 /poky/
 /linux/
 /certificates/

@@ -43,6 +43,11 @@ repos:
     commit: 2ee80ebc81c30d34fe7a86ef8e8e2e580f569641
     branch: master
 
+  meta-cyclonedx:
+    url: https://github.com/savoirfairelinux/meta-cyclonedx.git
+    commit: 87758c218ca6e8fb75f38cba2b3fc9281ee690df
+    branch: main
+
 # Pass these environment variables through to bitbake
 env:
   RAUC_KEY_FILE: null
@@ -59,3 +64,5 @@ local_conf_header:
     BB_PRESSURE_MAX_CPU = "250000"
     BB_PRESSURE_MAX_MEMORY = "250000"
     INHERIT += "buildhistory"
+  sbom: |
+    INHERIT += "cyclonedx-export"
