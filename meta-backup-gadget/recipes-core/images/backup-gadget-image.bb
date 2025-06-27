@@ -7,6 +7,7 @@ IMAGE_INSTALL += " \
     net-tools \
     util-linux \
     packagegroup-core-ssh-openssh \
+    tzdata \
 "
 
 # Ethernet drivers
