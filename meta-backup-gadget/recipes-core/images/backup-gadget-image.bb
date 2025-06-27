@@ -19,4 +19,8 @@ IMAGE_INSTALL += " \
 # Temperature Monitoring Driver
 IMAGE_INSTALL += "kernel-module-k10temp"
 
+IMAGE_INSTALL += " \
+    ${MACHINE_EXTRA_RRECOMMENDS} \
+"
+
 inherit gadget-image
