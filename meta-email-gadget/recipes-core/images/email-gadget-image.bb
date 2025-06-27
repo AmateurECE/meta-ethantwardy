@@ -15,7 +15,6 @@ IMAGE_INSTALL += " \
 IMAGE_INSTALL += " \
     sudo \
     tzdata \
-    busybox-ntpd \
     packagegroup-core-ssh-openssh \
     wireguard-tools \
     cronie \

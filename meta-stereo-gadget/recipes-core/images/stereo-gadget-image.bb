@@ -12,7 +12,6 @@ IMAGE_INSTALL:append = " \
     pipewire-alsa-card-profile \
     packagegroup-core-ssh-openssh \
     pi-bluetooth \
-    busybox-ntpd \
     usbutils \
 "
 
