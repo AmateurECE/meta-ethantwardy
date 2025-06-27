@@ -1,0 +1,7 @@
+# short-description: x86-64 Dual A/B image w/ mutable data partition
+
+part /boot --source bootimg-efi --sourceparams="loader=grub-efi" --fstype=vfat --label boot --active --align 1024
+part / --source rootfs --fstype=ext4 --label system0 --align 4096 --size 4G
+part --label system1 --align 4096 --size 4G
+part --ondisk mmcblk0 --fstype=btrfs --label gadget-data --align 1024 --size 8G
+bootloader --ptable=gpt --configfile="x86-64-mutable-gadget-grub.cfg"

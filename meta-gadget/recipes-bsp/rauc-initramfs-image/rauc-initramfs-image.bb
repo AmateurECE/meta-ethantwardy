@@ -1,5 +1,5 @@
 SUMMARY = "Basic initramfs to boot the rootfs in the rauc slot"
-DESCRIPTION = "Initramfs that finds root based on rauc slot for cloud instances"
+DESCRIPTION = "Initramfs that finds root based on rauc slot for gadgets with multiple disks"
 LICENSE = "MIT"
 
 INITRAMFS_SCRIPTS ?= "initramfs-framework-base initramfs-module-udev"
@@ -7,7 +7,7 @@ INITRAMFS_SCRIPTS ?= "initramfs-framework-base initramfs-module-udev"
 PACKAGE_INSTALL = " \
     e2fsprogs-dumpe2fs \
     e2fsprogs-tune2fs \
-    cloud-initramfs-init \
+    rauc-initramfs-init \
     ${VIRTUAL-RUNTIME_base-utils} \
     base-passwd \
 "

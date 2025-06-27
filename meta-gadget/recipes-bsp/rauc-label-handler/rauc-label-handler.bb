@@ -1,7 +1,7 @@
 SUMMARY = "Keep slot labels in sync after a RAUC update"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
-SRC_URI = "file://cloud-label-handler.sh"
+SRC_URI = "file://rauc-label-handler.sh"
 
 S = "${WORKDIR}/sources"
 UNPACKDIR = "${S}"
@@ -9,5 +9,5 @@ UNPACKDIR = "${S}"
 RDEPENDS:${PN} += "e2fsprogs-tune2fs"
 
 do_install() {
-    install -Dm755 ${UNPACKDIR}/cloud-label-handler.sh ${D}${libexecdir}/rauc/cloud-label-handler
+    install -Dm755 ${UNPACKDIR}/rauc-label-handler.sh ${D}${libexecdir}/rauc/rauc-label-handler
 }
