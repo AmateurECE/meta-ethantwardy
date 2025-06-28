@@ -21,6 +21,7 @@ IMAGE_INSTALL += "kernel-module-k10temp"
 
 IMAGE_INSTALL += " \
     backup-dataset \
+    hddfancontrol \
 "
 
 IMAGE_INSTALL += " \
