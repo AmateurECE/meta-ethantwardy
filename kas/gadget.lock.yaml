@@ -5,8 +5,8 @@ overrides:
         meta-cyclonedx:
             commit: 87758c218ca6e8fb75f38cba2b3fc9281ee690df
         meta-openembedded:
-            commit: 59f822ceb7a788a6da80eeb0ea909a03e72f81a0
+            commit: e984a3504f8b77e2a2ec852379adbace619d7c51
         meta-rauc:
-            commit: 2ee80ebc81c30d34fe7a86ef8e8e2e580f569641
+            commit: 407903bebdf11ec6ddf53b7088f92ea835f9f595
         poky:
-            commit: dfe34c23379f501c65abdde10b7185f0c6b48c02
+            commit: 72d932cc5b8ad99caf83e45924e81dcd58f56d20

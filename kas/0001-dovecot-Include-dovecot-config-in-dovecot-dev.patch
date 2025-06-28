@@ -1,13 +1,16 @@
-From b1f73b0b68a4c82a27c65a935afa48b8b9933e1e Mon Sep 17 00:00:00 2001
+From a5334d65cd1dcd5513b3c7036530a3514efc0c5e Mon Sep 17 00:00:00 2001
 From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
 Date: Sat, 10 May 2025 21:01:18 -0500
-Subject: [PATCH 1/2] dovecot: Include dovecot-config in dovecot-dev
+Subject: [PATCH] dovecot: Include dovecot-config in dovecot-dev
 
 This tool is used by dovecot plugins (e.g. pigeonhole) to locate and
 build against dovecot libraries.
+---
+ .../recipes-support/dovecot/dovecot_2.3.21.1.bb  | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/meta-networking/recipes-support/dovecot/dovecot_2.3.21.1.bb b/meta-networking/recipes-support/dovecot/dovecot_2.3.21.1.bb
-index 3177cdb1d7..d1e8fee878 100644
+index 3177cdb1d7..5935ff3119 100644
 --- a/meta-networking/recipes-support/dovecot/dovecot_2.3.21.1.bb
 +++ b/meta-networking/recipes-support/dovecot/dovecot_2.3.21.1.bb
 @@ -49,7 +49,10 @@ SYSTEMD_SERVICE:${PN} = "dovecot.service dovecot.socket"
@@ -15,7 +18,7 @@ index 3177cdb1d7..d1e8fee878 100644
  
  do_install:append () {
 -    rm -rf ${D}${libdir}/dovecot/dovecot-config
-+    sed -e "s/-f\(debug\|macro\)-prefix-map=[^[:space:]]*//g" \
++    sed -e "s/-f\(debug\|macro\|file\)-prefix-map=[^[:space:]]*//g" \
 +        -e "s@-I${RECIPE_SYSROOT}@-I@g" \
 +        -i ${D}${libdir}/dovecot/dovecot-config
 +

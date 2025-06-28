@@ -8,16 +8,6 @@ repos:
   poky:
     url: https://git.yoctoproject.org/git/poky
     branch: master
-    patches:
-      0001:
-        repo: meta-ethantwardy
-        path: kas/0001-meta-graphics-mesa-Fix-SRC_URI-upstream-domain-name.patch
-      0002:
-        repo: meta-ethantwardy
-        path: kas/0002-meta-busybox-Apply-patch-to-fix-compilation-test.patch
-      0003:
-        repo: meta-ethantwardy
-        path: kas/0003-meta-libatomic-ops-Fix-SRC_URI.patch
     layers:
       meta:
       meta-poky:
@@ -40,10 +30,6 @@ repos:
     url: https://github.com/rauc/meta-rauc.git
     branch: master
 
-  meta-cyclonedx:
-    url: https://github.com/savoirfairelinux/meta-cyclonedx.git
-    branch: main
-
 # Pass these environment variables through to bitbake
 env:
   RAUC_KEY_FILE: null
@@ -60,5 +46,3 @@ local_conf_header:
     BB_PRESSURE_MAX_CPU = "250000"
     BB_PRESSURE_MAX_MEMORY = "250000"
     INHERIT += "buildhistory"
-  sbom: |
-    INHERIT += "cyclonedx-export"
