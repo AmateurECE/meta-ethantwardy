@@ -20,6 +20,10 @@ IMAGE_INSTALL += " \
 IMAGE_INSTALL += "kernel-module-k10temp"
 
 IMAGE_INSTALL += " \
+    backup-dataset \
+"
+
+IMAGE_INSTALL += " \
     ${MACHINE_EXTRA_RRECOMMENDS} \
 "
 
