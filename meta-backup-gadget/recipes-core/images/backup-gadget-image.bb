@@ -10,6 +10,7 @@ IMAGE_INSTALL += " \
     util-linux \
     packagegroup-core-ssh-openssh \
     tzdata \
+    rsync \
 "
 
 # The function of this image.
