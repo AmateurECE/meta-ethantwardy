@@ -3,7 +3,7 @@ header:
   includes: [kas/gadget.yaml]
 distro: backup-gadget
 target: ab-mutable-gadget-image-bundle
-machine: x86-64-mutable-gadget
+machine: backup-gadget-v1
 repos:
   meta-ethantwardy:
     layers:

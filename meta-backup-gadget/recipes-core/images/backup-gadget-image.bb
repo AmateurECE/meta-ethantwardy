@@ -1,5 +1,7 @@
 include recipes-core/images/core-image-minimal.bb
 
+IMAGE_INSTALL += "${MACHINE_EXTRA_RRECOMMENDS}"
+
 # Required (or desired) tools
 IMAGE_INSTALL += " \
     curl \
@@ -10,22 +12,7 @@ IMAGE_INSTALL += " \
     tzdata \
 "
 
-# Ethernet drivers
-IMAGE_INSTALL += " \
-    kernel-module-r8169 \
-    kernel-module-realtek \
-"
-
-# Temperature Monitoring Driver
-IMAGE_INSTALL += "kernel-module-k10temp"
-
-IMAGE_INSTALL += " \
-    backup-dataset \
-    hddfancontrol \
-"
-
-IMAGE_INSTALL += " \
-    ${MACHINE_EXTRA_RRECOMMENDS} \
-"
+# The function of this image.
+IMAGE_INSTALL += "backup-dataset"
 
 inherit gadget-image
