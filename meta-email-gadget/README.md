@@ -72,6 +72,13 @@ echo '*@<domain.com> <selector>._domainkey.<domain.com>' \
 # Setup MTA-STS
 
 ```
+cat - >/etc/nginx/conf.d/ssl.conf <<EOF
+> port_in_redirect on;
+>
+> ssl_certificate /etc/letsencrypt/live/domain.com/fullchain.pem;
+> ssl_certificate_key /etc/letsencrypt/live/domain.com/privkey.pem;
+> EOF
+
 cat - >/etc/nginx/sites-available/mta-sts.conf <<EOF
 > server {
 >     listen 443 ssl;
