@@ -5,8 +5,6 @@ SRC_URI = " \
     file://0003-snowball-Allow-cross-compilation.patch \
 "
 
-S = "${WORKDIR}/git"
-
 # TODO: We could use luajit instead of lua here if we -DENABLE_LUAJIT=ON
 DEPENDS += " \
     binutils \

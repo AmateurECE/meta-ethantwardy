@@ -33,6 +33,11 @@ IMAGE_INSTALL += " \
     nftables \
     firewall-config \
     kernel-module-nft-ct \
+    kernel-module-nft-nat \
+    kernel-module-nft-chain-nat \
+    kernel-module-nft-masq \
+    kernel-module-xt-nat \
+    kernel-module-xt-masquerade \
 "
 
 # Mail documentation, utilities and services.

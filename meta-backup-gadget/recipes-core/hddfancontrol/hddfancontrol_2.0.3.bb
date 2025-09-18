@@ -6,7 +6,6 @@ HOMEPAGE = "https://crates.io/crates/hddfancontrol"
 
 inherit update-rc.d cargo cargo-update-recipe-crates
 
-S = "${WORKDIR}/git"
 SRC_URI += " \
     git://github.com/desbma/hddfancontrol;protocol=https;branch=master;tag=${PV} \
     file://hddfancontrol.sh \

@@ -16,8 +16,7 @@ do_compile() {
 
 inherit kernel-arch deploy nopackages
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 do_deploy() {
     install -d ${DEPLOYDIR}

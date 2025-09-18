@@ -40,7 +40,7 @@ SRC_URI += " \
     file://35-Fix-new-warnings-and-error.patch \
 "
 
-S = "${WORKDIR}/bsd-mailx-${PV}cvs.orig"
+S = "${UNPACKDIR}/bsd-mailx-${PV}cvs.orig"
 
 DEPENDS = " \
     libbsd \

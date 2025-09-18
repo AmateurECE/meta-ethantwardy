@@ -1,17 +1,21 @@
-From 0160d8e14e216fc357cdea38b74d25897bb99008 Mon Sep 17 00:00:00 2001
+From 2aeb1b70c60b5e262b558a22208d1663be3081cc Mon Sep 17 00:00:00 2001
 From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
 Date: Sat, 10 May 2025 21:04:52 -0500
-Subject: [PATCH 2/2] dovecot: Add recipe for pigeonhole
+Subject: [PATCH] dovecot: Add recipe for pigeonhole
 
 Pigeonhole is a dovecot plugin that adds support for the Sieve language
 and the ManageSieve protocol to dovecot.
+---
+ .../dovecot/pigeonhole_0.5.21.1.bb            | 29 +++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+ create mode 100644 meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb
 
 diff --git a/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb b/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb
 new file mode 100644
-index 0000000000..1997b1905d
+index 0000000000..1c5bedf74b
 --- /dev/null
 +++ b/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb
-@@ -0,0 +1,31 @@
+@@ -0,0 +1,29 @@
 +LICENSE = "LGPL-2.1-only"
 +LIC_FILES_CHKSUM = "file://COPYING.LGPL;md5=4fbd65380cdd255951079008b364516c"
 +
@@ -20,8 +24,6 @@ index 0000000000..1997b1905d
 +SRCBRANCH = "release-0.5.21"
 +
 +SRC_URI += "git://github.com/dovecot/pigeonhole.git;protocol=https;branch=${SRCBRANCH};tag=${PV}"
-+
-+S = "${WORKDIR}/git"
 +
 +DEPENDS += "dovecot"
 +

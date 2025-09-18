@@ -18,15 +18,14 @@ SRC_URI = " \
     ${RAUC_KEYRING_URI} \
 "
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 do_install () {
     if [ -z "${RAUC_CONFIG_FILE}" ]; then
         bbfatal "No RAUC configuration available for the current machine!"
     fi
-    install -Dm0644 ${UNPACKDIR}/${RAUC_CONFIG_FILE} ${D}${sysconfdir}/rauc/system.conf
-    install -Dm0644 ${UNPACKDIR}/${RAUC_KEYRING_FILE} -t ${D}${sysconfdir}/rauc
+    install -Dm0644 ${S}/${RAUC_CONFIG_FILE} ${D}${sysconfdir}/rauc/system.conf
+    install -Dm0644 ${S}/${RAUC_KEYRING_FILE} -t ${D}${sysconfdir}/rauc
 
     # Mountpoint needed for the installation process at runtime.
     install -d ${D}/mnt/rauc/bundle

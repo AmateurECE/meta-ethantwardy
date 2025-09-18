@@ -13,8 +13,6 @@ SRC_URI = " \
 "
 SRC_URI[sha256sum] = "a867bfbb5126516c12d4c8a93909ef1e4d5309fc4e9f5b97b2d987b0ffd4bbe3"
 
-S = "${UNPACKDIR}/git"
-
 do_install:append() {
     ln -sf python3 ${D}${bindir}/fail2ban-python
 

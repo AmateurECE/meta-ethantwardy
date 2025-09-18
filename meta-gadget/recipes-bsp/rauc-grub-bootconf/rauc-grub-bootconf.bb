@@ -4,8 +4,7 @@ SUMMARY = "Boots RAUC-based systems that have multiple disks"
 
 RPROVIDES:${PN} += "virtual-grub-bootconf"
 
-S = "${WORKDIR}/sources"
-UNPACKDIR = "${S}"
+S = "${UNPACKDIR}"
 
 SRC_URI = "file://grub.cfg"
 
