@@ -9,7 +9,7 @@ require ${BPN}-crates.inc
 inherit cargo cargo-update-recipe-crates pkgconfig
 
 SRC_URI += "git://github.com/AmateurECE/spam-statistics;protocol=https;branch=main;name=spam-statistics"
-SRCREV_spam-statistics = "65e4700dfd8442649af6f099b732015bb2e5e98a"
+SRCREV_spam-statistics = "b376e032847103dc488798da8559ac350778a56d"
 SRCREV_FORMAT = "spam-statistics"
 PV:append = "+31"
 
