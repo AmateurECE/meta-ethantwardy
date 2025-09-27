@@ -30,6 +30,10 @@ repos:
     url: https://github.com/rauc/meta-rauc.git
     branch: master
 
+  meta-cyclonedx:
+    url: https://github.com/iris-GmbH/meta-cyclonedx.git
+    branch: main
+
 # Pass these environment variables through to bitbake
 env:
   RAUC_KEY_FILE: null
@@ -45,4 +49,4 @@ local_conf_header:
   host: |
     BB_PRESSURE_MAX_CPU = "250000"
     BB_PRESSURE_MAX_MEMORY = "250000"
-    INHERIT += "buildhistory"
+    INHERIT += "buildhistory cyclonedx-export"

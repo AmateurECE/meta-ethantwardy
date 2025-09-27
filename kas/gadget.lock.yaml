@@ -8,3 +8,5 @@ overrides:
             commit: 8992a51e245b82fe59ade3da1bfac4ffde967d7b
         poky:
             commit: cfbb00657ab961a3c3a8e6619fc08a2a3f4255c7
+        meta-cyclonedx:
+            commit: 4bcdbfa49fa36768304da0da90b4bff68b64bd86
