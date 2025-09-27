@@ -4,7 +4,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/BSD-3-Clause;md5=550794465ba0ec
 
 include rspamd.inc
 
-SRCREV = "${AUTOREV}"
+# The version bundled with this release of rspamd
+PV = "2.0.0"
 
 OECMAKE_TARGET_COMPILE = "contrib/snowball/snowball"
 

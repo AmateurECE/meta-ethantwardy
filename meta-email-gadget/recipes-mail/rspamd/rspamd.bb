@@ -31,6 +31,8 @@ LIC_FILES_CHKSUM = " \
 
 include rspamd.inc
 
+PV = "3.11.1"
+
 inherit useradd update-rc.d
 
 SRC_URI += " \
