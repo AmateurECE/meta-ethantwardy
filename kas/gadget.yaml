@@ -47,6 +47,6 @@ local_conf_header:
     USERADD_UID_TABLES = "files/passwd"
     USERADD_GID_TABLES = "files/group"
   host: |
-    BB_PRESSURE_MAX_CPU = "250000"
+    BB_PRESSURE_MAX_CPU = "200000"
     BB_PRESSURE_MAX_MEMORY = "250000"
     INHERIT += "buildhistory cyclonedx-export"

@@ -1,31 +1,31 @@
-From a5334d65cd1dcd5513b3c7036530a3514efc0c5e Mon Sep 17 00:00:00 2001
+From 1f56f323ea20390a7a4568be823b011a568d441a Mon Sep 17 00:00:00 2001
 From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
-Date: Sat, 10 May 2025 21:01:18 -0500
-Subject: [PATCH] dovecot: Include dovecot-config in dovecot-dev
+Date: Thu, 23 Oct 2025 22:44:54 -0500
+Subject: [PATCH 1/2] dovecot: Include dovecot-config in dovecot-dev
 
 This tool is used by dovecot plugins (e.g. pigeonhole) to locate and
 build against dovecot libraries.
 ---
- .../recipes-support/dovecot/dovecot_2.3.21.1.bb  | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ .../recipes-support/dovecot/dovecot_2.4.1-4.bb  | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/meta-networking/recipes-support/dovecot/dovecot_2.3.21.1.bb b/meta-networking/recipes-support/dovecot/dovecot_2.3.21.1.bb
-index 3177cdb1d7..5935ff3119 100644
---- a/meta-networking/recipes-support/dovecot/dovecot_2.3.21.1.bb
-+++ b/meta-networking/recipes-support/dovecot/dovecot_2.3.21.1.bb
-@@ -49,7 +49,10 @@ SYSTEMD_SERVICE:${PN} = "dovecot.service dovecot.socket"
+diff --git a/meta-networking/recipes-support/dovecot/dovecot_2.4.1-4.bb b/meta-networking/recipes-support/dovecot/dovecot_2.4.1-4.bb
+index 5894c76bac..8c32f21d2a 100644
+--- a/meta-networking/recipes-support/dovecot/dovecot_2.4.1-4.bb
++++ b/meta-networking/recipes-support/dovecot/dovecot_2.4.1-4.bb
+@@ -52,7 +52,10 @@ SYSTEMD_SERVICE:${PN} = "dovecot.service dovecot.socket"
  SYSTEMD_AUTO_ENABLE = "disable"
  
  do_install:append () {
 -    rm -rf ${D}${libdir}/dovecot/dovecot-config
-+    sed -e "s/-f\(debug\|macro\|file\)-prefix-map=[^[:space:]]*//g" \
-+        -e "s@-I${RECIPE_SYSROOT}@-I@g" \
-+        -i ${D}${libdir}/dovecot/dovecot-config
++   sed -e "s/-f\(debug\|macro\|file\)-prefix-map=[^[:space:]]*//g" \
++       -e "s@-I${RECIPE_SYSROOT}@-I@g" \
++       -i ${D}${libdir}/dovecot/dovecot-config
 +
      install -d 755 ${D}/etc/dovecot
      touch ${D}/etc/dovecot/dovecot.conf
      chmod 644 ${D}/etc/dovecot/dovecot.conf
-@@ -61,6 +64,14 @@ do_install:append () {
+@@ -64,6 +67,15 @@ do_install:append () {
      oe_multilib_header dovecot/config.h
  }
  
@@ -33,6 +33,7 @@ index 3177cdb1d7..5935ff3119 100644
 +dovecot_sysroot_preprocess () {
 +    install -Dm755 ${D}${libdir}/dovecot/dovecot-config -t ${SYSROOT_DESTDIR}${libdir}/dovecot
 +    sed -e "s@^LIBDOVECOT='-L${libdir}@LIBDOVECOT='-L${RECIPE_SYSROOT}${libdir}@" \
++        -e "/^LIBDOVECOT_LDA/d" \
 +        -e "s@-I${includedir}@-I${RECIPE_SYSROOT}${includedir}@" \
 +        -i ${SYSROOT_DESTDIR}${libdir}/dovecot/dovecot-config
 +}
@@ -40,7 +41,7 @@ index 3177cdb1d7..5935ff3119 100644
  USERADD_PACKAGES = "${PN}"
  USERADD_PARAM:${PN} = "-r -d ${libexecdir} -M -s ${base_sbindir}/nologin -g dovecot dovecot; \
                        -r -d ${libexecdir} -M -s ${base_sbindir}/nologin -g dovenull dovenull"
-@@ -70,7 +81,8 @@ FILES:${PN} += "${libdir}/dovecot/*plugin.so \
+@@ -73,7 +85,8 @@ FILES:${PN} += "${libdir}/dovecot/*plugin.so \
                  ${libdir}/dovecot/libfs_compress.so \
                  ${libdir}/dovecot/libssl_iostream_openssl.so"
  FILES:${PN}-staticdev += "${libdir}/dovecot/*/*.a"

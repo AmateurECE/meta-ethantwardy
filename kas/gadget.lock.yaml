@@ -2,11 +2,11 @@ header:
     version: 14
 overrides:
     repos:
+        meta-cyclonedx:
+            commit: 4bcdbfa49fa36768304da0da90b4bff68b64bd86
         meta-openembedded:
-            commit: d58fd569c26b033c2ac13891956848de9499f478
+            commit: a2299f5fb1f481db93f4d99cf7866f69c6a99674
         meta-rauc:
             commit: 8992a51e245b82fe59ade3da1bfac4ffde967d7b
         poky:
-            commit: cfbb00657ab961a3c3a8e6619fc08a2a3f4255c7
-        meta-cyclonedx:
-            commit: 4bcdbfa49fa36768304da0da90b4bff68b64bd86
+            commit: 416731b8756cd2689055ada2deaff48c7751d3b9

@@ -3,4 +3,4 @@ header:
 overrides:
     repos:
         meta-raspberrypi:
-            commit: bf065600bc79dd0e2320b2def302293b166142da
+            commit: e75c190de3c395832621b9e4f4f37e4d7f847474

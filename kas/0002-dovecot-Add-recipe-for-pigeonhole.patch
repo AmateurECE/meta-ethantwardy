@@ -1,35 +1,114 @@
-From 2aeb1b70c60b5e262b558a22208d1663be3081cc Mon Sep 17 00:00:00 2001
+From 15fabcca62dc37bb99c9c0ff8bfd01833eacef94 Mon Sep 17 00:00:00 2001
 From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
-Date: Sat, 10 May 2025 21:04:52 -0500
-Subject: [PATCH] dovecot: Add recipe for pigeonhole
+Date: Thu, 23 Oct 2025 22:44:19 -0500
+Subject: [PATCH 2/2] dovecot: Add recipe for pigeonhole
 
 Pigeonhole is a dovecot plugin that adds support for the Sieve language
 and the ManageSieve protocol to dovecot.
 ---
- .../dovecot/pigeonhole_0.5.21.1.bb            | 29 +++++++++++++++++++
- 1 file changed, 29 insertions(+)
- create mode 100644 meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb
+ ...erroneous-call-to-missing-LDAP-macro.patch | 25 +++++++++++
+ ...rage-Only-include-LDAP-when-its-used.patch | 29 +++++++++++++
+ .../dovecot/pigeonhole_2.4.1.bb               | 41 +++++++++++++++++++
+ 3 files changed, 95 insertions(+)
+ create mode 100644 meta-networking/recipes-support/dovecot/dovecot/0001-build-Remove-erroneous-call-to-missing-LDAP-macro.patch
+ create mode 100644 meta-networking/recipes-support/dovecot/dovecot/0002-sieve-ldap-storage-Only-include-LDAP-when-its-used.patch
+ create mode 100644 meta-networking/recipes-support/dovecot/pigeonhole_2.4.1.bb
 
-diff --git a/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb b/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb
+diff --git a/meta-networking/recipes-support/dovecot/dovecot/0001-build-Remove-erroneous-call-to-missing-LDAP-macro.patch b/meta-networking/recipes-support/dovecot/dovecot/0001-build-Remove-erroneous-call-to-missing-LDAP-macro.patch
 new file mode 100644
-index 0000000000..1c5bedf74b
+index 0000000000..5a30efe417
 --- /dev/null
-+++ b/meta-networking/recipes-support/dovecot/pigeonhole_0.5.21.1.bb
++++ b/meta-networking/recipes-support/dovecot/dovecot/0001-build-Remove-erroneous-call-to-missing-LDAP-macro.patch
+@@ -0,0 +1,25 @@
++From 30de139ff576d503b9f7290c684bef8f01d64024 Mon Sep 17 00:00:00 2001
++From: "Ethan D. Twardy" <et@ethantwardy.com>
++Date: Thu, 23 Oct 2025 22:03:36 -0500
++Subject: [PATCH] build: Remove erroneous call to missing LDAP macro
++
++---
++ configure.ac | 2 --
++ 1 file changed, 2 deletions(-)
++
++diff --git a/configure.ac b/configure.ac
++index 1121455d..938f77ac 100644
++--- a/configure.ac
+++++ b/configure.ac
++@@ -105,8 +105,6 @@ AS_HELP_STRING([--with-ldap=yes|plugin], [Build with LDAP support (default=no)])
++ # lib-ldap, but, until then, some code is duplicated.
++ have_ldap=no
++ AS_IF([test $want_ldap != no], [
++-    PKG_CHECK_MODULES([LDAP], [ldap >= 2.4], [have_ldap=yes], [have_ldap=no])
++-
++     AS_IF([test $have_ldap = no], [
++     AC_CHECK_LIB(ldap, ldap_init, [
++         AC_CHECK_HEADER(ldap.h, [
++-- 
++2.47.2
++
+diff --git a/meta-networking/recipes-support/dovecot/dovecot/0002-sieve-ldap-storage-Only-include-LDAP-when-its-used.patch b/meta-networking/recipes-support/dovecot/dovecot/0002-sieve-ldap-storage-Only-include-LDAP-when-its-used.patch
+new file mode 100644
+index 0000000000..23e78ff47d
+--- /dev/null
++++ b/meta-networking/recipes-support/dovecot/dovecot/0002-sieve-ldap-storage-Only-include-LDAP-when-its-used.patch
 @@ -0,0 +1,29 @@
++From b37322a8d338bf999bc9774154dce79c4857d622 Mon Sep 17 00:00:00 2001
++From: Aki Tuomi <aki.tuomi@open-xchange.com>
++Date: Mon, 26 May 2025 09:12:52 +0300
++Subject: [PATCH] sieve-ldap-storage: Only include LDAP when it's used
++
++---
++ src/lib-sieve/storage/ldap/sieve-ldap-storage.c | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/src/lib-sieve/storage/ldap/sieve-ldap-storage.c b/src/lib-sieve/storage/ldap/sieve-ldap-storage.c
++index ecf2724c..715572c7 100644
++--- a/src/lib-sieve/storage/ldap/sieve-ldap-storage.c
+++++ b/src/lib-sieve/storage/ldap/sieve-ldap-storage.c
++@@ -3,7 +3,6 @@
++ 
++ #include "lib.h"
++ #include "settings.h"
++-#include "ldap-utils.h"
++ #include "iostream-ssl.h"
++ 
++ #include "sieve-common.h"
++@@ -13,6 +12,7 @@
++ 
++ #if defined(SIEVE_BUILTIN_LDAP) || defined(PLUGIN_BUILD)
++ 
+++#include "ldap-utils.h"
++ #include "sieve-error.h"
++ 
++ #ifndef PLUGIN_BUILD
+diff --git a/meta-networking/recipes-support/dovecot/pigeonhole_2.4.1.bb b/meta-networking/recipes-support/dovecot/pigeonhole_2.4.1.bb
+new file mode 100644
+index 0000000000..a9bb708073
+--- /dev/null
++++ b/meta-networking/recipes-support/dovecot/pigeonhole_2.4.1.bb
+@@ -0,0 +1,41 @@
 +LICENSE = "LGPL-2.1-only"
 +LIC_FILES_CHKSUM = "file://COPYING.LGPL;md5=4fbd65380cdd255951079008b364516c"
 +
++FILESEXTRAPATHS:prepend := "${THISDIR}:"
++
 +# NOTE: See this page to correlate pigeonhole versions to dovecot versions:
 +# https://pigeonhole.dovecot.org/download.html
-+SRCBRANCH = "release-0.5.21"
++SRCBRANCH = "release-2.4.1"
 +
-+SRC_URI += "git://github.com/dovecot/pigeonhole.git;protocol=https;branch=${SRCBRANCH};tag=${PV}"
++SRC_URI += " \
++    git://github.com/dovecot/pigeonhole.git;protocol=https;branch=${SRCBRANCH};tag=${PV} \
++    file://dovecot/0001-build-Remove-erroneous-call-to-missing-LDAP-macro.patch \
++    file://dovecot/0002-sieve-ldap-storage-Only-include-LDAP-when-its-used.patch \
++"
 +
 +DEPENDS += "dovecot"
 +
 +inherit autotools
 +
-+EXTRA_OECONF = "--with-dovecot=${RECIPE_SYSROOT}/usr/lib/dovecot"
++EXTRA_OECONF = " \
++    --with-dovecot=${RECIPE_SYSROOT}/usr/lib/dovecot \
++    --without-ldap \
++"
 +
 +FILES:${PN} = " \
 +    ${bindir}/sieve* \
@@ -44,7 +123,10 @@ index 0000000000..1c5bedf74b
 +    ${libdir}/dovecot/*.a \
 +    ${libdir}/dovecot/*/*.a \
 +"
-+FILES:${PN}-dev += "${libdir}/dovecot/libdovecot-sieve.so"
++FILES:${PN}-dev += " \
++    ${libdir}/dovecot/libdovecot-sieve.so \
++    ${libdir}/dovecot/libdovecot-managesieve.so \
++"
 -- 
 2.47.2
 
