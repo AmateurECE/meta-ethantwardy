@@ -1,4 +1,4 @@
-From 15fabcca62dc37bb99c9c0ff8bfd01833eacef94 Mon Sep 17 00:00:00 2001
+From a7772cf79f94a576d2331698fa194dc47ad6c29f Mon Sep 17 00:00:00 2001
 From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
 Date: Thu, 23 Oct 2025 22:44:19 -0500
 Subject: [PATCH 2/2] dovecot: Add recipe for pigeonhole

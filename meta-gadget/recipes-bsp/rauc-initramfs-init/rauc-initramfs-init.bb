@@ -6,8 +6,8 @@ SRC_URI += "file://init.sh"
 
 S = "${UNPACKDIR}"
 
-do_install:append() {
-    install -m755 ${UNPACKDIR}/init.sh ${D}/init
+do_install() {
+    install -m755 ${S}/init.sh ${D}/init
 
     # The kernel expects a device node for /dev/console to exist in initramfs
     # before even executing /init.

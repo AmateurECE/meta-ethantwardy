@@ -1,23 +1,21 @@
-From c3c6936c2b81cc9e3de1c0ec167fd185362379d3 Mon Sep 17 00:00:00 2001
+From 752be76665ec19435abcc56c1d8f352751e2bcfb Mon Sep 17 00:00:00 2001
 From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
-Date: Sat, 1 Mar 2025 09:41:57 -0600
+Date: Tue, 4 Nov 2025 20:19:08 -0600
 Subject: [PATCH] postfix: Remove postinst ontarget task
 
 For the email gadget, these actions are taken at provisioning time, not
 at postinst time. Since the rootfs is intended to be read-only, it's
 necessary to delete this task. Unfortunately, this can't be done in a
 .bbappend.
-
-Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
 ---
- .../recipes-daemons/postfix/postfix_3.10.1.bb            | 9 ---------
+ .../recipes-daemons/postfix/postfix_3.10.5.bb            | 9 ---------
  1 file changed, 9 deletions(-)
 
-diff --git a/meta-networking/recipes-daemons/postfix/postfix_3.10.1.bb b/meta-networking/recipes-daemons/postfix/postfix_3.10.1.bb
-index d426b0fe83..3abff6e804 100644
---- a/meta-networking/recipes-daemons/postfix/postfix_3.10.1.bb
-+++ b/meta-networking/recipes-daemons/postfix/postfix_3.10.1.bb
-@@ -225,15 +225,6 @@ ALTERNATIVE_LINK_NAME[mailq.1] = "${mandir}/man1/mailq.1"
+diff --git a/meta-networking/recipes-daemons/postfix/postfix_3.10.5.bb b/meta-networking/recipes-daemons/postfix/postfix_3.10.5.bb
+index edcdc1a8ca..e4e57d99f7 100644
+--- a/meta-networking/recipes-daemons/postfix/postfix_3.10.5.bb
++++ b/meta-networking/recipes-daemons/postfix/postfix_3.10.5.bb
+@@ -229,15 +229,6 @@ ALTERNATIVE_LINK_NAME[mailq.1] = "${mandir}/man1/mailq.1"
  ALTERNATIVE_LINK_NAME[newaliases.1] = "${mandir}/man1/newaliases.1"
  ALTERNATIVE_LINK_NAME[sendmail.1] = "${mandir}/man1/sendmail.1"
  

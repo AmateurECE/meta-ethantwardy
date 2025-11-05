@@ -3,10 +3,10 @@ header:
 overrides:
     repos:
         meta-cyclonedx:
-            commit: 4bcdbfa49fa36768304da0da90b4bff68b64bd86
+            commit: 57804977fa4b45d138053fe794c2f4eca1465a94
         meta-openembedded:
-            commit: a2299f5fb1f481db93f4d99cf7866f69c6a99674
+            commit: 40445a7e32a05b46060a61c64c1ad697562a3e00
         meta-rauc:
-            commit: 8992a51e245b82fe59ade3da1bfac4ffde967d7b
+            commit: 85007eaaf4612579365108f90ac48c364eb9a090
         poky:
-            commit: 416731b8756cd2689055ada2deaff48c7751d3b9
+            commit: ec569c235dc5eabbeb9353ab1d8e0a3eeef574e1
