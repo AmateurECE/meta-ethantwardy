@@ -11,6 +11,13 @@ IMAGE_INSTALL += " \
     packagegroup-core-ssh-openssh \
     tzdata \
     rsync \
+    jq \
+    sudo \
+"
+
+# Backup functionality provided by
+IMAGE_INSTALL += " \
+    btrbk \
 "
 
 # The function of this image.

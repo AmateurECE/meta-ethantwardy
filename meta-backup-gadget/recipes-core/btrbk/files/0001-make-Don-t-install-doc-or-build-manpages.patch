@@ -1,0 +1,31 @@
+From fc41608db2cccb1e0dfe72b5f3504060c42cc1b5 Mon Sep 17 00:00:00 2001
+From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
+Date: Fri, 7 Nov 2025 23:00:44 -0600
+Subject: [PATCH] make: Don't install doc or build manpages
+
+The installation instructions claim to support using asciidoc for
+building the docs, but this does not seem to be the case. Asciidoctor is
+not currently packaged, so simply don't install the docs for now.
+
+Signed-off-by: Ethan D. Twardy <ethan.twardy@gmail.com>
+Upstream-Status: Inappropriate
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index a8bc83d..eddfaf5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -50,7 +50,7 @@ replace_vars = sed \
+ 
+ all: man
+ 
+-install: install-bin install-bin-links install-etc install-completion install-systemd install-share install-man install-doc
++install: install-bin install-bin-links install-etc install-completion install-systemd install-share
+ 
+ install-bin:
+ 	@echo 'installing binary...'
+-- 
+2.47.2
+
