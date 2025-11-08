@@ -11,10 +11,17 @@ SRC_URI = " \
 
 RDEPENDS:${PN} += " \
     bash \
+    coreutils \
     btrfs-tools \
     perl \
     ssh \
     mbuffer \
+    perl-module-carp \
+    perl-module-getopt-long \
+    perl-module-time-local \
+    perl-module-ipc-open3 \
+    perl-module-symbol \
+    perl-module-cwd \
 "
 
 do_compile[noexec] = "1"

@@ -13,14 +13,13 @@ IMAGE_INSTALL += " \
     rsync \
     jq \
     sudo \
+    cronie \
 "
 
-# Backup functionality provided by
+# The function of this image
 IMAGE_INSTALL += " \
     btrbk \
+    backup-dataset \
 "
-
-# The function of this image.
-IMAGE_INSTALL += "backup-dataset"
 
 inherit gadget-image

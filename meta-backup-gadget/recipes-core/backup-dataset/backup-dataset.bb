@@ -5,10 +5,14 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 S = "${UNPACKDIR}"
 SRC_URI += " \
     file://mount-dataset.sh \
+    file://btrbk.conf \
+    file://btrbk.sh \
 "
 
 do_install() {
     install -Dm755 ${UNPACKDIR}/mount-dataset.sh ${D}${sysconfdir}/init.d/mount-dataset
+    install -Dm755 ${UNPACKDIR}/btrbk.sh -t ${D}${sysconfdir}/cron.daily
+    install -Dm644 ${UNPACKDIR}/btrbk.conf -t ${D}${sysconfdir}/btrbk
     install -d ${D}/dataset
 }
 
