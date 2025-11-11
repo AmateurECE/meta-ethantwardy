@@ -1,0 +1,40 @@
+# See http://www.postfix.org/COMPATIBILITY_README.html
+compatibility_level = 3.9
+
+mynetworks_style = host
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+
+myorigin = backup.ethantwardy.com
+
+# List of domains (maptype:mapname allowed) that this machine considers
+# itself the final destination for.
+mydestination = backup.ethantwardy.com, localhost.localdomain, localhost, local.$mydomain
+
+mydomain = ethantwardy.com
+myhostname = backup.ethantwardy.com
+inet_interfaces = loopback-only
+
+# IP protocols to use: ipv4, ipv6, or all
+# (set this explicitly so `post-install upgrade-configuration' wont complain)
+inet_protocols = all
+
+# TODO: Silence a warning from sendmail?
+smtputf8_enable = no
+
+alias_maps = hash:/etc/aliases
+alias_database = hash:/etc/aliases
+
+# Relay mail to ethantwardy.com
+relayhost = 10.4.0.1
+
+# List of CAs for SMTP Client to trust
+# Prefer this over _CApath when smtp is running chrooted
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+# SMTP Client TLS security level: none|may|encrypt|...
+smtp_tls_security_level = may
+# SMTP Client TLS session cache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_relay_restrictions =
+  permit_mynetworks
+  permit_sasl_authenticated
+  defer_unauth_destination

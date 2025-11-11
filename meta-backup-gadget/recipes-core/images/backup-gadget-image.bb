@@ -14,6 +14,7 @@ IMAGE_INSTALL += " \
     jq \
     sudo \
     cronie \
+    postfix \
 "
 
 # The function of this image
