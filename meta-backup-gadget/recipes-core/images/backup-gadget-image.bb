@@ -13,13 +13,11 @@ IMAGE_INSTALL += " \
     rsync \
     jq \
     sudo \
-    cronie \
     postfix \
 "
 
 # The function of this image
 IMAGE_INSTALL += " \
-    btrbk \
     backup-dataset \
 "
 

@@ -8,14 +8,17 @@ SRC_URI += " \
     file://btrbk.conf \
     file://btrbk.sh \
     file://wg0.sh \
+    file://backup-databases.sh \
 "
 
 do_install() {
     install -Dm755 ${UNPACKDIR}/mount-dataset.sh ${D}${sysconfdir}/init.d/mount-dataset
     install -Dm755 ${UNPACKDIR}/wg0.sh ${D}${sysconfdir}/init.d/wg0
-    install -Dm755 ${UNPACKDIR}/btrbk.sh -t ${D}${sysconfdir}/cron.daily
     install -Dm644 ${UNPACKDIR}/btrbk.conf -t ${D}${sysconfdir}/btrbk
     install -d ${D}/dataset
+
+    install -Dm755 ${UNPACKDIR}/btrbk.sh -t ${D}${sysconfdir}/cron.daily
+    install -Dm755 ${UNPACKDIR}/backup-databases.sh -t ${D}${sysconfdir}/cron.weekly
 }
 
 inherit update-rc.d
@@ -35,5 +38,11 @@ FILES:${PN}-mount-dataset += " \
 "
 FILES:${PN}-wg0 += "${sysconfdir}/init.d/wg0"
 
-DEPENDS += "wireguard-tools"
-RDEPENDS:${PN} += "${PN}-mount-dataset ${PN}-wg0"
+RDEPENDS:${PN}-wg0 += "wireguard-tools"
+RDEPENDS:${PN} += " \
+    ${PN}-mount-dataset \
+    ${PN}-wg0 \
+    ssh \
+    btrbk \
+    cronie \
+"
