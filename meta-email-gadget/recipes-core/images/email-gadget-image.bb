@@ -22,6 +22,7 @@ IMAGE_INSTALL += " \
     certbot-dns-luadns \
     rsyslog \
     fail2ban \
+    coreutils \
 "
 
 # Ensure the update-rc.d and shadow packages are not removed from the rootfs.
