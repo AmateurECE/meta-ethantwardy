@@ -5,7 +5,7 @@ SRC_URI = " \
     file://0003-snowball-Allow-cross-compilation.patch \
 "
 
-SRCREV = "3.11.1"
+SRCREV = "3.14.0"
 
 # TODO: We could use luajit instead of lua here if we -DENABLE_LUAJIT=ON
 DEPENDS += " \

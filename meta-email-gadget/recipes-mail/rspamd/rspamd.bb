@@ -31,7 +31,7 @@ LIC_FILES_CHKSUM = " \
 
 include rspamd.inc
 
-PV = "3.11.1"
+PV = "3.14.0"
 
 inherit useradd update-rc.d
 
