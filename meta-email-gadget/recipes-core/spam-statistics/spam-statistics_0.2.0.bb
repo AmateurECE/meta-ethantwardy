@@ -9,9 +9,9 @@ require ${BPN}-crates.inc
 inherit cargo cargo-update-recipe-crates pkgconfig
 
 SRC_URI += "git://github.com/AmateurECE/spam-statistics;protocol=https;branch=main;name=spam-statistics"
-SRCREV_spam-statistics = "b376e032847103dc488798da8559ac350778a56d"
+SRCREV_spam-statistics = "20e88e6ef6550fdf08d0a45473bf9396007184a6"
 SRCREV_FORMAT = "spam-statistics"
-PV:append = "+31"
+PV:append = "+1"
 
 DEPENDS += " \
     fontconfig \
