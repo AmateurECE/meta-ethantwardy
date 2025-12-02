@@ -1,4 +1,2 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
-SRC_URI += " \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'rauc', 'file://verity.cfg', '', d)} \
-"
+SRC_URI:append:ab-mutable = " file://rpi-ab-mutable-gadget.cfg"

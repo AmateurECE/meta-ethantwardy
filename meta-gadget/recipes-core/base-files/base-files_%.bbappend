@@ -39,8 +39,7 @@ do_install:append() {
 
 do_install:append:ab-mutable() {
     install -Dm644 ${UNPACKDIR}/mutable.fstab ${D}/etc/fstab
-    install -d ${D}/data/etc
-    install -d ${D}/data/var
+    install -d ${D}/data
 }
 
-FILES:append:ab-mutable:${PN} = " /data/var /data/etc"
+FILES:append:ab-mutable:${PN} = " /data"

@@ -1,5 +1,4 @@
 IMAGE_FEATURES += "read-only-rootfs"
-IMAGE_FEATURES += "${@'overlayfs-etc' if 'ab-mutable' in d.getVar('OVERRIDES') else ''}"
 
 # Gadgets based on the qemux86-64 machine depend on this file in their WKS script.
 SRC_URI:append:qemux86-64 = " file://${@bb.utils.which(d.getVar('BBPATH', True), 'wic/qemu-mutable-gadget-grub.cfg')}"
@@ -18,5 +17,15 @@ boot_bundled_kernel() {
     ln -sf ${KERNEL_IMAGETYPE}-${INITRAMFS_LINK_NAME}.bin ${IMAGE_ROOTFS}/boot/${KERNEL_IMAGETYPE}
 }
 ROOTFS_POSTPROCESS_COMMAND += "${@bb.utils.contains('INITRAMFS_IMAGE_BUNDLE', '1', 'boot_bundled_kernel', '', d)}"
+
+# Because IMAGE_FEATURES contains read-only-rootfs but not overlay-etc, bitbake
+# wants to use /etc/default/ssh to point sshd at /etc/ssh/sshd_config_readonly
+# instead of /etc/ssh/sshd_config. Prevent this by creating this file. At boot,
+# SSH will overwrite this file with a key, which will be stored in the
+# gadget-data partition.
+reconfigure_sshd() {
+    touch ${IMAGE_ROOTFS}/etc/ssh/ssh_host_rsa_key
+}
+ROOTFS_POSTPROCESS_COMMAND += "reconfigure_sshd"
 
 do_rootfs[depends] += "${@bb.utils.contains('INITRAMFS_IMAGE_BUNDLE', '1', 'virtual/kernel:do_bundle_initramfs', '', d)}"

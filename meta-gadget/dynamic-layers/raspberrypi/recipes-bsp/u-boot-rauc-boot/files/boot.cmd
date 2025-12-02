@@ -5,6 +5,7 @@ test -n "${BOOT_system1_LEFT}" || setenv BOOT_system1_LEFT 3
 saveenv
 
 setenv bootpart
+setenv bootslot
 for BOOT_SLOT in "${BOOT_ORDER}"; do
   if test "x${bootpart}" != "x"; then
     # Skip the remaining iterations
@@ -13,12 +14,14 @@ for BOOT_SLOT in "${BOOT_ORDER}"; do
       echo "Found valid slot system0, ${BOOT_system0_LEFT} attempts remaining"
       setexpr BOOT_system0_LEFT ${BOOT_system0_LEFT} - 1
       setenv bootpart 2
+      setenv bootslot "system0"
     fi
   elif test "x${BOOT_SLOT}" = "xsystem1"; then
     if test 0x${BOOT_system1_LEFT} -gt 0; then
       echo "Found valid slot system1, ${BOOT_system1_LEFT} attempts remaining"
       setexpr BOOT_system1_LEFT ${BOOT_system1_LEFT} - 1
       setenv bootpart 3
+      setenv bootslot "system1"
     fi
   fi
 done
@@ -34,5 +37,5 @@ setexpr bootargs gsub "rootfstype=ext4" "" "${bootargs}"
 setexpr bootargs gsub "console=\\S+" "" "${bootargs}"
 setexpr bootargs gsub "kgdboc=\\S+" "" "${bootargs}"
 
-setenv bootargs "${bootargs} console=ttyS0,115200 root=/dev/mmcblk0p${bootpart} rootwait init=/sbin/preinit"
+setenv bootargs "${bootargs} console=ttyS0,115200 rdinit=/init rauc.slot=${bootslot}"
 booti ${kernel_addr_r} - ${fdt_addr}

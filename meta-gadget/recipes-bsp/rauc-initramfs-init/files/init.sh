@@ -1,5 +1,25 @@
 #!/bin/sh
 
+mount_overlay() {
+  mountpoint=$1
+  lower=$2
+  upper=$mountpoint/.upper
+  work=$mountpoint/.work
+
+  mkdir -p $upper
+  mkdir -p $lower
+
+  if ! mount -n -t overlay \
+    -o upperdir=$upper \
+    -o lowerdir=$lower \
+    -o workdir=$work \
+    -o index=off,xino=off,redirect_dir=off,metacopy=off \
+    $upper $lower; then
+    printf "<INITRAMFS>: Mounting overlay on $lower failed!\n"
+    exec sh
+  fi
+}
+
 # Minimal setup
 mkdir -p /proc /sys /run/lock /var/lock
 mount -t proc proc /proc
@@ -11,11 +31,11 @@ SLOT=$(cat /proc/cmdline | sed -n 's/.*rauc\.slot=\([^ ]*\).*/\1/p')
 
 # Fallback if not found
 if [ -z "$SLOT" ]; then
-  printf "rauc.slot not specified, dropping into root shell"
+  printf "rauc.slot not specified, dropping into root shell\n"
   exec sh
 fi
 
-echo "Booting from slot: $SLOT (LABEL=$SLOT)"
+printf "Booting from slot: $SLOT (LABEL=$SLOT)\n"
 
 # Mount root
 NEWROOT=/newroot
@@ -24,6 +44,8 @@ mkdir $NEWROOT
 ROOT_MOUNTED=0
 TRIES=0
 
+# Retry because the kernel may not have finished parsing labels by the time
+# control gets here.
 while [ $TRIES -lt 3 ] && [ $ROOT_MOUNTED = "0" ]; do
   if ! mount -o ro LABEL="$SLOT" $NEWROOT; then
     TRIES=$(($TRIES + 1))
@@ -34,17 +56,27 @@ while [ $TRIES -lt 3 ] && [ $ROOT_MOUNTED = "0" ]; do
 done
 
 if [ $ROOT_MOUNTED = "0" ]; then
-  echo "Failed to mount rootfs with label '$SLOT'"
+  printf "Failed to mount rootfs with label '$SLOT'\n"
   exec sh
 fi
 
-echo "Mounted rootfs from label '$SLOT'"
+printf "Mounted rootfs from label '$SLOT'\n"
 
 mount -t proc proc $NEWROOT/proc
 mount -t sysfs sysfs $NEWROOT/sys
 mount -t devtmpfs devtmpfs $NEWROOT/dev
 
+# Mount data partition and overlays.
+if mount -n -t btrfs -o discard=async,space_cache=v2,subvolid=5 \
+  LABEL=gadget-data $NEWROOT/data; then
+  mount_overlay "$NEWROOT/data/@etc" $NEWROOT/etc
+  mount_overlay "$NEWROOT/data/@var" $NEWROOT/var
+else
+  printf "<INITRAMFS>: Mounting /data failed!\n"
+  exec sh
+fi
+
 [ -z "$CONSOLE" ] && CONSOLE="/dev/console"
 
 # Switch to real root
-exec switch_root -c $CONSOLE $NEWROOT /sbin/preinit "$@"
+exec switch_root -c $CONSOLE $NEWROOT /sbin/init "$@"
