@@ -8,7 +8,7 @@ indexed_gzip==1.9.4
 indexed_zstd==1.6.1
 jsonschema==4.23.0
 jsonschema-specifications==2024.10.1
-kas==4.6
+kas==5.1
 kconfiglib==14.1.0
 libarchive-c==5.1
 pycparser==2.22
