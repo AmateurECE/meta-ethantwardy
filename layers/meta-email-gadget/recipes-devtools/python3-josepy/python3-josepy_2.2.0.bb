@@ -1,22 +1,17 @@
-SUMMARY = "ACME protocol implementation in Python"
+SUMMARY = "JOSE protocol implementation in Python"
 HOMEPAGE = "https://certbot.eff.org/"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=d2c2a5517cd7fd190a1aa6dfa23abb7a"
 
-SRC_URI[sha256sum] = "7b97820857d9baffed98bca50ab82bb6a636e447865d7a013a7bdd7972f03cda"
+SRC_URI[sha256sum] = "74c033151337c854f83efe5305a291686cef723b4b970c43cfe7270cf4a677a9"
 
-inherit pypi python_setuptools_build_meta
+inherit pypi python_poetry_core
 
-PYPI_PACKAGE = "acme"
+PYPI_PACKAGE = "josepy"
 SRC_URI = "https://files.pythonhosted.org/packages/source/${PYPI_PACKAGE[0]}/${PYPI_PACKAGE}/${PYPI_PACKAGE}-${PV}.tar.gz"
 
 RDEPENDS:${PN} += " \
     python3-cryptography \
-    python3-josepy \
-    python3-pyopenssl \
-    python3-pyrfc3339 \
-    python3-pytz \
-    python3-requests \
 "
 
 BBCLASSEXTEND = "native"

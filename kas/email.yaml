@@ -19,6 +19,12 @@ repos:
         repo: meta-ethantwardy
         path: ../kas/0002-dovecot-Add-recipe-for-pigeonhole.patch
 
+  openembedded-core:
+    patches:
+      0001:
+        repo: meta-ethantwardy
+        path: ../kas/0001-python3-poetry-core-upgrade-2.1.3-2.2.1.patch
+
 local_conf_header:
   image: |
     ROOTFS_IMAGE_TARGET = "email-gadget-image"

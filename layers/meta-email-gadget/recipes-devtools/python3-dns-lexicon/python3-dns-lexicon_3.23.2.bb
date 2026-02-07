@@ -2,7 +2,7 @@ SUMMARY = "Manipulate DNS records on various DNS providers in a standardized/agn
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=bc5dc1e358941b563b5e53b9f0d53bc8"
 
-SRC_URI[sha256sum] = "7cd19f692b384fe5eaa47cce334d24c78ae2eba1d2fb24d2b8a05e04fe294497"
+SRC_URI[sha256sum] = "3c40174e9d657289d4d4f81d44451c4d63f8c26c8513e4d7a61c30ac456aab8f"
 
 inherit pypi python_hatchling
 
