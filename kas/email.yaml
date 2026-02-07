@@ -14,10 +14,10 @@ repos:
     patches:
       0003:
         repo: meta-ethantwardy
-        path: kas/0001-dovecot-Include-dovecot-config-in-dovecot-dev.patch
+        path: ../kas/0001-dovecot-Include-dovecot-config-in-dovecot-dev.patch
       0004:
         repo: meta-ethantwardy
-        path: kas/0002-dovecot-Add-recipe-for-pigeonhole.patch
+        path: ../kas/0002-dovecot-Add-recipe-for-pigeonhole.patch
 
 local_conf_header:
   image: |

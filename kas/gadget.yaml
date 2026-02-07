@@ -2,6 +2,7 @@ header:
   version: 17
 repos:
   meta-ethantwardy:
+    path: layers/
     layers:
       meta-gadget:
 
@@ -20,7 +21,7 @@ repos:
     patches:
       0001:
         repo: meta-ethantwardy
-        path: kas/0001-postfix-Remove-postinst-ontarget-task.patch
+        path: ../kas/0001-postfix-Remove-postinst-ontarget-task.patch
     layers:
       meta-oe:
       meta-multimedia:

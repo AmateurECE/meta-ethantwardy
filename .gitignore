@@ -2,7 +2,12 @@
 /build/
 /certificates/
 /linux/
-/layers/
+/layers/bitbake/
+/layers/meta-cyclonedx/
+/layers/meta-openembedded/
+/layers/meta-rauc/
+/layers/meta-yocto/
+/layers/openembedded-core/
 
 config.yaml
 reboot.sh
