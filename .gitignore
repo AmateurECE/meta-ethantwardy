@@ -1,12 +1,8 @@
 /.venv/
 /build/
-/meta-openembedded/
-/meta-raspberrypi/
-/meta-rauc/
-/meta-cyclonedx/
-/poky/
-/linux/
 /certificates/
+/linux/
+/layers/
 
 config.yaml
 reboot.sh

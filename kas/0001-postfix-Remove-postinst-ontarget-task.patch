@@ -1,4 +1,4 @@
-From 752be76665ec19435abcc56c1d8f352751e2bcfb Mon Sep 17 00:00:00 2001
+From bc2c3bcbaf79ee9249b98b1490d92f9c6d242bdb Mon Sep 17 00:00:00 2001
 From: "Ethan D. Twardy" <ethan.twardy@gmail.com>
 Date: Tue, 4 Nov 2025 20:19:08 -0600
 Subject: [PATCH] postfix: Remove postinst ontarget task
@@ -8,14 +8,14 @@ at postinst time. Since the rootfs is intended to be read-only, it's
 necessary to delete this task. Unfortunately, this can't be done in a
 .bbappend.
 ---
- .../recipes-daemons/postfix/postfix_3.10.5.bb            | 9 ---------
+ .../recipes-daemons/postfix/postfix_3.10.6.bb            | 9 ---------
  1 file changed, 9 deletions(-)
 
-diff --git a/meta-networking/recipes-daemons/postfix/postfix_3.10.5.bb b/meta-networking/recipes-daemons/postfix/postfix_3.10.5.bb
-index edcdc1a8ca..e4e57d99f7 100644
---- a/meta-networking/recipes-daemons/postfix/postfix_3.10.5.bb
-+++ b/meta-networking/recipes-daemons/postfix/postfix_3.10.5.bb
-@@ -229,15 +229,6 @@ ALTERNATIVE_LINK_NAME[mailq.1] = "${mandir}/man1/mailq.1"
+diff --git a/meta-networking/recipes-daemons/postfix/postfix_3.10.6.bb b/meta-networking/recipes-daemons/postfix/postfix_3.10.6.bb
+index 6c091d9c56..ff97664add 100644
+--- a/meta-networking/recipes-daemons/postfix/postfix_3.10.6.bb
++++ b/meta-networking/recipes-daemons/postfix/postfix_3.10.6.bb
+@@ -230,15 +230,6 @@ ALTERNATIVE_LINK_NAME[mailq.1] = "${mandir}/man1/mailq.1"
  ALTERNATIVE_LINK_NAME[newaliases.1] = "${mandir}/man1/newaliases.1"
  ALTERNATIVE_LINK_NAME[sendmail.1] = "${mandir}/man1/sendmail.1"
  
@@ -32,5 +32,5 @@ index edcdc1a8ca..e4e57d99f7 100644
  RDEPENDS:${PN}-cfg:class-target += "${PN}-bin"
  RDEPENDS:${PN}:class-target += "${PN}-cfg"
 -- 
-2.47.2
+2.51.0
 

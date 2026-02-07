@@ -5,17 +5,18 @@ repos:
     layers:
       meta-gadget:
 
-  poky:
-    url: https://git.yoctoproject.org/git/poky
-    branch: master
+  meta-yocto:
+    url: https://git.yoctoproject.org/git/meta-yocto
+    branch: whinlatter
+    path: layers/meta-yocto
     layers:
-      meta:
       meta-poky:
       meta-yocto-bsp:
 
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
-    branch: master
+    branch: whinlatter
+    path: layers/meta-openembedded
     patches:
       0001:
         repo: meta-ethantwardy
@@ -28,11 +29,20 @@ repos:
 
   meta-rauc:
     url: https://github.com/rauc/meta-rauc.git
-    branch: master
+    branch: whinlatter
+    path: layers/meta-rauc
 
   meta-cyclonedx:
     url: https://github.com/iris-GmbH/meta-cyclonedx.git
-    branch: main
+    branch: whinlatter
+    path: layers/meta-cyclonedx
+
+  openembedded-core:
+    url: https://git.openembedded.org/openembedded-core
+    branch: whinlatter
+    path: layers/openembedded-core
+    layers:
+      meta:
 
 # Pass these environment variables through to bitbake
 env:
