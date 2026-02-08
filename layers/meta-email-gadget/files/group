@@ -41,6 +41,11 @@ shutdown:x:70:
 wheel:x:80:
 users:x:100:
 crontab:x:101:
+systemd-network:x:502:
+systemd-resolve:x:503:
+systemd-timesync:x:504:
+systemd-journal:x:507:
+render:x:527:
 www:x:988:
 dovenull:x:990:
 dovecot:x:991:

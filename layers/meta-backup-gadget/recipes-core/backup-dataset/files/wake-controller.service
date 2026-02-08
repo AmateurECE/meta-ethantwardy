@@ -1,0 +1,10 @@
+[Unit]
+Description=Wake Controller
+After=crond.service syslog.service
+Requires=crond.service syslog.service
+
+[Service]
+ExecStart=/usr/bin/wake-controller.sh
+
+[Install]
+WantedBy=multi-user.target

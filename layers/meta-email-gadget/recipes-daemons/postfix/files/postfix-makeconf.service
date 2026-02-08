@@ -1,0 +1,11 @@
+[Unit]
+Description=postfix configuration
+Before=postfix.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/postfix-makeconf.sh
+
+[Install]
+RequiredBy=postfix.service

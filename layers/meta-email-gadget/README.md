@@ -252,13 +252,21 @@ cat - >/etc/bind/named.conf.local <<EOF
 
 The user database needs to be migrated after a system update. These are the
 files `/etc/{group,gshadow,passwd,shadow}` and their backup files (suffixed
-with `-`). To migrate a file, first check the differences:
+with `-`). To migrate a file, first check to make sure the backup file
+`/etc/<file>-` is up to date:
 
 ```
-root@mail:~# rm /data/etc/.upper/passwd
-root@mail:~# mount -o remount /etc
 root@mail:~# diff -Naur /etc/passwd /etc/passwd-
---- /etc/passwd
+# If there are differences, copy the working file to the backup:
+root@mail:~# cp /etc/passwd /etc/passwd-
+```
+There should now be no differences. Next, migrate users from the backup to the
+new primary:
+```
+# If system0 contains the upgraded passwd file, mount it:
+root@mail:~# mount /dev/disk/by-label/system0 /mnt/rauc/rootfs.0
+root@mail:~# diff -Naur /mnt/rauc/rootfs.0/etc/passwd /etc/passwd-
+--- /mnt/rauc/rootfs.0/etc/passwd
 +++ /etc/passwd-
 @@ -15,12 +15,11 @@
  list:x:38:38:Mailing List Manager:/var/list:/sbin/nologin
@@ -283,8 +291,9 @@ In this case, I only care about migrating the last line--my custom user
 account:
 
 ```
-root@mail:~# tail -n1 /etc/passwd- >>/etc/passwd
-root@mail:~# cp /etc/passwd /etc/passwd-
+root@mail:~# cp /mnt/rauc/rootfs.0/etc/passwd /data/@etc/.upper/passwd
+root@mail:~# tail -n1 /etc/passwd- >>/data/@etc/.upper/passwd
+root@mail:~# cp /data/\@etc/.upper/passwd /etc/passwd-
 ```
 
 Repeat this procedure for each of the files.

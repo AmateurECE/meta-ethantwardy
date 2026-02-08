@@ -33,10 +33,11 @@ include rspamd.inc
 
 PV = "3.14.0"
 
-inherit useradd update-rc.d
+inherit useradd systemd
+
+SYSTEMD_SERVICE:${PN} = "rspamd.service"
 
 SRC_URI += " \
-    file://rspamd.sh \
     file://classifier-bayes.conf \
     file://redis.conf \
     file://milter_headers.conf \
@@ -62,11 +63,16 @@ EXTRA_OECMAKE += " \
     -DCONFDIR=/etc/rspamd \
     -DRUNDIR=/var/run \
     -DLOGDIR=/var/log \
+    -DRSPAMD_USER=rspamd \
+    -DWANT_SYSTEMD_UNITS=ON \
 "
+
+do_configure:append() {
+    sed -i -e 's/User=_rspamd/User=rspamd/' ${S}/rspamd.service
+}
 
 do_install:append() {
     install -d -m755 ${D}/var/lib/rspamd
-    install -Dm755 ${UNPACKDIR}/rspamd.sh ${D}/etc/init.d/rspamd
 
     LOCAL_CONFDIR="${D}/etc/rspamd/local.d"
     install -Dm644 ${UNPACKDIR}/classifier-bayes.conf -t "$LOCAL_CONFDIR"
@@ -81,7 +87,4 @@ pkg_postinst:${PN}() {
 
 FILES:${PN} += " \
     /var/lib/rspamd \
-    /etc/init.d/rspamd \
 "
-
-INITSCRIPT_NAME = "rspamd"

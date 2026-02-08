@@ -76,6 +76,14 @@ else
   exec sh
 fi
 
+# Mount /home. See mutable.fstab in the metadata sources for more information.
+mount -n -t btrfs -o discard=async,space_cache=v2,subvol=/@home \
+  LABEL=gadget-data $NEWROOT/home
+
+if [ ! -d $NEWROOT/home/root ]; then
+  mkdir $NEWROOT/home/root
+fi
+
 [ -z "$CONSOLE" ] && CONSOLE="/dev/console"
 
 # Switch to real root

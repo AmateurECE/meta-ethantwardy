@@ -1,60 +1,63 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 SRC_URI += " \
     file://redis.conf \
-    file://redis-server.sh \
-    file://redis-rspamd.sh \
-    file://redis-bayesian.sh \
     file://rspamd.conf \
     file://bayesian.conf \
+    file://redis@.service \
+    file://sysctl.conf \
+    file://tmpfiles.conf \
 "
 
-# Redis recipe sets these. Pedantically unset them here.
-python __anonymous__ () {
-    d.delVar("INITSCRIPT_NAME")
-    d.delVar("INITSCRIPT_PARAMS")
-}
+# Redis recipe sets this--unset it so that we can install our own
+SYSTEMD_SERVICE:${PN} = ""
 
 PACKAGES =+ "${PN}-rspamd ${PN}-bayesian"
 RDEPENDS:${PN}:class-target += "${PN}-rspamd ${PN}-bayesian"
-
-INITSCRIPT_PACKAGES = "${PN}-rspamd ${PN}-bayesian"
-INITSCRIPT_NAME:${PN}-rspamd = "redis-rspamd"
-INITSCRIPT_NAME:${PN}-bayesian = "redis-bayesian"
 
 CONFFILES:${PN}-rspamd = "${sysconfdir}/redis/rspamd.conf"
 CONFFILES:${PN}-bayesian = "${sysconfdir}/redis/bayesian.conf"
 
 do_install:append() {
+    install -Dm644 ${UNPACKDIR}/redis@.service -t ${D}${systemd_system_unitdir}
+    install -d ${D}${systemd_system_unitdir}/rspamd.service.requires
     install -Dm644 ${UNPACKDIR}/redis.conf -t ${D}/etc/redis
-    install -Dm755 ${UNPACKDIR}/redis-server.sh -t ${D}/usr/libexec/redis
-    # Delete the default initscript installed by upstream
-    rm -f ${D}/etc/init.d/redis-server
+    install -Dm644 ${UNPACKDIR}/tmpfiles.conf ${D}/usr/lib/tmpfiles.d/redis.conf
+    # Delete the default systemd script installed by upstream
+    rm -f ${D}${systemd_system_unitdir}/redis.service
 
-    install -Dm755 ${UNPACKDIR}/redis-rspamd.sh ${D}/etc/init.d/redis-rspamd
     install -Dm644 ${UNPACKDIR}/rspamd.conf -t ${D}/etc/redis
+    ln -s ../redis@.service ${D}${systemd_system_unitdir}/rspamd.service.requires/redis@rspamd.service
     install -d -m755 ${D}/var/lib/redis/rspamd
 
-    install -Dm755 ${UNPACKDIR}/redis-bayesian.sh ${D}/etc/init.d/redis-bayesian
     install -Dm644 ${UNPACKDIR}/bayesian.conf -t ${D}/etc/redis
+    ln -s ../redis@.service ${D}${systemd_system_unitdir}/rspamd.service.requires/redis@bayesian.service
     install -d -m755 ${D}/var/lib/redis/bayesian
+
+    install -Dm644 ${UNPACKDIR}/sysctl.conf ${D}/usr/lib/sysctl.d/redis.conf
 }
 
 pkg_postinst:${PN}-rspamd() {
-    chown redis:redis $D/var/lib/redis/rspamd
+    chown redis:rspamd $D/var/lib/redis/rspamd
 }
 
 pkg_postinst:${PN}-bayesian() {
-    chown redis:redis $D/var/lib/redis/bayesian
+    chown redis:rspamd $D/var/lib/redis/bayesian
 }
 
+FILES:${PN} += " \
+    ${systemd_system_unitdir}/redis@.service \
+    /usr/lib/tmpfiles.d/redis.conf \
+    /usr/lib/sysctl.d/redis.conf \
+"
+
 FILES:${PN}-rspamd = " \
-    /etc/init.d/redis-rspamd \
+    ${systemd_system_unitdir}/rspamd.service.requires/redis@rspamd.service \
     /etc/redis/rspamd.conf \
     /var/lib/redis/rspamd \
 "
 
 FILES:${PN}-bayesian = " \
-    /etc/init.d/redis-bayesian \
+    ${systemd_system_unitdir}/rspamd.service.requires/redis@bayesian.service \
     /etc/redis/bayesian.conf \
     /var/lib/redis/bayesian \
 "

@@ -1,0 +1,12 @@
+[Unit]
+Description=Disable DIPM on SCSI disks
+Before=local-fs-pre.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/scsi-dipm-workaround.sh
+
+[Install]
+WantedBy=local-fs-pre.target

@@ -1,0 +1,16 @@
+[Unit]
+Description=Redis In-Memory Data Store
+After=network.target
+
+[Service]
+User=redis
+Group=rspamd
+ExecStart=/usr/bin/redis-server /etc/redis/%i.conf
+ExecStop=/usr/bin/redis-cli shutdown
+Restart=always
+LimitNOFILE=10032
+Type=notify
+StateDirectory=redis
+
+[Install]
+WantedBy=multi-user.target

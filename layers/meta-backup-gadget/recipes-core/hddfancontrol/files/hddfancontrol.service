@@ -1,0 +1,14 @@
+[Unit]
+Description=HDD fan control
+Documentation=man:hddfancontrol(1)
+After=hddtemp.service
+
+[Service]
+ExecStart=/usr/bin/start-hddfancontrol.sh
+Restart=always
+
+CPUSchedulingPolicy=rr
+CPUSchedulingPriority=49
+
+[Install]
+RequiredBy=multi-user.target
