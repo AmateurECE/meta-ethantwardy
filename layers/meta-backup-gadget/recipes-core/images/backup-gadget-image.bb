@@ -14,6 +14,8 @@ IMAGE_INSTALL += " \
     jq \
     sudo \
     postfix \
+    less \
+    kitty-terminfo \
 "
 
 # The function of this image

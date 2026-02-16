@@ -10,8 +10,7 @@ IMAGE_INSTALL += " \
     kernel-module-configs \
     util-linux \
     lsof \
-    ncurses-terminfo-base \
-    ncurses-terminfo \
+    kitty-terminfo \
 "
 
 # Install a few things that provide required features
