@@ -1,0 +1,11 @@
+[package]
+name = "backup-controller"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+chrono = { version = "0.4", features = ["clock"], default-features = false }
+env_logger = { version = "0.11", default-features = false }
+lettre = { version = "0.11", features = ["builder", "smtp-transport"], default-features = false }
+log = { version = "0.4", default-features = false }
+thiserror = { version = "2.0", default-features = false }

@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup Controller
+
+[Service]
+ExecStart=/usr/bin/backup-controller
+Environment=RUST_LOG=info
+
+[Install]
+WantedBy=multi-user.target

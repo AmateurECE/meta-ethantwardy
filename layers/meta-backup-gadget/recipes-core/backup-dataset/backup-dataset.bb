@@ -4,8 +4,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 S = "${UNPACKDIR}"
 SRC_URI += " \
-    file://wake-controller.sh \
-    file://wake-controller.service \
+    file://${LAYER_SOURCEDIR}/backup-controller \
+    file://backup-controller.service \
     file://dataset.mount \
     file://scsi-dipm-workaround.sh \
     file://scsi-dipm-workaround.service \
@@ -14,9 +14,14 @@ SRC_URI += " \
     file://backup-databases.sh \
 "
 
-do_install() {
-    install -Dm755 ${UNPACKDIR}/wake-controller.sh -t ${D}${bindir}
-    install -Dm644 ${UNPACKDIR}/wake-controller.service -t ${D}${systemd_system_unitdir}
+require ${BPN}-crates.inc
+
+CARGO_SRC_DIR = "${LAYER_SOURCEDIR}/backup-controller"
+
+inherit systemd cargo cargo-update-recipe-crates
+
+do_install:append() {
+    install -Dm644 ${UNPACKDIR}/backup-controller.service -t ${D}${systemd_system_unitdir}
 
     install -Dm755 ${UNPACKDIR}/scsi-dipm-workaround.sh -t ${D}${bindir}
     install -Dm644 ${UNPACKDIR}/scsi-dipm-workaround.service -t ${D}${systemd_system_unitdir}
@@ -29,21 +34,15 @@ do_install() {
 
     install -Dm644 ${UNPACKDIR}/btrbk.conf -t ${D}${sysconfdir}/btrbk
     install -Dm755 ${UNPACKDIR}/btrbk.sh -t ${D}${sysconfdir}/cron.daily
-    install -Dm755 ${UNPACKDIR}/backup-databases.sh -t ${D}${sysconfdir}/cron.weekly
+    install -Dm755 ${UNPACKDIR}/backup-databases.sh -t ${D}/usr/libexec
 }
 
-inherit systemd
+PACKAGES =+ "${PN}-controller ${PN}-mount-dataset ${PN}-wg0"
+SYSTEMD_PACKAGES = "${PN}-controller ${PN}-mount-dataset"
 
-PACKAGES =+ "${PN}-wake-controller ${PN}-mount-dataset ${PN}-wg0"
-SYSTEMD_PACKAGES = "${PN}-wake-controller ${PN}-mount-dataset"
-
-SYSTEMD_SERVICE:${PN}-wake-controller = "wake-controller.service"
+SYSTEMD_SERVICE:${PN}-controller = "backup-controller.service"
 SYSTEMD_SERVICE:${PN}-mount-dataset = "dataset.mount"
 
-FILES:${PN}-wake-controller += " \
-    ${systemd_system_unitdir}/wake-controller.service \
-    ${bindir}/wake-controller \
-"
 FILES:${PN}-mount-dataset += " \
     ${systemd_system_unitdir}/scsi-dipm-workaround.service \
     /dataset \
@@ -55,10 +54,9 @@ FILES:${PN}-wg0 += " \
 RDEPENDS:${PN}-wake-controller += "util-linux"
 RDEPENDS:${PN}-wg0 += "wireguard-tools"
 RDEPENDS:${PN} += " \
-    ${PN}-wake-controller \
+    ${PN}-controller \
     ${PN}-mount-dataset \
     ${PN}-wg0 \
     ssh \
     btrbk \
-    cronie \
 "
