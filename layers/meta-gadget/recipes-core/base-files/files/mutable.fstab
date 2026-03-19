@@ -4,8 +4,10 @@ devpts               /dev/pts             devpts     mode=0620,ptmxmode=0666,gid
 tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,strictatime 0  0
 tmpfs                /var/volatile        tmpfs      defaults              0  0
 
-# The gadget data partition
-LABEL=gadget-data    /home                btrfs      rw,relatime,discard=async,space_cache=v2,subvol=/@home              0  0
+# Systemd only officially supports root's HOME directory at /root, but we want
+# to store it on the same btrfs subvolume as /home. Systemd complains if /root
+# is a symlink, but seems to accept a bind-mount fine.
+/home/root           /root                none       defaults,bind        0  0
 
 # The boot partition
 LABEL=boot           /boot                auto       defaults             0  0

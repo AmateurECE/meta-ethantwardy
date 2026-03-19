@@ -1,0 +1,13 @@
+[Unit]
+Description=Mount for BTRFS Pool
+After=scsi-dipm-workaround.service
+Requires=scsi-dipm-workaround.service
+Before=local-fs.target
+
+[Mount]
+What=LABEL=dataset
+Where=/dataset
+Type=btrfs
+
+[Install]
+RequiredBy=local-fs.target

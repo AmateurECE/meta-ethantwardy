@@ -4,58 +4,59 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 S = "${UNPACKDIR}"
 SRC_URI += " \
-    file://wake-controller.sh \
-    file://run-wake-controller.sh \
-    file://mount-dataset.sh \
+    file://${LAYER_SOURCEDIR}/backup-controller \
+    file://backup-controller.service \
+    file://dataset.mount \
+    file://scsi-dipm-workaround.sh \
+    file://scsi-dipm-workaround.service \
     file://btrbk.conf \
     file://btrbk.sh \
-    file://wg0.sh \
     file://backup-databases.sh \
 "
 
-do_install() {
-    install -Dm755 ${UNPACKDIR}/wake-controller.sh ${D}${bindir}/wake-controller
-    install -Dm755 ${UNPACKDIR}/run-wake-controller.sh ${D}${sysconfdir}/init.d/wake-controller
-    install -Dm755 ${UNPACKDIR}/mount-dataset.sh ${D}${sysconfdir}/init.d/mount-dataset
-    install -Dm755 ${UNPACKDIR}/wg0.sh ${D}${sysconfdir}/init.d/wg0
-    install -Dm644 ${UNPACKDIR}/btrbk.conf -t ${D}${sysconfdir}/btrbk
+require ${BPN}-crates.inc
+
+CARGO_SRC_DIR = "${LAYER_SOURCEDIR}/backup-controller"
+
+inherit systemd cargo cargo-update-recipe-crates
+
+do_install:append() {
+    install -Dm644 ${UNPACKDIR}/backup-controller.service -t ${D}${systemd_system_unitdir}
+
+    install -Dm755 ${UNPACKDIR}/scsi-dipm-workaround.sh -t ${D}${bindir}
+    install -Dm644 ${UNPACKDIR}/scsi-dipm-workaround.service -t ${D}${systemd_system_unitdir}
+    install -Dm644 ${UNPACKDIR}/dataset.mount -t ${D}${systemd_system_unitdir}
     install -d ${D}/dataset
 
+    # Start wg0 before postfix
+    install -d ${D}${systemd_system_unitdir}/postfix.service.requires
+    ln -s ../wg-quick@.service ${D}${systemd_system_unitdir}/postfix.service.requires/wg-quick@wg0.service
+
+    install -Dm644 ${UNPACKDIR}/btrbk.conf -t ${D}${sysconfdir}/btrbk
     install -Dm755 ${UNPACKDIR}/btrbk.sh -t ${D}${sysconfdir}/cron.daily
-    install -Dm755 ${UNPACKDIR}/backup-databases.sh -t ${D}${sysconfdir}/cron.weekly
+    install -Dm755 ${UNPACKDIR}/backup-databases.sh -t ${D}/usr/libexec
 }
 
-inherit update-rc.d
+PACKAGES =+ "${PN}-controller ${PN}-mount-dataset ${PN}-wg0"
+SYSTEMD_PACKAGES = "${PN}-controller ${PN}-mount-dataset"
 
-PACKAGES =+ "${PN}-wake-controller ${PN}-mount-dataset ${PN}-wg0"
-INITSCRIPT_PACKAGES = "${PN}-wake-controller ${PN}-mount-dataset ${PN}-wg0"
+SYSTEMD_SERVICE:${PN}-controller = "backup-controller.service"
+SYSTEMD_SERVICE:${PN}-mount-dataset = "dataset.mount"
 
-INITSCRIPT_NAME:${PN}-wake-controller = "wake-controller"
-INITSCRIPT_PARAMS:${PN}-wake-controller = "start 5 3 4 5 . stop 30 0 1 6 ."
-
-INITSCRIPT_NAME:${PN}-mount-dataset = "mount-dataset"
-INITSCRIPT_PARAMS:${PN}-mount-dataset = "start 5 3 4 5 . stop 30 0 1 6 ."
-
-INITSCRIPT_NAME:${PN}-wg0 = "wg0"
-INITSCRIPT_PARAMS:${PN}-wg0 = "start 5 3 4 5 . stop 30 0 1 6 ."
-
-FILES:${PN}-wake-controller += " \
-    ${sysconfdir}/init.d/wake-controller \
-    ${bindir}/wake-controller \
-"
 FILES:${PN}-mount-dataset += " \
-    ${sysconfdir}/init.d/mount-dataset \
+    ${systemd_system_unitdir}/scsi-dipm-workaround.service \
     /dataset \
 "
-FILES:${PN}-wg0 += "${sysconfdir}/init.d/wg0"
+FILES:${PN}-wg0 += " \
+    ${systemd_system_unitdir}/postfix.service.requires/wg-quick@wg0.service \
+"
 
 RDEPENDS:${PN}-wake-controller += "util-linux"
 RDEPENDS:${PN}-wg0 += "wireguard-tools"
 RDEPENDS:${PN} += " \
-    ${PN}-wake-controller \
+    ${PN}-controller \
     ${PN}-mount-dataset \
     ${PN}-wg0 \
     ssh \
     btrbk \
-    cronie \
 "

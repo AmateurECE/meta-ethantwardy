@@ -31,7 +31,7 @@ do_install () {
     if [ "${@bb.utils.contains('IMAGE_FEATURES', 'bash-completion', '1', '0', d)}" != "1" ]; then
         rm -rf ${D}${datadir}/bash-completion
     fi
-    if [ "${@bb.utils.contains('DISTRO_FEATURES', 'systemd', '1', '0', d)}" != "1" ]; then
-        rm -rf ${D}${libdir}
-    fi
+
+    # The backup-gadget does not use the systemd timer and service units.
+    rm -rf ${D}${libdir}
 }

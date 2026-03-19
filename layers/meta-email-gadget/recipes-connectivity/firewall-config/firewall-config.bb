@@ -5,17 +5,11 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 S = "${UNPACKDIR}"
 
 SRC_URI = " \
-    file://nftables.conf \
-    file://firewall.sh \
+    file://main.nft \
 "
 
 do_install() {
-    install -Dm755 ${UNPACKDIR}/nftables.conf -t ${D}${sysconfdir}/nftables
-    install -Dm755 ${UNPACKDIR}/firewall.sh ${D}${sysconfdir}/init.d/firewall
+    install -Dm755 ${UNPACKDIR}/main.nft -t ${D}${sysconfdir}/nftables/rules
 }
 
 RDEPENDS:${PN} += "nftables"
-
-inherit update-rc.d
-
-INITSCRIPT_NAME = "firewall"

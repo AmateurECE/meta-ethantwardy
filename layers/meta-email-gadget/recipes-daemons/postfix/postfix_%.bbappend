@@ -3,16 +3,13 @@ SRC_URI += " \
     file://main.cf \
     file://master.cf \
     file://postfix-makeconf.sh \
+    file://postfix-makeconf.service \
 "
 
 PACKAGES =+ "${PN}-makeconf"
 
-# Upstream recipe uses INITSCRIPT_NAME without a package name.
-# /etc/init.d/postfix is installed in postfix-cfg package.
-INITSCRIPT_NAME = ""
-INITSCRIPT_PACKAGES += "${PN}-cfg ${PN}-makeconf"
-INITSCRIPT_NAME:${PN}-cfg = "postfix"
-INITSCRIPT_NAME:${PN}-makeconf = "postfix-makeconf"
+SYSTEMD_PACKAGES += "${PN}-makeconf"
+SYSTEMD_SERVICE:${PN}-makeconf = "postfix-makeconf.service"
 
 do_install:append() {
     install -Dm644 ${UNPACKDIR}/main.cf ${D}/etc/postfix/main.cf.base
@@ -20,15 +17,12 @@ do_install:append() {
 
     rm -f ${D}/etc/postfix/main.cf
 
-    install -Dm755 ${UNPACKDIR}/postfix-makeconf.sh ${D}/etc/init.d/postfix-makeconf
+    install -Dm755 ${UNPACKDIR}/postfix-makeconf.sh -t ${D}${bindir}
+    install -Dm644 ${UNPACKDIR}/postfix-makeconf.service -t ${D}${systemd_system_unitdir}
 }
 
-FILES:${PN}-cfg:remove = "/etc/postfix/main.cf"
-FILES:${PN}-cfg:append = " \
-    /etc/postfix/main.cf.base \
-"
-
 FILES:${PN}-makeconf = " \
-    /etc/init.d/postfix-makeconf \
+    ${systemd_system_unitdir}/postfix-makeconf.service \
+    ${systemd_system_unitdir}/postfix.service.requires/postfix-makeconf.service \
 "
-RDEPENDS:${PN}:class-target += "${PN}-cfg ${PN}-makeconf"
+RDEPENDS:${PN}:class-target += "${PN}-makeconf"
