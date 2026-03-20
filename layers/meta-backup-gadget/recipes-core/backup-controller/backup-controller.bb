@@ -4,19 +4,18 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 S = "${UNPACKDIR}"
 SRC_URI += " \
-    file://${LAYER_SOURCEDIR}/backup-controller \
+    file://${BACKUP_GADGET_SRCDIR}/${BPN} \
     file://backup-controller.service \
     file://dataset.mount \
     file://scsi-dipm-workaround.sh \
     file://scsi-dipm-workaround.service \
     file://btrbk.conf \
-    file://btrbk.sh \
     file://backup-databases.sh \
 "
 
 require ${BPN}-crates.inc
 
-CARGO_SRC_DIR = "${LAYER_SOURCEDIR}/backup-controller"
+CARGO_SRC_DIR = "${BACKUP_GADGET_SRCDIR}/backup-controller"
 
 inherit systemd cargo cargo-update-recipe-crates
 
@@ -33,7 +32,6 @@ do_install:append() {
     ln -s ../wg-quick@.service ${D}${systemd_system_unitdir}/postfix.service.requires/wg-quick@wg0.service
 
     install -Dm644 ${UNPACKDIR}/btrbk.conf -t ${D}${sysconfdir}/btrbk
-    install -Dm755 ${UNPACKDIR}/btrbk.sh -t ${D}${sysconfdir}/cron.daily
     install -Dm755 ${UNPACKDIR}/backup-databases.sh -t ${D}/usr/libexec
 }
 
