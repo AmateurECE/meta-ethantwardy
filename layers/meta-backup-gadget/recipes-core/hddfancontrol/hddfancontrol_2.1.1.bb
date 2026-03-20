@@ -16,7 +16,6 @@ SRC_URI += " \
 RDEPENDS:${PN} += " \
     hdparm \
     smartmontools \
-    backup-dataset \
 "
 
 SYSTEMD_SERVICE:${PN} = "${PN}.service"

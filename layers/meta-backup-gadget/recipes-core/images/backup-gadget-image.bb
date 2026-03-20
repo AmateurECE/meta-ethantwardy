@@ -20,7 +20,7 @@ IMAGE_INSTALL += " \
 
 # The function of this image
 IMAGE_INSTALL += " \
-    backup-dataset \
+    backup-controller \
 "
 
 inherit gadget-image
