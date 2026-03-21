@@ -3,7 +3,7 @@ HOMEPAGE = "https://certbot.eff.org/"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=d2c2a5517cd7fd190a1aa6dfa23abb7a"
 
-SRC_URI[sha256sum] = "c4110645d1a8c2d5a0b68b1b06473ef2ea70aa53da1002d0e8374c185f843564"
+SRC_URI[sha256sum] = "7edcf171a34f9156e1c1c3e2cf59d2172d93c57746b226023addd05f49af4221"
 
 inherit pypi python_setuptools_build_meta
 
@@ -12,8 +12,6 @@ SRC_URI = "https://files.pythonhosted.org/packages/source/${PYPI_PACKAGE[0]}/${P
 
 RDEPENDS:${PN} += " \
     certbot \
-    python3-acme \
-    python3-dns-lexicon \
 "
 
 BBCLASSEXTEND = "native"

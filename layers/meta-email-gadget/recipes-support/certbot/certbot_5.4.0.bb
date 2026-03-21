@@ -3,7 +3,7 @@ HOMEPAGE = "https://certbot.eff.org/"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=16542115f15152bdc6d80c5b5d208e70"
 
-SRC_URI[sha256sum] = "862c08708e6d730be61868ba1692f7dbd0825c7e9b5eaec13768257537976038"
+SRC_URI[sha256sum] = "c0757fbc82aec597072219ce05c559f3bd2e20e9e96a54a5286f297e639fb91b"
 
 inherit pypi python_setuptools_build_meta
 
