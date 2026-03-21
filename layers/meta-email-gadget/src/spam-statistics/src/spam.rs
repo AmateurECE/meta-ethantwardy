@@ -6,7 +6,7 @@ use std::{
     sync::LazyLock,
 };
 
-use chrono::{DateTime, Local, NaiveDate};
+use chrono::{DateTime, Local, NaiveDate, TimeDelta, Utc};
 use email::Mailbox;
 use regex::Regex;
 
@@ -111,30 +111,52 @@ where
     Ok(spam)
 }
 
-/// Return a list of the top spam-sending domains
-fn top_offending_domains<S, I>(iter: I) -> Vec<(String, usize)>
+#[derive(Default)]
+struct Misclassified {
+    senders: Vec<String>,
+    recent_count: usize,
+    total_count: usize,
+}
+
+/// Obtain a report of recently misclassified spam.
+fn recent_misclassified<S, I>(iter: I, cutoff: TimeDelta) -> Vec<Misclassified>
 where
     I: Iterator<Item = S>,
     S: AsRef<SpamEmail>,
 {
-    let mut counts = HashMap::<String, usize>::new();
+    let now = Local::now().date_naive();
+    let mut results = HashMap::new();
     let mut error_count = 0;
     let misclassified_spam = iter.filter(|email| !email.as_ref().is_spam);
     for message in misclassified_spam {
-        let message = message.as_ref();
-        let Ok(mailbox) = message.from.parse::<Mailbox>() else {
+        let Ok(sender) = message.as_ref().from.parse::<Mailbox>() else {
             error_count += 1;
             continue;
         };
 
-        let mut address = mailbox.address.split("@");
-        address.next();
-        let Some(domain) = address.next() else {
+        let mut address_split = sender.address.split("@");
+        address_split.next();
+        let Some(domain) = address_split.next() else {
             error_count += 1;
             continue;
         };
-        let count = counts.entry(domain.to_string()).or_default();
-        *count += 1;
+
+        let record = match results.get_mut(domain) {
+            Some(r) => r,
+            None => {
+                results.insert(domain.to_string(), Misclassified::default());
+                // INVARIANT: We just inserted into the map above
+                results.get_mut(domain).unwrap()
+            }
+        };
+
+        record.total_count += 1;
+        if !record.senders.contains(&sender.address) {
+            record.senders.push(sender.address);
+        }
+        if message.as_ref().date_received > (now - cutoff) {
+            record.recent_count += 1;
+        }
     }
 
     eprintln!(
@@ -142,22 +164,34 @@ where
         error_count
     );
 
-    let mut counts = counts.into_iter().collect::<Vec<_>>();
-    counts.sort_by(|(_, one), (_, two)| two.cmp(one));
-    counts
+    let mut results: Vec<Misclassified> = results
+        .into_values()
+        .filter(|record| record.recent_count > 0)
+        .collect();
+    results.sort_by(|a, b| b.recent_count.cmp(&a.recent_count));
+    results
 }
 
 pub fn domain_report(spam: impl Iterator<Item = SpamEmail>) -> String {
-    let domains = top_offending_domains(spam);
+    const CUTOFF: TimeDelta = TimeDelta::days(7);
+    let domains = recent_misclassified(spam, CUTOFF);
     "<h3>Misclassified Domains</h3>".to_string()
         + "<p>Domains that have sent mail misclassified as ham.</p>"
-        + r#"<ul style="list-style-type:none;">"#
+        + r#"<table>"#
+        + r#"<tr><th>Sending Addresses</th><th>Count (Last 7 Days)</th><th>Total Count</th></tr>"#
         + &domains
             .iter()
-            .map(|(domain, count)| format!("<li>{}: {}</li>\n", domain, count))
+            .map(|record| {
+                format!(
+                    "<tr><td>{}</td><td>{}</td><td>{}</td></tr>\n",
+                    record.senders.join(", "),
+                    record.recent_count,
+                    record.total_count
+                )
+            })
             .collect::<Vec<_>>()
             .join("\n")
-        + "</ul>"
+        + "</table>"
 }
 
 pub fn load_spam_maildir<P>(path: P) -> anyhow::Result<SpamResults>
