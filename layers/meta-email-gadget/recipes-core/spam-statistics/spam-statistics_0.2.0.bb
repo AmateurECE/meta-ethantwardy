@@ -1,27 +1,23 @@
 LICENSE = "MIT"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=250dce80b2d545ccfdd59653914c3842"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 SUMMARY = "Gather statistics about spam on email systems that use Rspamd"
-HOMEPAGE = "https://github.com/AmateurECE/spam-statistics"
+HOMEPAGE = "https://github.com/AmateurECE/meta-ethantwardy"
 
 require ${BPN}-crates.inc
 
+S = "${UNPACKDIR}"
+CARGO_SRC_DIR = "${EMAIL_GADGET_SRCDIR}/${BPN}"
+
 inherit cargo cargo-update-recipe-crates pkgconfig
 
-SRC_URI += "git://github.com/AmateurECE/spam-statistics;protocol=https;branch=main;name=spam-statistics"
-SRCREV_spam-statistics = "20e88e6ef6550fdf08d0a45473bf9396007184a6"
-SRCREV_FORMAT = "spam-statistics"
-PV:append = "+1"
-
-DEPENDS += " \
-    fontconfig \
+SRC_URI += " \
+    file://${EMAIL_GADGET_SRCDIR}/${BPN} \
+    file://spam-statistics.sh \
 "
 
-RDEPENDS:${PN} += " \
-    ttf-roboto \
-"
-
-SRC_URI += "file://spam-statistics.sh"
+DEPENDS += "fontconfig"
+RDEPENDS:${PN} += "ttf-roboto"
 
 do_install:append() {
     install -Dm755 ${UNPACKDIR}/spam-statistics.sh -t ${D}${sysconfdir}/cron.daily
