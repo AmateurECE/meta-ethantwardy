@@ -15,6 +15,8 @@ use crate::{
 mod executor;
 mod job;
 
+const MOUNTPOINT: &str = "/dataset";
+
 fn jobs() -> Vec<Job> {
     vec![
         Job {
@@ -32,6 +34,29 @@ fn jobs() -> Vec<Job> {
                 time: "07:45:00".parse().unwrap(),
             },
         },
+        Job {
+            command: Box::new(|| {
+                let mut btrfs = Command::new("/usr/bin/btrfs");
+                btrfs.args(["scrub", "start", "-Bd", "-c2", "-n4", MOUNTPOINT]);
+                btrfs
+            }),
+            schedule: Schedule::Monthly {
+                day_of_month: 1,
+                time: "02:00:00".parse().unwrap(),
+            },
+        },
+        Job {
+            command: Box::new(|| {
+                let mut btrfs = Command::new("/usr/bin/btrfs");
+                btrfs.args(["balance", "start", "-v", "-dusage=10", MOUNTPOINT]);
+                btrfs
+            }),
+            schedule: Schedule::Weekly {
+                weekday: Weekday::Mon,
+                time: "02:00:00".parse().unwrap(),
+            },
+        },
+        // TODO: btrfs balance
     ]
 }
 
