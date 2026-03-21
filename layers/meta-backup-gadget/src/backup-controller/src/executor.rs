@@ -21,7 +21,7 @@ pub enum Error {
     #[error("executing rtcwake: {0}")]
     Io(#[from] io::Error),
     #[error("{0} failed")]
-    SubprocessError(&'static str),
+    Subprocess(&'static str),
     #[error("formatting message: {0}")]
     Message(#[from] lettre::error::Error),
     #[error("sending email: {0}")]
@@ -47,7 +47,7 @@ pub fn hibernate(until: &DateTime<Local>) -> Result<(), Error> {
             .success()
         {
             true => Ok(()),
-            false => Err(Error::SubprocessError("rtcwake")),
+            false => Err(Error::Subprocess("rtcwake")),
         }
     }
 }
@@ -102,7 +102,7 @@ impl Executor {
         const WAKEUP_BUFFER: TimeDelta = TimeDelta::seconds(15);
         loop {
             let now = Local::now();
-            let next_job = next_job(&now, &jobs).unwrap();
+            let next_job = next_job(&now, jobs).unwrap();
 
             let due_at = next_job.next_invocation(&now);
             let waketime = due_at.checked_sub_signed(WAKEUP_BUFFER).unwrap();
