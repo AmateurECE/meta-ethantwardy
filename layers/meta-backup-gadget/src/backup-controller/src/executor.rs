@@ -8,13 +8,21 @@ use std::{
 
 use chrono::{DateTime, Local, TimeDelta};
 use lettre::{
-    Message, SmtpTransport, Transport as _,
+    AsyncSmtpTransport, AsyncTransport as _, Message, Tokio1Executor,
     message::{Mailbox, SinglePart},
     transport::smtp,
 };
 use log::info;
+use tokio::join;
 
-use crate::job::{Job, next_job};
+pub mod notify;
+mod postfix;
+pub mod tail;
+
+use crate::{
+    executor::postfix::completed_send,
+    job::{Job, next_job},
+};
 
 #[derive(Debug, thiserror::Error)]
 pub enum Error {
@@ -53,23 +61,25 @@ pub fn hibernate(until: &DateTime<Local>) -> Result<(), Error> {
 }
 
 pub struct Executor {
-    transport: SmtpTransport,
+    transport: AsyncSmtpTransport<Tokio1Executor>,
     recipient: Mailbox,
     sender: Mailbox,
 }
 
 impl Executor {
-    pub fn new(transport: SmtpTransport, domain: &str, recipient_username: &str) -> Self {
+    pub fn new(
+        transport: AsyncSmtpTransport<Tokio1Executor>,
+        recipient: &str,
+        sender: &str,
+    ) -> Self {
         Self {
             transport,
-            recipient: format!("{}@{}", recipient_username, domain)
-                .parse()
-                .unwrap(),
-            sender: format!("backup@{}", domain).parse().unwrap(),
+            recipient: recipient.parse().unwrap(),
+            sender: sender.parse().unwrap(),
         }
     }
 
-    fn run_job(&self, job: &Job) -> Result<(), Error> {
+    async fn run_job(&self, job: &Job) -> Result<(), Error> {
         let mut command = (job.command)();
         let program = PathBuf::from(command.get_program());
         info!("Running {}", program.display());
@@ -88,13 +98,17 @@ impl Executor {
             .singlepart(SinglePart::plain(body))?;
 
         info!("Sending message to {}", &self.recipient);
-        self.transport.send(&message)?;
-        // FIXME: Hard-coded sleep ensures that the MTA has time to send the message.
-        sleep(Duration::from_secs(5));
+        let (smtp_result, mta_result) = join!(
+            biased;
+            completed_send(self.sender.to_string(), self.recipient.to_string()),
+            self.transport.send(message),
+        );
+        smtp_result?;
+        mta_result?;
         Ok(())
     }
 
-    pub fn run(self, jobs: &[Job]) -> ! {
+    pub async fn run(self, jobs: &[Job]) -> ! {
         // Stay awake for the first minute, allowing the user to log in and create /etc/caffeinated, if
         // they so desire.
         sleep(Duration::from_secs(60));
@@ -110,7 +124,7 @@ impl Executor {
 
             if next_job.is_due_within(&WAKEUP_BUFFER) {
                 sleep_until(due_at);
-                self.run_job(next_job).expect("failed to run job");
+                self.run_job(next_job).await.expect("failed to run job");
             } else {
                 // If the job is not due within 60 seconds, this is a spurious wakeup. Keep the system
                 // awake for 60 seconds, and then hibernate again.
