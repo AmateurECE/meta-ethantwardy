@@ -1,11 +1,11 @@
 use std::{
-    fs,
+    env, fs,
     io::{self, Write as _},
     process::Command,
 };
 
 use chrono::Weekday;
-use lettre::SmtpTransport;
+use lettre::AsyncSmtpTransport;
 
 use crate::{
     executor::Executor,
@@ -56,7 +56,6 @@ fn jobs() -> Vec<Job> {
                 time: "02:00:00".parse().unwrap(),
             },
         },
-        // TODO: btrfs balance
     ]
 }
 
@@ -64,7 +63,8 @@ fn disable_wakeup_sources() -> io::Result<()> {
     fs::write("/proc/acpi/wakeup", b"XHC0")
 }
 
-fn main() {
+#[tokio::main(flavor = "current_thread")]
+async fn main() {
     env_logger::builder()
         .format(|buf, record| writeln!(buf, "[{}] {}", record.level(), record.args()))
         .init();
@@ -72,12 +72,14 @@ fn main() {
     disable_wakeup_sources().expect("failed to disable wakeup sources");
     let domain = fs::read_to_string("/etc/hostname").expect("failed to read hostname");
 
+    let recipient = env::var("MAILTO").unwrap();
+
     let jobs = jobs();
     let executor = Executor::new(
-        SmtpTransport::unencrypted_localhost(),
-        domain.trim_end(),
-        "root",
+        AsyncSmtpTransport::<_>::unencrypted_localhost(),
+        &recipient,
+        &format!("backup@{}", domain),
     );
 
-    executor.run(&jobs);
+    executor.run(&jobs).await;
 }
