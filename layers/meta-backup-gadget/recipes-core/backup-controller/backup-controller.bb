@@ -13,6 +13,7 @@ SRC_URI += " \
     file://backup-databases.sh \
 "
 
+# Comment this line before running update_crates
 require ${BPN}-crates.inc
 
 CARGO_SRC_DIR = "${BACKUP_GADGET_SRCDIR}/backup-controller"

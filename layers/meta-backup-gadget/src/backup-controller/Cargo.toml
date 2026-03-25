@@ -6,6 +6,11 @@ edition = "2024"
 [dependencies]
 chrono = { version = "0.4", features = ["clock"], default-features = false }
 env_logger = { version = "0.11", default-features = false }
-lettre = { version = "0.11", features = ["builder", "smtp-transport"], default-features = false }
+lettre = { version = "0.11", features = ["builder", "smtp-transport", "tokio1"], default-features = false }
 log = { version = "0.4", default-features = false }
+notify = { version = "8.2.0", default-features = false }
+pin-project = "1.1.11"
+regex = "1.12.3"
 thiserror = { version = "2.0", default-features = false }
+tokio = { version = "1.50.0", default-features = false, features = ["fs", "io-util", "macros", "rt"] }
+tokio-stream = { version = "0.1.18", default-features = false, features = ["io-util"] }
