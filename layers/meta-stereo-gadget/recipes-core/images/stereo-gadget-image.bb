@@ -33,6 +33,4 @@ IMAGE_INSTALL:append = " \
     kernel-modules \
 "
 
-IMAGE_FSTYPES = "tar.bz2 wic.bz2 wic.bmap"
-
 inherit gadget-image

@@ -8,6 +8,7 @@
 /layers/meta-rauc/
 /layers/meta-yocto/
 /layers/openembedded-core/
+/layers/meta-raspberrypi/
 
 config.yaml
 reboot.sh
