@@ -12,6 +12,8 @@ SRC_URI = "https://files.pythonhosted.org/packages/source/${PYPI_PACKAGE[0]}/${P
 
 RDEPENDS:${PN} += " \
     certbot \
+    python3-acme \
+    python3-dns-lexicon \
 "
 
 BBCLASSEXTEND = "native"

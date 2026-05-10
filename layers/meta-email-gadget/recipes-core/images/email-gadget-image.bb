@@ -13,6 +13,13 @@ IMAGE_INSTALL += " \
     kitty-terminfo \
 "
 
+# (Optional) Install pip and venv modules
+# IMAGE_INSTALL += "
+#     python3-venv \
+#     python3-modules \
+#     python3-pip \
+# "
+
 # Install a few things that provide required features
 IMAGE_INSTALL += " \
     sudo \
