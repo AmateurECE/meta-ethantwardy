@@ -3,12 +3,12 @@ header:
 overrides:
     repos:
         meta-cyclonedx:
-            commit: 799989a78b6cdd2e97eb28b6963f145ba539bee5
+            commit: 453b4d7490aa497d07d5494fbc2f9ce326b66b30
         meta-openembedded:
-            commit: d28d0a23615f4d91d125fdcd247a71245087dab3
+            commit: d861698ab8d4bbdda13f93747390f3f095f1f48f
         meta-rauc:
-            commit: 9aec376b7f614f434b1f8412d76f10c006eb5393
+            commit: 4bc963abde09904392d3ce7524d430b7e4b808aa
         meta-yocto:
-            commit: 6973ca663aaa9c3ab517ee960ab7985a5bf54c07
+            commit: 3f2e6b6fadfa542f0fe3738375a2f9fcbd4c1f6e
         openembedded-core:
-            commit: fa31089d48cac2aa11279e932a77f4dbdc02c02d
+            commit: 8751ec83421192fc0f8495fb95798f9eb7be77a0
