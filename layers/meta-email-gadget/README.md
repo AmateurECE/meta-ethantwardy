@@ -49,11 +49,13 @@ ln -s /etc/letsencrypt/live/mail.domain.com/fullchain.pem \
 # Renew certificates weekly
 cat - >/etc/cron.weekly/renew-certificates.sh <<EOF
 > #!/bin/sh
->
+> 
 > set -e
-> certbot renew -w /var/www/certbot -n
-> systemctl restart nginx.service postfix.service rspamd.service \\
->     dovecot.service
+> 
+> certbot renew \
+>     -w /var/www/certbot \
+>     -n \
+>     --deploy-hook "/usr/bin/systemctl restart nginx postfix rspamd dovecot"
 EOF
 chmod 0755 /etc/cron.weekly/renew-certificates.sh
 
