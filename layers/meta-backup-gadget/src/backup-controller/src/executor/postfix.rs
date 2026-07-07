@@ -1,13 +1,9 @@
-use std::path::PathBuf;
 use std::{io, sync::LazyLock};
 
+use linemux::MuxedLines;
 use regex::Regex;
-use tokio::io::{AsyncBufReadExt as _, BufReader};
-use tokio_stream::StreamExt as _;
-use tokio_stream::wrappers::LinesStream;
 
-use crate::executor::tail::Tail;
-
+#[derive(Debug)]
 enum State {
     Start,
     From { id: String },
@@ -87,11 +83,12 @@ impl Send {
 /// Additionally, this method only works with the busybox syslogd implementation.
 pub async fn completed_send(from: String, to: String) -> io::Result<()> {
     let mut send = Send::new(from, to);
-    let mut file = LinesStream::new(
-        BufReader::new(Tail::new(PathBuf::from("/var/log/messages")).await?).lines(),
-    );
-    while let Some(line) = file.next().await {
-        send = send.input_line(&line?);
+    let mut lines = MuxedLines::new()?;
+    lines.add_file("/var/log/messages").await?;
+    while let Ok(Some(line)) = lines.next_line().await {
+        let line = line.line();
+        send = send.input_line(line);
+        log::info!("line={}, state={:?}", line, send.state);
         if matches!(send.state, State::Removed) {
             return Ok(());
         }

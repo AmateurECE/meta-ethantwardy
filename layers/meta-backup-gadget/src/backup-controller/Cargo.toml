@@ -7,9 +7,8 @@ edition = "2024"
 chrono = { version = "0.4", features = ["clock"], default-features = false }
 env_logger = { version = "0.11", default-features = false }
 lettre = { version = "0.11", features = ["builder", "smtp-transport", "tokio1"], default-features = false }
+linemux = "0.3.0"
 log = { version = "0.4", default-features = false }
-notify = { version = "8.2.0", default-features = false }
-pin-project = "1.1.11"
 regex = "1.12.3"
 thiserror = { version = "2.0", default-features = false }
 tokio = { version = "1.50.0", default-features = false, features = ["fs", "io-util", "macros", "rt"] }

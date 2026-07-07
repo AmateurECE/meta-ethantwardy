@@ -15,9 +15,7 @@ use lettre::{
 use log::info;
 use tokio::join;
 
-pub mod notify;
 mod postfix;
-pub mod tail;
 
 use crate::{
     executor::postfix::completed_send,
